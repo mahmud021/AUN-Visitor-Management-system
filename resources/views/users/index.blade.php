@@ -172,7 +172,7 @@
                                     <div class="px-6 py-3">
                                         <div class="flex items-center gap-x-3">
                                             <span
-                                                class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">{{ $user->user_details->telephone }}</span>
+                                                class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">0{{ $user->user_details->telephone }}</span>
                                         </div>
                                     </div>
                                 </td>
