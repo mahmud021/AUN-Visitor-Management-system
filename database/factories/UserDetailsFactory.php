@@ -21,7 +21,7 @@ class UserDetailsFactory extends Factory
     {
         return [
             'user_id' => User::factory(),
-            'school_id' => fake()->numerify('A000#####'),
+            'school_id' => fake()->numerify('A########'),
             'role' => fake()->randomElement(['Staff', 'Student']),
             'status' => fake()->randomElement(['Active', 'Inactive', 'Graduated']),
             'telephone' => fake()->phoneNumber(),
