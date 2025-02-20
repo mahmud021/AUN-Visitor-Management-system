@@ -14,11 +14,11 @@
 
 
     <!-- Tailwind CSS -->
-{{--    <script src="https://cdn.tailwindcss.com"></script>--}}
+    <script src="https://cdn.tailwindcss.com"></script>
 
-{{--    <!-- Preline CSS -->--}}
-{{--   <link href="https://cdn.jsdelivr.net/npm/preline@latest/dist/preline.min.css" rel="stylesheet">--}}
-    @vite(['resources/js/app.js','resources/css/app.css'])
+    <!-- Preline CSS -->
+   <link href="https://cdn.jsdelivr.net/npm/preline@latest/dist/preline.min.css" rel="stylesheet">
+
 </head>
 <body class="font-sans antialiased">
 @include('layouts.navigation')

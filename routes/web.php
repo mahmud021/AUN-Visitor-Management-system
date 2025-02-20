@@ -29,9 +29,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::delete('/{user}', [UserController::class, 'destroy'])->name('destroy');
     });
 
+
     // Visitor Management
     Route::prefix('visitors')->name('visitors.')->group(function () {
         Route::get('/', [VisitorController::class, 'index'])->name('index')->middleware('can:view-all-visitors');
+        Route::get('/create', [VisitorController::class, 'create'])
+            ->name('create');
         Route::post('/', [VisitorController::class, 'store'])
             ->name('store')
             ->middleware('can:create-visitor');

@@ -16,6 +16,10 @@ class VisitorController extends Controller
         return view('visitors.index', compact('visitors'));
     }
 
+    public function create() {
+        return view('visitors.create');
+    }
+
     public function store(Request $request)
     {
         // Validate incoming request data.
