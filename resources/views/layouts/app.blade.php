@@ -18,6 +18,7 @@
 
     <!-- Preline CSS -->
    <link href="https://cdn.jsdelivr.net/npm/preline@latest/dist/preline.min.css" rel="stylesheet">
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
 </head>
 <body class="font-sans antialiased">
