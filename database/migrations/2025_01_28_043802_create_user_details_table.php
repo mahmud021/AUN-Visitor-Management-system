@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('school_id')->unique();
             $table->string('role');
             $table->string('status');
-            $table->integer('telephone');
+            $table->string('telephone');
             $table->timestamps();
         });
     }
