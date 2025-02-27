@@ -20,6 +20,7 @@ class UserController extends Controller
         return view('users.index', compact('users'));
     }
 
+
     public function visitorLogs(User $user)
     {
         // Get visitors for this user
@@ -31,7 +32,7 @@ class UserController extends Controller
             'visitors' => $visitors,  // collection of visitors
         ]);
     }
-    
+
 
 
     /**
