@@ -8,6 +8,7 @@ use App\Models\Visitor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
@@ -56,14 +57,16 @@ class UserController extends Controller
 
         // Validate the request
         $validated = $request->validate([
-            'first_name' => 'required|string',
-            'last_name' => 'required|string',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:8',
-            'role' => 'required|in:' . implode(',', array_keys(UserDetails::getRoles())),
-            'status' => 'required|in:' . implode(',', array_keys(UserDetails::getStatuses())),
-            'school_id' => 'required|string',
+            'first_name' => 'required|string|max:20',
+            'last_name' => 'required|string|max:20',
+            'email' => 'required|email|max:255|unique:users,email',
+            'password' => 'required|min:8|',
+            'role' => ['required', Rule::in(array_keys(UserDetails::getRoles()))],
+            'status' => ['required', Rule::in(array_keys(UserDetails::getStatuses()))],
+            'school_id' => 'required|string|unique:user_details,school_id',
             'telephone' => ['required', 'string', 'regex:/^0\d{10}$/', 'min:11', 'max:11'],
+        ], [
+            'school_id.unique' => 'This School ID is already assigned to another user.',
 
         ]);
 

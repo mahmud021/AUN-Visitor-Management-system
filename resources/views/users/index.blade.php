@@ -71,6 +71,7 @@
                                                     </option>
                                                 @endforeach
                                             </x-form.select>
+                                            <x-input-error :messages="$errors->get('role')" class="mt-1"/>
 
                                         </div>
 

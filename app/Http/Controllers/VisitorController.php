@@ -24,10 +24,10 @@ class VisitorController extends Controller
     {
         // Validate incoming request data.
         $validated = $request->validate([
-            'first_name'       => 'required|string',
-            'last_name'        => 'required|string',
-            'telephone'        => 'nullable|string',
-            'expected_arrival' => 'nullable|date',
+            'first_name'       => 'required|string|max:20',
+            'last_name'        => 'required|string|max:20',
+            'telephone'        => 'required|string|regex:/^0\d{10}$/|min:11|max:11',
+            'expected_arrival' => 'required|date|after_or_equal:today',
         ]);
 
         // Associate the visitor with the logged-in user.

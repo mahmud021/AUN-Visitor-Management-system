@@ -11,8 +11,8 @@ class UserDetails extends Model
     /** @use HasFactory<\Database\Factories\UserDetailsFactory> */
     use HasFactory;
 
-    const STATUS_INACTIVE = 'Inactive';
-    const STATUS_ACTIVE = 'Active';
+    const STATUS_INACTIVE = 'inactive';
+    const STATUS_ACTIVE = 'active';
    // const STATUS_GRADUATED = 'Graduated';
 
     // Optionally, define a method to return all statuses with labels
@@ -20,7 +20,7 @@ class UserDetails extends Model
     {
         return [
             self::STATUS_INACTIVE => 'Inactive',
-            self::STATUS_ACTIVE => 'Active',
+            self::STATUS_ACTIVE => 'active',
            // self::STATUS_GRADUATED => 'Graduated',
         ];
     }
