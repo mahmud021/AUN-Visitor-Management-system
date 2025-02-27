@@ -49,6 +49,11 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    public function setEmailAttribute($value)
+    {
+        $this->attributes['email'] = strtolower($value);
+    }
+
     public function user_details(): HasOne
     {
         return $this->hasOne(UserDetails::class);

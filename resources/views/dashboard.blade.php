@@ -5,7 +5,7 @@
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                 {{ $user->user_details->role }} Dashboard View
             </h2>
-            <a href="{{ route('visitors.create') }}">Create Visitor</a>
+{{--            <a href="{{ route('visitors.create') }}">Create23456789 Visitor</a>--}}
 
 
 
@@ -126,7 +126,7 @@
                                             </p>
                                             <div class="mt-3">
                                                 @if($allVisitor->status == 'pending')
-                                                    @if(auth()->user()->user_details->role === 'HR Admin' || auth()->user()->user_details->role === 'super admin')
+                                                    @if(auth()->user()?->user_details?->role === 'HR Admin' || auth()->user()?->user_details?->role === 'super admin')
                                                         <form action="{{ route('visitors.update', $allVisitor->id) }}" method="POST" class="inline">
                                                             @csrf
                                                             @method('PATCH')
