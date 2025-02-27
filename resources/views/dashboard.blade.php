@@ -113,10 +113,10 @@
                                     <div class="flex justify-between items-center gap-x-3">
                                         <div class="grow">
                                             <h3 class="group-hover:text-blue-600 font-semibold text-gray-800 dark:group-hover:text-neutral-200 dark:text-neutral-200">
-                                                {{ $allVisitor->first_name }} {{ $allVisitor->last_name }}
+                                                {{ $allVisitor->first_name ?? 'Null'  }} {{ $allVisitor->last_name ?? 'Null' }}
                                             </h3>
                                             <p class="text-sm text-gray-500 dark:text-neutral-500 mt-2">
-                                                Telephone: {{ $allVisitor->telephone }}
+                                                Telephone: {{ $allVisitor->telephone ?? 'Null' }}
                                             </p>
                                             <p class="text-sm text-gray-500 dark:text-neutral-500 mt-2">
                                                 Tag ID:
@@ -198,22 +198,22 @@
                                 <div class="flex justify-between items-center gap-x-3">
                                     <div class="grow">
                                         <h3 class="group-hover:text-blue-600 font-semibold text-gray-800 mt-2 dark:group-hover:text-neutral-200 dark:text-neutral-200">
-                                            {{ $myVisitor->first_name }} {{ $myVisitor->last_name }}
+                                            {{ $myVisitor->first_name ?? 'Null'}} {{ $myVisitor->last_name ?? 'Null'}}
                                         </h3>
                                         <p class="text-sm text-gray-500 dark:text-neutral-500 mt-2">
-                                            Telephone: {{ $myVisitor->telephone }}
+                                            Telephone: {{ $myVisitor->telephone ?? 'Null'}}
                                         </p>
                                         <p class="mt-2 text-lg font-bold text-blue-600">
                                             Access Code:
                                             <span class="inline-block bg-gray-200 text-gray-800 rounded px-2 py-1">
-                                {{ $myVisitor->visitor_code }}
+                                {{ $myVisitor->visitor_code ?? 'Null' }}
                             </span>
                                         </p>
                                         <p class="text-sm text-gray-500 dark:text-neutral-500 mt-2">
                                             {{ \Carbon\Carbon::parse($myVisitor->expected_arrival)->format('M d, h:i A') }}
                                         </p>
                                         <p class="mt-2">
-                                            <x-status-badge status="{{ $myVisitor->status }}"/>
+                                            <x-status-badge status="{{ $myVisitor->status ?? 'Null'}}"/>
                                         </p>
                                     </div>
                                     <a href="{{ route('visitors.timeline', $myVisitor->id) }}">

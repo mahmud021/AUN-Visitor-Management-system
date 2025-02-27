@@ -15,7 +15,7 @@
                     <!-- Visitor Header -->
                     <div class="mb-8 border-b pb-4">
                         <h1 class="text-2xl font-bold">
-                            {{ $visitor->first_name }} {{ $visitor->last_name }}
+                            {{ $visitor->first_name ?? 'Null' }} {{ $visitor->last_name ?? 'Null' }}
                         </h1>
                         <p class="text-sm text-gray-600 dark:text-neutral-400">
                             Created on {{ $visitor->created_at->format('l, F j, Y') }}
@@ -57,7 +57,7 @@
                                         @endif
                                     </h3>
                                     <p class="mt-1 text-sm text-gray-600 dark:text-neutral-400">
-                                        {{ $event->description }}
+                                        {{ $event->description ?? 'Null' }}
                                     </p>
                                     @if($event->user)
                                         <button type="button" class="mt-1 -ms-1 p-1 inline-flex items-center gap-x-2 text-xs rounded-lg border border-transparent text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-400 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700">

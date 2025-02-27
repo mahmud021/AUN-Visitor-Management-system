@@ -124,11 +124,11 @@
                                         <div class="flex items-center gap-x-3">
                                             <div class="grow">
                                 <span class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">
-                                    {{ $visitor->first_name }} {{ $visitor->last_name }}
+                                    {{ $visitor->first_name ?? 'Null' }} {{ $visitor->last_name ?? 'Null' }}
                                 </span>
                                                 @if($visitor->user)
                                                     <span class="block text-sm text-gray-500 dark:text-neutral-500">
-                                        Hosted by: {{ $visitor->user->user_details->school_id }}
+                                        Hosted by: {{ $visitor->user->user_details->school_id ?? 'Null' }}
                                     </span>
                                                 @endif
                                             </div>
@@ -140,7 +140,7 @@
                                 <td class="size-px whitespace-nowrap">
                                     <div class="px-6 py-3">
                         <span class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">
-                            {{ $visitor->telephone }}
+                            {{ $visitor->telephone ?? 'Null' }}
                         </span>
                                     </div>
                                 </td>

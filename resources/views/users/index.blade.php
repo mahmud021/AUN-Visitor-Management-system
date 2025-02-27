@@ -147,10 +147,10 @@
                                         <div class="flex items-center gap-x-3">
                                             <div class="grow">
                          <span class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">
-                             {{ $user->first_name }} {{ $user->last_name }}
+                             {{ $user->first_name ?? 'Null'}} {{ $user->last_name ?? 'Null' }}
                          </span>
                                                 <span
-                                                    class="block text-sm text-gray-500 dark:text-neutral-500">{{ $user->email }}</span>
+                                                    class="block text-sm text-gray-500 dark:text-neutral-500">{{ $user->email ?? 'Null' }}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -158,21 +158,21 @@
                                 <td class="h-px w-72 whitespace-nowrap">
                                     <div class="px-6 py-3">
                                         <span
-                                            class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">{{ $user->user_details->role}}</span>
+                                            class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">{{ $user->user_details->role ?? 'Null'}}</span>
                                         <span
-                                            class="block text-sm text-gray-500 dark:text-neutral-500">{{ $user->user_details->school_id }}</span>
+                                            class="block text-sm text-gray-500 dark:text-neutral-500">{{ $user->user_details->school_id ?? 'Null' }}</span>
                                     </div>
                                 </td>
                                 <td class="size-px whitespace-nowrap">
                                     <div class="px-6 py-3">
-                                        <x-status-badge status="{{ $user->user_details->status }}"/>
+                                        <x-status-badge status="{{ $user->user_details->status ?? 'Null' }}"/>
                                     </div>
                                 </td>
                                 <td class="size-px whitespace-nowrap">
                                     <div class="px-6 py-3">
                                         <div class="flex items-center gap-x-3">
                                             <span
-                                                class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">0{{ $user->user_details->telephone }}</span>
+                                                class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">0{{ $user->user_details->telephone ?? 'Null' }}</span>
                                         </div>
                                     </div>
                                 </td>
