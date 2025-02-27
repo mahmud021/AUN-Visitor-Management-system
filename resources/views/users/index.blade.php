@@ -24,11 +24,12 @@
                                 <x-modal.header title="Create User" modalId="hs-scale-animation-modal"/>
 
                                 <div class="p-4 overflow-y-auto">
-                                    <div class="grid grid-cols-1 gap-4 lg:gap-4"> <!-- Adjusted gap here -->
+                                    <div class="grid grid-cols-2 gap-4 lg:gap-4"> <!-- 2-column layout -->
+
                                         <!-- First Name -->
-                                        <div class="space-y-2"> <!-- Add space-y-2 for uniform spacing -->
+                                        <div class="space-y-2">
                                             <x-form.input name="first_name" label="First Name" type="text" value="{{ old('first_name') }}"/>
-                                            <x-input-error :messages="$errors->get('first_name')" class="mt-1"/> <!-- Reduced margin-top -->
+                                            <x-input-error :messages="$errors->get('first_name')" class="mt-1"/>
                                         </div>
 
                                         <!-- Last Name -->
@@ -37,14 +38,14 @@
                                             <x-input-error :messages="$errors->get('last_name')" class="mt-1"/>
                                         </div>
 
-                                        <!-- Email -->
-                                        <div class="space-y-2">
+                                        <!-- Email (Full Width) -->
+                                        <div class="col-span-2 space-y-2">
                                             <x-form.input name="email" label="AUN Email" type="email" value="{{ old('email') }}"/>
                                             <x-input-error :messages="$errors->get('email')" class="mt-1"/>
                                         </div>
 
-                                        <!-- Password -->
-                                        <div class="space-y-2">
+                                        <!-- Password (Full Width) -->
+                                        <div class="col-span-2 space-y-2">
                                             <x-form.input name="password" label="Password" type="password" required autocomplete="new-password"/>
                                             <x-input-error :messages="$errors->get('password')" class="mt-1"/>
                                         </div>
@@ -57,11 +58,11 @@
 
                                         <!-- School ID -->
                                         <div class="space-y-2">
-                                            <x-form.input name="school_id" label="ID number" type="text" value="{{ old('school_id') }}"/>
+                                            <x-form.input name="school_id" label="ID Number" type="text" value="{{ old('school_id') }}"/>
                                             <x-input-error :messages="$errors->get('school_id')" class="mt-1"/>
                                         </div>
 
-                                        <!-- Role Select -->
+                                        <!-- Role -->
                                         <div class="space-y-2">
                                             <x-form.select name="role" label="Select Role">
                                                 <option selected disabled>Open this select menu</option>
@@ -72,9 +73,9 @@
                                                 @endforeach
                                             </x-form.select>
                                             <x-input-error :messages="$errors->get('role')" class="mt-1"/>
-
                                         </div>
 
+                                        <!-- Status -->
                                         <div class="space-y-2">
                                             <x-form.select name="status" label="Select Status">
                                                 <option selected disabled>Open this select menu</option>
