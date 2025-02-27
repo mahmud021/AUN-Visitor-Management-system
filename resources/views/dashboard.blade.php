@@ -5,15 +5,10 @@
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                 {{ $user->user_details->role }} Dashboard View
             </h2>
-{{--            <a href="{{ route('visitors.create') }}">Create23456789 Visitor</a>--}}
-
-
-
 
             <!-- Button group on the right -->
             <div class="flex items-center gap-4">
                 <!-- Create Visitor button -->
-
                 <x-primary-button
                     type="button"
                     aria-haspopup="dialog"
@@ -25,19 +20,6 @@
                     Create Visitor
                 </x-primary-button>
 
-                @can('create-visitor')
-{{--                    <x-primary-button--}}
-{{--                        type="button"--}}
-{{--                        aria-haspopup="dialog"--}}
-{{--                        aria-expanded="false"--}}
-{{--                        aria-controls="hs-scale-animation-modal"--}}
-{{--                        data-hs-overlay="#hs-scale-animation-modal"--}}
-{{--                    >--}}
-{{--                        Create Visitor--}}
-{{--                    </x-primary-button>--}}
-                @endcan
-
-
                 <!-- Logout button -->
                 <form method="POST" action="{{ route('logout') }}" class="inline">
                     @csrf
@@ -46,6 +28,7 @@
                         {{ __('Log Out') }}
                     </button>
                 </form>
+
                 <!-- Modal Form -->
                 <form method="POST" action="{{ route('visitors.store') }}">
                     @csrf
@@ -56,7 +39,6 @@
                         />
                         <div class="p-4 overflow-y-auto">
                             <div class="grid grid-cols-1 gap-4 lg:gap-4">
-                                <!-- Form fields for creating a visitor -->
                                 <div class="space-y-2">
                                     <x-form.input name="first_name" label="First Name" type="text" value="{{ old('first_name') }}"/>
                                     <x-input-error :messages="$errors->get('first_name')" class="mt-1"/>
@@ -94,9 +76,6 @@
     <div class="py-12 bg-white dark:bg-gray-900">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="overflow-hidden shadow-sm sm:rounded-lg">
-                <!-- Cards for statistics -->
-
-
                 <!-- All Visitors Section (Visible only to Security and Super Admin) -->
                 @can('view-all-visitors')
                     <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
@@ -113,17 +92,15 @@
                                     <div class="flex justify-between items-center gap-x-3">
                                         <div class="grow">
                                             <h3 class="group-hover:text-blue-600 font-semibold text-gray-800 dark:group-hover:text-neutral-200 dark:text-neutral-200">
-                                                {{ $allVisitor->first_name ?? 'Null'  }} {{ $allVisitor->last_name ?? 'Null' }}
+                                                {{ $allVisitor->first_name ?? 'Null' }} {{ $allVisitor->last_name ?? 'Null' }}
                                             </h3>
                                             <p class="text-sm text-gray-500 dark:text-neutral-500 mt-2">
                                                 Telephone: {{ $allVisitor->telephone ?? 'Null' }}
                                             </p>
                                             <p class="text-sm text-gray-500 dark:text-neutral-500 mt-2">
-                                                Tag ID:
-                                            </p>
-                                            <p class="text-sm text-gray-500 dark:text-neutral-500 mt-2">
                                                 {{ \Carbon\Carbon::parse($allVisitor->expected_arrival)->format('M d, h:i A') }}
                                             </p>
+                                            <!-- Status actions -->
                                             <div class="mt-3">
                                                 @if($allVisitor->status == 'pending')
                                                     @if(auth()->user()?->user_details?->role === 'HR Admin' || auth()->user()?->user_details?->role === 'super admin')
@@ -148,13 +125,9 @@
                                                                 Check In
                                                             </x-primary-button>
                                                         </div>
-                                                        <!-- Floating Input for Visitor Code -->
                                                         <div class="relative">
                                                             <x-floating-input name="visitor_code" label="Visitor Code" />
                                                         </div>
-
-
-                                                        <!-- End Floating Input -->
                                                     </form>
                                                 @elseif($allVisitor->status == 'checked_in')
                                                     <form action="{{ route('visitors.update', $allVisitor->id) }}" method="POST" class="inline">
@@ -169,15 +142,13 @@
                                                 @endif
                                             </div>
                                             <p class="mt-2">
-                                                <x-status-badge status="{{ $allVisitor->status }}"/>
+                                                <x-status-badge status="{{ $allVisitor->status }}" />
                                             </p>
                                         </div>
                                         <a href="{{ route('visitors.timeline', $allVisitor->id) }}">
-                                            <div>
-                                                <svg class="shrink-0 size-5 text-gray-800 dark:text-neutral-200" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                    <path d="m9 18 6-6-6-6"/>
-                                                </svg>
-                                            </div>
+                                            <svg class="shrink-0 size-5 text-gray-800 dark:text-neutral-200" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="m9 18 6-6-6-6"/>
+                                            </svg>
                                         </a>
                                     </div>
                                 </x-card>
@@ -187,7 +158,6 @@
                             {{ $allVisitors->links() }}
                         </div>
                     </div>
-
                 @endcan
 
                 <!-- My Visitors Section (Visible to all authenticated users) -->
@@ -198,30 +168,28 @@
                                 <div class="flex justify-between items-center gap-x-3">
                                     <div class="grow">
                                         <h3 class="group-hover:text-blue-600 font-semibold text-gray-800 mt-2 dark:group-hover:text-neutral-200 dark:text-neutral-200">
-                                            {{ $myVisitor->first_name ?? 'Null'}} {{ $myVisitor->last_name ?? 'Null'}}
+                                            {{ $myVisitor->first_name ?? 'Null' }} {{ $myVisitor->last_name ?? 'Null' }}
                                         </h3>
                                         <p class="text-sm text-gray-500 dark:text-neutral-500 mt-2">
-                                            Telephone: {{ $myVisitor->telephone ?? 'Null'}}
+                                            Telephone: {{ $myVisitor->telephone ?? 'Null' }}
                                         </p>
                                         <p class="mt-2 text-lg font-bold text-blue-600">
                                             Access Code:
                                             <span class="inline-block bg-gray-200 text-gray-800 rounded px-2 py-1">
-                                {{ $myVisitor->visitor_code ?? 'Null' }}
-                            </span>
+                                                {{ $myVisitor->visitor_code ?? 'Null' }}
+                                            </span>
                                         </p>
                                         <p class="text-sm text-gray-500 dark:text-neutral-500 mt-2">
                                             {{ \Carbon\Carbon::parse($myVisitor->expected_arrival)->format('M d, h:i A') }}
                                         </p>
                                         <p class="mt-2">
-                                            <x-status-badge status="{{ $myVisitor->status ?? 'Null'}}"/>
+                                            <x-status-badge status="{{ $myVisitor->status ?? 'Null' }}" />
                                         </p>
                                     </div>
                                     <a href="{{ route('visitors.timeline', $myVisitor->id) }}">
-                                        <div>
-                                            <svg class="shrink-0 size-5 text-gray-800 dark:text-neutral-200" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                <path d="m9 18 6-6-6-6"/>
-                                            </svg>
-                                        </div>
+                                        <svg class="shrink-0 size-5 text-gray-800 dark:text-neutral-200" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="m9 18 6-6-6-6"/>
+                                        </svg>
                                     </a>
                                 </div>
                             </x-card>
@@ -231,7 +199,6 @@
                         {{ $myVisitors->links() }}
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
