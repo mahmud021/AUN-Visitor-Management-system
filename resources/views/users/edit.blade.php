@@ -22,7 +22,6 @@
                             </p>
                         </header>
 
-                        <!-- Form for updating user information -->
                         <form method="post" action="{{ route('user.update', $user->id) }}" class="mt-6 space-y-6">
                             @csrf
                             @method('patch')
@@ -52,55 +51,47 @@
                             </div>
 
                             <!-- Role -->
-                            <div class="space-y-2">
-                                <x-form.select name="role" label="Select Role">
-                                    <option selected disabled>Open this select menu</option>
+                            <div>
+                                <x-input-label for="role" :value="__('Role')" />
+                                <select id="role" name="role" class="mt-1 block w-full border-gray-300 dark:border-neutral-700 dark:bg-gray-800 dark:text-neutral-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                    <option selected disabled>{{ __('Select Role') }}</option>
                                     @foreach (App\Models\UserDetails::getRoles() as $value => $label)
-                                        <option value="{{ $value }}"
-                                            {{ (old('role', $user->user_details->role ?? '') == $value) ? 'selected' : '' }}>
+                                        <option value="{{ $value }}" {{ (old('role', $user->user_details->role ?? '') == $value) ? 'selected' : '' }}>
                                             {{ $label }}
                                         </option>
                                     @endforeach
-                                </x-form.select>
-                                <x-input-error :messages="$errors->get('role')" class="mt-1"/>
+                                </select>
+                                <x-input-error class="mt-2" :messages="$errors->get('role')" />
                             </div>
 
                             <!-- Status -->
-                            <div class="space-y-2">
-                                <x-form.select name="status" label="Select Status">
-                                    <option selected disabled>Open this select menu</option>
+                            <div>
+                                <x-input-label for="status" :value="__('Status')" />
+                                <select id="status" name="status" class="mt-1 block w-full border-gray-300 dark:border-neutral-700 dark:bg-gray-800 dark:text-neutral-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                    <option selected disabled>{{ __('Select Status') }}</option>
                                     @foreach (App\Models\UserDetails::getStatuses() as $value => $label)
-                                        <option value="{{ $value }}"
-                                            {{ (old('status', $user->user_details->status ?? '') == $value) ? 'selected' : '' }}>
+                                        <option value="{{ $value }}" {{ (old('status', $user->user_details->status ?? '') == $value) ? 'selected' : '' }}>
                                             {{ $label }}
                                         </option>
                                     @endforeach
-                                </x-form.select>
-                                <x-input-error :messages="$errors->get('status')" class="mt-1"/>
+                                </select>
+                                <x-input-error class="mt-2" :messages="$errors->get('status')" />
                             </div>
 
                             <!-- School ID -->
                             <div>
-                                <x-form.input
-                                    name="school_id"
-                                    label="School ID"
-                                    type="text"
-                                    :value="old('school_id', $user->user_details->school_id)"
-                                    required
-                                />
-                                <x-input-error :messages="$errors->get('school_id')" class="mt-1" />
+                                <x-input-label for="school_id" :value="__('School ID')" />
+                                <x-text-input id="school_id" name="school_id" type="text" class="mt-1 block w-full"
+                                              :value="old('school_id', $user->user_details->school_id)" required />
+                                <x-input-error class="mt-2" :messages="$errors->get('school_id')" />
                             </div>
 
                             <!-- Telephone -->
                             <div>
-                                <x-form.input
-                                    name="telephone"
-                                    label="Telephone Number"
-                                    type="text"
-                                    :value="old('telephone', $user->user_details->telephone)"
-                                    required
-                                />
-                                <x-input-error :messages="$errors->get('telephone')" class="mt-1" />
+                                <x-input-label for="telephone" :value="__('Telephone Number')" />
+                                <x-text-input id="telephone" name="telephone" type="text" class="mt-1 block w-full"
+                                              :value="old('telephone', $user->user_details->telephone)" required />
+                                <x-input-error class="mt-2" :messages="$errors->get('telephone')" />
                             </div>
 
                             <!-- Save Button -->
@@ -120,7 +111,6 @@
                     </section>
                 </div>
             </div>
-
             <!-- Update Password Section -->
             <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
                 <div class="max-w-xl">
