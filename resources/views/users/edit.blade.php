@@ -95,21 +95,21 @@
                             </div>
                             <!-- Blacklist Toggle -->
                             <div class="flex items-center">
+                                <!-- Hidden input for false value -->
                                 <input type="hidden" name="blacklist" value="0">
+
+                                <!-- Toggle Switch -->
                                 <input type="checkbox"
                                        id="blacklist"
                                        name="blacklist"
                                        value="1"
-                                       class="relative w-[3.25rem] h-7 p-px bg-gray-100 [...] all-your-classes"
+                                       class="relative w-[3.25rem] h-7 p-px bg-gray-100 border-transparent text-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:ring-blue-600 disabled:opacity-50 disabled:pointer-events-none checked:bg-none checked:text-blue-600 checked:border-blue-600 focus:checked:border-blue-600 dark:bg-neutral-800 dark:border-neutral-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-600 before:inline-block before:content-[''] before:size-6 before:bg-white checked:before:bg-blue-200 before:translate-x-0 checked:before:translate-x-full before:rounded-full before:shadow before:transform before:ring-0 before:transition before:ease-in-out before:duration-200 dark:before:bg-neutral-400 dark:checked:before:bg-blue-200"
                                     @checked(old('blacklist', $user->user_details->blacklist ?? false))>
-                                <label for="blacklist" class="text-sm text-gray-500 ms-3">Blacklist User</label>
-                            </div>
-
-                                <!-- Accessible Label -->
-                                <label for="blacklist" class="sr-only">Blacklist Status</label>
 
                                 <!-- Visible Label -->
-                                <span class="text-sm text-gray-500 ms-3">Blacklist User</span>
+                                <label for="blacklist" class="text-sm text-gray-500 ms-3 dark:text-gray-400">
+                                    Blacklist User
+                                </label>
                             </div>
 
 
