@@ -19,6 +19,7 @@
     },
     "dependencies": {
         "@tailwindcss/vite": "^4.0.5",
-        "preline": "^2.7.0"
+        "preline": "^2.7.0",
+        "toastify-js": "^1.12.0"
     }
 }

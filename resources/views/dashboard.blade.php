@@ -5,6 +5,9 @@
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                 {{ $user->user_details->role }} Dashboard View
             </h2>
+            <button id="hs-new-toast" type="button" class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
+                Call toast
+            </button>
 
             <!-- Button group on the right -->
             <div class="flex items-center gap-4">
@@ -202,4 +205,69 @@
             </div>
         </div>
     </div>
+    @push('scripts')
+        <script>
+            function tostifyCustomClose(el) {
+                const parent = el.closest('.toastify');
+                const close = parent.querySelector('.toast-close');
+                close.click();
+            }
+
+            window.addEventListener('load', () => {
+                (function () {
+                    let i = 0;
+                    const callToast = document.querySelector("#hs-new-toast");
+                    const toastMarkup1 = `
+                    <div class="max-w-xs relative bg-white border border-gray-200 rounded-xl shadow-lg dark:bg-neutral-800 dark:border-neutral-700" role="alert" tabindex="-1" aria-labelledby="hs-toast-avatar-label">
+                        <div class="flex p-4">
+                            <div class="shrink-0">
+                                <img class="inline-block size-8 rounded-full" src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80" alt="Avatar">
+                                <button onclick="tostifyCustomClose(this)" type="button" class="absolute top-3 end-3 inline-flex shrink-0 justify-center items-center size-5 rounded-lg text-gray-800 opacity-50 hover:opacity-100 focus:outline-none focus:opacity-100 dark:text-white" aria-label="Close">
+                                    <span class="sr-only">Close</span>
+                                    <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+                                </button>
+                            </div>
+                            <div class="ms-4 me-5">
+                                <h3 id="hs-toast-avatar-label" class="text-gray-800 font-medium text-sm dark:text-white">
+                                    <span class="font-semibold">James</span> mentioned you in a comment
+                                </h3>
+                                <div class="mt-1 text-sm text-gray-600 dark:text-neutral-400">
+                                    Nice work! Keep it up!
+                                </div>
+                                <div class="mt-3">
+                                    <button type="button" class="text-blue-600 decoration-2 hover:underline font-medium text-sm focus:outline-none focus:underline dark:text-blue-500">
+                                        Mark as read
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                    const toastMarkup2 = `
+                    <div class="flex p-4">
+                        <p class="text-sm text-gray-700 dark:text-neutral-400">Your email has been sent</p>
+                        <div class="ms-auto">
+                            <button onclick="tostifyCustomClose(this)" type="button" class="inline-flex shrink-0 justify-center items-center size-5 rounded-lg text-gray-800 opacity-50 hover:opacity-100 focus:outline-none focus:opacity-100 dark:text-white" aria-label="Close">
+                                <span class="sr-only">Close</span>
+                                <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+                `;
+
+                    callToast.addEventListener("click", () => {
+                        Toastify({
+                            text: i % 3 ? toastMarkup1 : toastMarkup2,
+                            className: "hs-toastify-on:opacity-100 opacity-0 fixed -top-[150px] right-[20px] z-[90] transition-all duration-300 w-[320px] bg-white text-sm text-gray-700 border border-gray-200 rounded-xl shadow-lg [&>.toast-close]:hidden dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-400",
+                            duration: 3000,
+                            close: true,
+                            escapeMarkup: false
+                        }).showToast();
+
+                        i++;
+                    });
+                })();
+            });
+        </script>
+    @endpush
 </x-app-layout>
