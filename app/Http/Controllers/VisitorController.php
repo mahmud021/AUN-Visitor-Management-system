@@ -48,8 +48,10 @@ class VisitorController extends Controller
             'occurred_at' => now(),
         ]);
 
-        return redirect()->back();
+        // Set a flash message with key "success"
+        return redirect()->back()->with('success', 'Visitor created successfully.');
     }
+
 
     public function show(Visitor $visitor)
     {

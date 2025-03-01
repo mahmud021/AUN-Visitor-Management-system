@@ -15,7 +15,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- Preline CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/preline@latest/dist/preline.min.css" rel="stylesheet">
+{{--    <link href="https://cdn.jsdelivr.net/npm/preline@latest/dist/preline.min.css" rel="stylesheet">--}}
 
     <!-- Vite Assets -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -43,9 +43,10 @@
     </div>
 </div>
 
-<!-- ADD this Blade stack if you are using @push('scripts') in your views -->
-@stack('scripts')
 
+@stack('scripts')
+@include('components.flash-toast')
 <script src="https://cdn.jsdelivr.net/npm/preline@2.7.0/dist/preline.min.js"></script>
+<script src="/public/js/preline.min.js"></script>
 </body>
 </html>
