@@ -65,6 +65,8 @@ class UserController extends Controller
             'status' => ['required', Rule::in(array_keys(UserDetails::getStatuses()))],
             'school_id' => 'required|string|unique:user_details,school_id',
             'telephone' => ['required', 'string', 'regex:/^0\d{10}$/', 'min:11', 'max:11'],
+            'blacklist' => 'boolean', // Ensure it accepts true/false
+
         ], [
             'school_id.unique' => 'This School ID is already assigned to another user.',
 
@@ -107,7 +109,8 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        // Validate the input data
+        // In your controller
+        \Log::debug('Full request:', $request->all());        // Validate the input data
         $validated = $request->validate([
             'first_name' => 'required|string',
             'last_name' => 'required|string',
@@ -115,6 +118,7 @@ class UserController extends Controller
             'role' => 'required|in:' . implode(',', array_keys(UserDetails::getRoles())),
             'status' => 'required|in:' . implode(',', array_keys(UserDetails::getStatuses())),
             'school_id' => 'required|string',
+            'blacklist' => 'boolean',
             'telephone' => ['required', 'string', 'regex:/^0\d{10}$/', 'min:11', 'max:11'],
 
         ]);
@@ -130,6 +134,7 @@ class UserController extends Controller
         $user->user_details->update([
             'role' => $validated['role'],
             'status' => $validated['status'],
+            'blacklist' => $validated['blacklist'] ?? false,
             'school_id' => $validated['school_id'],
             'telephone' => $validated['telephone'],
         ]);

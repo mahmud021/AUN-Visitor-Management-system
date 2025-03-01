@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('role');
             $table->string('status');
             $table->string('telephone');
+            $table->boolean('blacklist')->default(false);
             $table->timestamps();
         });
     }

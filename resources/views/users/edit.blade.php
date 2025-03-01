@@ -28,26 +28,26 @@
 
                             <!-- First Name -->
                             <div>
-                                <x-input-label for="first_name" :value="__('First Name')" />
+                                <x-input-label for="first_name" :value="__('First Name')"/>
                                 <x-text-input id="first_name" name="first_name" type="text" class="mt-1 block w-full"
-                                              :value="old('first_name', $user->first_name)" required autofocus />
-                                <x-input-error class="mt-2" :messages="$errors->get('first_name')" />
+                                              :value="old('first_name', $user->first_name)" required autofocus/>
+                                <x-input-error class="mt-2" :messages="$errors->get('first_name')"/>
                             </div>
 
                             <!-- Last Name -->
                             <div>
-                                <x-input-label for="last_name" :value="__('Last Name')" />
+                                <x-input-label for="last_name" :value="__('Last Name')"/>
                                 <x-text-input id="last_name" name="last_name" type="text" class="mt-1 block w-full"
-                                              :value="old('last_name', $user->last_name)" required />
-                                <x-input-error class="mt-2" :messages="$errors->get('last_name')" />
+                                              :value="old('last_name', $user->last_name)" required/>
+                                <x-input-error class="mt-2" :messages="$errors->get('last_name')"/>
                             </div>
 
                             <!-- Email -->
                             <div>
-                                <x-input-label for="email" :value="__('Email')" />
+                                <x-input-label for="email" :value="__('Email')"/>
                                 <x-text-input id="email" name="email" type="email" class="mt-1 block w-full"
-                                              :value="old('email', $user->email)" required />
-                                <x-input-error class="mt-2" :messages="$errors->get('email')" />
+                                              :value="old('email', $user->email)" required/>
+                                <x-input-error class="mt-2" :messages="$errors->get('email')"/>
                             </div>
 
                             <!-- Role -->
@@ -80,25 +80,38 @@
 
                             <!-- School ID -->
                             <div>
-                                <x-input-label for="school_id" :value="__('School ID')" />
+                                <x-input-label for="school_id" :value="__('School ID')"/>
                                 <x-text-input id="school_id" name="school_id" type="text" class="mt-1 block w-full"
-                                              :value="old('school_id', $user->user_details->school_id)" required />
-                                <x-input-error class="mt-2" :messages="$errors->get('school_id')" />
+                                              :value="old('school_id', $user->user_details->school_id)" required/>
+                                <x-input-error class="mt-2" :messages="$errors->get('school_id')"/>
                             </div>
 
                             <!-- Telephone -->
                             <div>
-                                <x-input-label for="telephone" :value="__('Telephone Number')" />
+                                <x-input-label for="telephone" :value="__('Telephone Number')"/>
                                 <x-text-input id="telephone" name="telephone" type="text" class="mt-1 block w-full"
-                                              :value="old('telephone', $user->user_details->telephone)" required />
-                                <x-input-error class="mt-2" :messages="$errors->get('telephone')" />
+                                              :value="old('telephone', $user->user_details->telephone)" required/>
+                                <x-input-error class="mt-2" :messages="$errors->get('telephone')"/>
                             </div>
+                            <!-- Blacklist Toggle -->
                             <div class="flex items-center">
-                                <input type="checkbox" id="hs-xs-switch" class="relative w-[35px] h-[21px] bg-gray-100 border-transparent text-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:ring-blue-600 disabled:opacity-50 disabled:pointer-events-none checked:bg-none checked:text-blue-600 checked:border-blue-600 focus:checked:border-blue-600 dark:bg-neutral-800 dark:border-neutral-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-600
-
-  before:inline-block before:size-4 before:bg-white checked:before:bg-blue-200 before:translate-x-0 checked:before:translate-x-full before:rounded-full before:shadow before:transform before:ring-0 before:transition before:ease-in-out before:duration-200 dark:before:bg-neutral-400 dark:checked:before:bg-blue-200">
-                                <label for="hs-xs-switch" class="text-sm text-gray-500 ms-3 dark:text-neutral-400">Blacklist</label>
+                                <input type="hidden" name="blacklist" value="0">
+                                <input type="checkbox"
+                                       id="blacklist"
+                                       name="blacklist"
+                                       value="1"
+                                       class="relative w-[3.25rem] h-7 p-px bg-gray-100 [...] all-your-classes"
+                                    @checked(old('blacklist', $user->user_details->blacklist ?? false))>
+                                <label for="blacklist" class="text-sm text-gray-500 ms-3">Blacklist User</label>
                             </div>
+
+                                <!-- Accessible Label -->
+                                <label for="blacklist" class="sr-only">Blacklist Status</label>
+
+                                <!-- Visible Label -->
+                                <span class="text-sm text-gray-500 ms-3">Blacklist User</span>
+                            </div>
+
 
                             <!-- Save Button -->
                             <div class="flex items-center gap-4">
@@ -131,24 +144,26 @@
                         </header>
 
                         <!-- Form for updating password -->
-                        <form method="post" action="{{ route('user.password.update', $user->id) }}" class="mt-6 space-y-6">
+                        <form method="post" action="{{ route('user.password.update', $user->id) }}"
+                              class="mt-6 space-y-6">
                             @csrf
                             @method('put')
 
                             <!-- New Password -->
                             <div>
-                                <x-input-label for="password" :value="__('New Password')" />
+                                <x-input-label for="password" :value="__('New Password')"/>
                                 <x-text-input id="password" name="password" type="password" class="mt-1 block w-full"
-                                              autocomplete="new-password" />
-                                <x-input-error class="mt-2" :messages="$errors->get('password')" />
+                                              autocomplete="new-password"/>
+                                <x-input-error class="mt-2" :messages="$errors->get('password')"/>
                             </div>
 
                             <!-- Confirm New Password -->
                             <div>
-                                <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-                                <x-text-input id="password_confirmation" name="password_confirmation" type="password" class="mt-1 block w-full"
-                                              autocomplete="new-password" />
-                                <x-input-error class="mt-2" :messages="$errors->get('password_confirmation')" />
+                                <x-input-label for="password_confirmation" :value="__('Confirm Password')"/>
+                                <x-text-input id="password_confirmation" name="password_confirmation" type="password"
+                                              class="mt-1 block w-full"
+                                              autocomplete="new-password"/>
+                                <x-input-error class="mt-2" :messages="$errors->get('password_confirmation')"/>
                             </div>
 
                             <!-- Save Button -->
@@ -202,11 +217,11 @@
                                 </p>
 
                                 <div class="mt-6">
-                                    <x-input-label for="password" :value="__('Password')" class="sr-only" />
+                                    <x-input-label for="password" :value="__('Password')" class="sr-only"/>
                                     <x-text-input id="password" name="password" type="password"
                                                   class="mt-1 block w-3/4"
-                                                  placeholder="{{ __('Password') }}" />
-                                    <x-input-error :messages="$errors->get('userDeletion')" class="mt-2" />
+                                                  placeholder="{{ __('Password') }}"/>
+                                    <x-input-error :messages="$errors->get('userDeletion')" class="mt-2"/>
                                 </div>
 
                                 <div class="mt-6 flex justify-end">
