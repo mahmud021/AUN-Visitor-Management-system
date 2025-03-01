@@ -136,15 +136,32 @@
                                                                 Enter Visitor Code
                                                             </label>
                                                             <div class="py-2 px-3 bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-neutral-700">
-                                                                <div class="flex gap-x-5" data-hs-pin-input="">
-                                                                    <input id="visitor_code_1" class="block w-[38px] h-[38px] text-center border-gray-200 rounded-md text-xs placeholder:text-gray-300 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
-                                                                           type="text" placeholder="○" data-hs-pin-input-item="" autofocus="" name="visitor_code[]">
-                                                                    <input id="visitor_code_2" class="block w-[38px] h-[38px] text-center border-gray-200 rounded-md text-xs placeholder:text-gray-300 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
-                                                                           type="text" placeholder="○" data-hs-pin-input-item="" name="visitor_code[]">
-                                                                    <input id="visitor_code_3" class="block w-[38px] h-[38px] text-center border-gray-200 rounded-md text-xs placeholder:text-gray-300 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
-                                                                           type="text" placeholder="○" data-hs-pin-input-item="" name="visitor_code[]">
-                                                                    <input id="visitor_code_4" class="block w-[38px] h-[38px] text-center border-gray-200 rounded-md text-xs placeholder:text-gray-300 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
-                                                                           type="text" placeholder="○" data-hs-pin-input-item="" name="visitor_code[]">
+                                                                <div class="flex gap-x-3" data-hs-pin-input>
+                                                                    <input id="visitor_code_1"
+                                                                           class="w-8 h-8 text-sm text-center p-0 border-gray-200 rounded-md focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-neutral-700 dark:text-neutral-400"
+                                                                           type="text"
+                                                                           placeholder="○"
+                                                                           data-hs-pin-input-item
+                                                                           autofocus
+                                                                           name="visitor_code[]">
+                                                                    <input id="visitor_code_2"
+                                                                           class="w-8 h-8 text-sm text-center p-0 border-gray-200 rounded-md focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-neutral-700 dark:text-neutral-400"
+                                                                           type="text"
+                                                                           placeholder="○"
+                                                                           data-hs-pin-input-item
+                                                                           name="visitor_code[]">
+                                                                    <input id="visitor_code_3"
+                                                                           class="w-8 h-8 text-sm text-center p-0 border-gray-200 rounded-md focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-neutral-700 dark:text-neutral-400"
+                                                                           type="text"
+                                                                           placeholder="○"
+                                                                           data-hs-pin-input-item
+                                                                           name="visitor_code[]">
+                                                                    <input id="visitor_code_4"
+                                                                           class="w-8 h-8 text-sm text-center p-0 border-gray-200 rounded-md focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-neutral-700 dark:text-neutral-400"
+                                                                           type="text"
+                                                                           placeholder="○"
+                                                                           data-hs-pin-input-item
+                                                                           name="visitor_code[]">
                                                                 </div>
                                                             </div>
                                                         </div>
