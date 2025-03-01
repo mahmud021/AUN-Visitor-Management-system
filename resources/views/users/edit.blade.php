@@ -51,31 +51,31 @@
                             </div>
 
                             <!-- Role -->
-                            <div>
-                                <x-input-label for="role" :value="__('Role')" />
-                                <select id="role" name="role" class="mt-1 block w-full border-gray-300 dark:border-neutral-700 dark:bg-gray-800 dark:text-neutral-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                                    <option selected disabled>{{ __('Select Role') }}</option>
+                            <div class="space-y-2">
+                                <x-form.select name="role" label="Select Role">
+                                    <option selected disabled>Open this select menu</option>
                                     @foreach (App\Models\UserDetails::getRoles() as $value => $label)
-                                        <option value="{{ $value }}" {{ (old('role', $user->user_details->role ?? '') == $value) ? 'selected' : '' }}>
+                                        <option value="{{ $value }}"
+                                            {{ (old('role', $user->user_details->role ?? '') == $value) ? 'selected' : '' }}>
                                             {{ $label }}
                                         </option>
                                     @endforeach
-                                </select>
-                                <x-input-error class="mt-2" :messages="$errors->get('role')" />
+                                </x-form.select>
+                                <x-input-error :messages="$errors->get('role')" class="mt-1"/>
                             </div>
 
                             <!-- Status -->
-                            <div>
-                                <x-input-label for="status" :value="__('Status')" />
-                                <select id="status" name="status" class="mt-1 block w-full border-gray-300 dark:border-neutral-700 dark:bg-gray-800 dark:text-neutral-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                                    <option selected disabled>{{ __('Select Status') }}</option>
+                            <div class="space-y-2">
+                                <x-form.select name="status" label="Select Status">
+                                    <option selected disabled>Open this select menu</option>
                                     @foreach (App\Models\UserDetails::getStatuses() as $value => $label)
-                                        <option value="{{ $value }}" {{ (old('status', $user->user_details->status ?? '') == $value) ? 'selected' : '' }}>
+                                        <option value="{{ $value }}"
+                                            {{ (old('status', $user->user_details->status ?? '') == $value) ? 'selected' : '' }}>
                                             {{ $label }}
                                         </option>
                                     @endforeach
-                                </select>
-                                <x-input-error class="mt-2" :messages="$errors->get('status')" />
+                                </x-form.select>
+                                <x-input-error :messages="$errors->get('status')" class="mt-1"/>
                             </div>
 
                             <!-- School ID -->
