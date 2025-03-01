@@ -28,7 +28,12 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Gate::define('create-visitor', function ($user) {
-            return $user->user_details->status !== 'Inactive';
+            // Check if user has details and isn't blacklisted
+            $allowed = $user->user_details &&
+                $user->user_details->status === 'Active' &&
+                !$user->user_details->blacklist;
+
+            return $allowed;
         });
 
 

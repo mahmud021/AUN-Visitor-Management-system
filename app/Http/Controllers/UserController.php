@@ -110,7 +110,6 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         // In your controller
-        \Log::debug('Full request:', $request->all());        // Validate the input data
         $validated = $request->validate([
             'first_name' => 'required|string',
             'last_name' => 'required|string',
