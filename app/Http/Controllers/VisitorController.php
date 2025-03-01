@@ -78,16 +78,23 @@ class VisitorController extends Controller
 
         // If updating status to "checked_in", ensure the visitor code is provided and correct.
         if ($request->input('status') === 'checked_in') {
+            // Validate that visitor_code is an array and each item is required.
             $request->validate([
-                'visitor_code' => 'required',
+                'visitor_code'   => 'required|array',
+                'visitor_code.*' => 'required|string|size:1', // Ensures each input is a single character/digit.
             ]);
 
-            if ($visitor->visitor_code !== $request->visitor_code) {
-                return redirect()->back()->withErrors(['visitor_code' => 'The visitor code entered does not match our records.']);
+            // Combine the pin input digits into a single string.
+            $inputVisitorCode = implode('', $request->input('visitor_code'));
+
+            if ($visitor->visitor_code !== $inputVisitorCode) {
+                return redirect()->back()->withErrors([
+                    'visitor_code' => 'The visitor code entered does not match our records.'
+                ]);
             }
         }
 
-        // Update the status column.
+        // Update the visitor status.
         $visitor->status = $request->input('status');
         $visitor->save();
 

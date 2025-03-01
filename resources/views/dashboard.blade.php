@@ -127,8 +127,13 @@
                                                                 Check In
                                                             </x-primary-button>
                                                         </div>
-                                                        <div class="relative">
-                                                            <x-floating-input name="visitor_code" label="Visitor Code" />
+                                                        <div class="py-2 px-3 bg-white border border-gray-200 rounded-lg dark:bg-neutral-900 dark:border-neutral-700">
+                                                            <div class="flex gap-x-5" data-hs-pin-input="">
+                                                                <input class="block w-[38px] h-[38px] text-center border-gray-200 rounded-md text-sm placeholder:text-gray-300 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" type="text" placeholder="○" data-hs-pin-input-item="" autofocus="" name="visitor_code[]">
+                                                                <input class="block w-[38px] h-[38px] text-center border-gray-200 rounded-md text-sm placeholder:text-gray-300 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" type="text" placeholder="○" data-hs-pin-input-item="" name="visitor_code[]">
+                                                                <input class="block w-[38px] h-[38px] text-center border-gray-200 rounded-md text-sm placeholder:text-gray-300 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" type="text" placeholder="○" data-hs-pin-input-item="" name="visitor_code[]">
+                                                                <input class="block w-[38px] h-[38px] text-center border-gray-200 rounded-md text-sm placeholder:text-gray-300 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" type="text" placeholder="○" data-hs-pin-input-item="" name="visitor_code[]">
+                                                            </div>
                                                         </div>
                                                     </form>
                                                 @elseif($allVisitor->status == 'checked_in')
