@@ -102,6 +102,10 @@
                                             <p class="text-sm text-gray-500 dark:text-neutral-500 mt-2">
                                                 {{ \Carbon\Carbon::parse($allVisitor->expected_arrival)->format('M d, h:i A') }}
                                             </p>
+                                            <p class="mt-2">
+                                                <x-status-badge status="{{ $allVisitor->status }}" />
+                                            </p>
+
                                             <!-- Status actions -->
                                             <div class="mt-3">
                                                 @if($allVisitor->status == 'pending')
@@ -127,14 +131,24 @@
                                                                 Check In
                                                             </x-primary-button>
                                                         </div>
-                                                        <div class="py-2 px-3 bg-white border border-gray-200 rounded-lg dark:bg-neutral-900 dark:border-neutral-700">
-                                                            <div class="flex gap-x-5" data-hs-pin-input="">
-                                                                <input class="block w-[38px] h-[38px] text-center border-gray-200 rounded-md text-sm placeholder:text-gray-300 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" type="text" placeholder="○" data-hs-pin-input-item="" autofocus="" name="visitor_code[]">
-                                                                <input class="block w-[38px] h-[38px] text-center border-gray-200 rounded-md text-sm placeholder:text-gray-300 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" type="text" placeholder="○" data-hs-pin-input-item="" name="visitor_code[]">
-                                                                <input class="block w-[38px] h-[38px] text-center border-gray-200 rounded-md text-sm placeholder:text-gray-300 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" type="text" placeholder="○" data-hs-pin-input-item="" name="visitor_code[]">
-                                                                <input class="block w-[38px] h-[38px] text-center border-gray-200 rounded-md text-sm placeholder:text-gray-300 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" type="text" placeholder="○" data-hs-pin-input-item="" name="visitor_code[]">
+                                                        <div class="mt-4">
+                                                            <label for="visitor_code" class="block text-sm font-medium text-gray-700 dark:text-neutral-300 mb-2">
+                                                                Enter Visitor Code
+                                                            </label>
+                                                            <div class="py-2 px-3 bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-neutral-700">
+                                                                <div class="flex gap-x-5" data-hs-pin-input="">
+                                                                    <input id="visitor_code_1" class="block w-[38px] h-[38px] text-center border-gray-200 rounded-md text-xs placeholder:text-gray-300 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
+                                                                           type="text" placeholder="○" data-hs-pin-input-item="" autofocus="" name="visitor_code[]">
+                                                                    <input id="visitor_code_2" class="block w-[38px] h-[38px] text-center border-gray-200 rounded-md text-xs placeholder:text-gray-300 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
+                                                                           type="text" placeholder="○" data-hs-pin-input-item="" name="visitor_code[]">
+                                                                    <input id="visitor_code_3" class="block w-[38px] h-[38px] text-center border-gray-200 rounded-md text-xs placeholder:text-gray-300 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
+                                                                           type="text" placeholder="○" data-hs-pin-input-item="" name="visitor_code[]">
+                                                                    <input id="visitor_code_4" class="block w-[38px] h-[38px] text-center border-gray-200 rounded-md text-xs placeholder:text-gray-300 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
+                                                                           type="text" placeholder="○" data-hs-pin-input-item="" name="visitor_code[]">
+                                                                </div>
                                                             </div>
                                                         </div>
+
                                                     </form>
                                                 @elseif($allVisitor->status == 'checked_in')
                                                     <form action="{{ route('visitors.update', $allVisitor->id) }}" method="POST" class="inline">
@@ -148,9 +162,6 @@
                                                     </form>
                                                 @endif
                                             </div>
-                                            <p class="mt-2">
-                                                <x-status-badge status="{{ $allVisitor->status }}" />
-                                            </p>
                                         </div>
                                         <a href="{{ route('visitors.timeline', $allVisitor->id) }}">
                                             <svg class="shrink-0 size-5 text-gray-800 dark:text-neutral-200" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
