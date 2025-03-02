@@ -39,7 +39,7 @@ return new class extends Migration
             $table->timestamp('checked_out_at')->nullable();
             $table->timestamp('denied_at')->nullable(); // If you want a record of when it was denied
             $table->dateTime('expected_arrival')->change();
-            $table->dateTime('visit_end')->after('expected_arrival');
+            $table->dateTime('visit_end')->after('expected_arrival');V
             $table->timestamps(); // created_at & updated_at
         });
     }

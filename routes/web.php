@@ -13,6 +13,8 @@ require __DIR__ . '/auth.php';
 // Public Route: Login Page
 Route::redirect('/', '/login');
 
+// routes/web.php
+
 // Protected Routes
 Route::middleware(['auth', 'verified'])->group(function () {
     // Dashboard
