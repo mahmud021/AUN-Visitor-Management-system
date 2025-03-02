@@ -20,9 +20,10 @@ class VisitorController extends Controller
         return view('visitors.create');
     }
 
+    use Carbon\Carbon;
+
     public function store(Request $request)
     {
-        // Validate incoming request data.
         $validated = $request->validate([
             'first_name' => 'required|string|max:20',
             'last_name' => 'required|string|max:20',
@@ -31,36 +32,22 @@ class VisitorController extends Controller
             'visit_end' => 'required|date_format:Y-m-d\TH:i|after:expected_arrival',
         ]);
 
-        // Convert input to proper datetime format
+        // Convert datetime-local format to proper datetime
         $validated['expected_arrival'] = Carbon::createFromFormat(
             'Y-m-d\TH:i',
             $validated['expected_arrival']
-        )->format('Y-m-d H:i:s');
+        );
 
         $validated['visit_end'] = Carbon::createFromFormat(
             'Y-m-d\TH:i',
             $validated['visit_end']
-        )->format('Y-m-d H:i:s');
+        );
 
-        // Associate the visitor with the logged-in user.
         $validated['user_id'] = auth()->id();
-
-        // Generate a random 4-digit visitor code (as a string, padded with leading zeros if needed).
         $validated['visitor_code'] = str_pad(rand(0, 9999), 4, '0', STR_PAD_LEFT);
 
-        // Create the visitor.
         $visitor = Visitor::create($validated);
-// Debug log statement
-        \Log::debug('Stored Visitor', [
-            'expected_arrival' => $visitor->expected_arrival,
-            'visit_end' => $visitor->visit_end,
-            'types' => [
-                'expected' => get_class($visitor->expected_arrival),
-                'end' => get_class($visitor->visit_end)
-            ]
-        ]); // <-- Added missing closing
 
-        // Log the timeline event for visitor creation.
         TimelineEvent::create([
             'visitor_id' => $visitor->id,
             'user_id' => auth()->id(),
@@ -73,10 +60,8 @@ class VisitorController extends Controller
             'occurred_at' => now(),
         ]);
 
-        // Set a flash message with key "success"
         return redirect()->back()->with('success', 'Visitor created successfully.');
     }
-
 
     public function show(Visitor $visitor)
     {

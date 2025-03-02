@@ -19,12 +19,10 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->string('telephone');
-
-            // We keep expected_arrival as a date or datetime if you also want time
             $table->dateTime('expected_arrival')->nullable();
+            $table->dateTime('visit_end')->nullable(); // Changed this line
             $table->string('visitor_code', 4)->nullable();
 
-            // Expand status to include checked_in, checked_out, etc.
             $table->enum('status', [
                 'pending',
                 'approved',
@@ -33,17 +31,13 @@ return new class extends Migration
                 'checked_out'
             ])->default('pending');
 
-            // Timestamps for each event
             $table->timestamp('approved_at')->nullable();
             $table->timestamp('checked_in_at')->nullable();
             $table->timestamp('checked_out_at')->nullable();
-            $table->timestamp('denied_at')->nullable(); // If you want a record of when it was denied
-            $table->dateTime('expected_arrival')->change();
-            $table->dateTime('visit_end')->after('expected_arrival');
-            $table->timestamps(); // created_at & updated_at
+            $table->timestamp('denied_at')->nullable();
+            $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      */
