@@ -24,12 +24,23 @@ class VisitorController extends Controller
     {
         // Validate incoming request data.
         $validated = $request->validate([
-            'first_name'       => 'required|string|max:20',
-            'last_name'        => 'required|string|max:20',
-            'telephone'        => 'required|string|regex:/^0\d{10}$/|min:11|max:11',
-            'expected_arrival' => 'required|date|after_or_equal:today',
-            'visit_end' => 'required|date|after:expected_arrival',
+            'first_name' => 'required|string|max:20',
+            'last_name' => 'required|string|max:20',
+            'telephone' => 'required|string|regex:/^0\d{10}$/|min:11|max:11',
+            'expected_arrival' => 'required|date_format:Y-m-d\TH:i',
+            'visit_end' => 'required|date_format:Y-m-d\TH:i|after:expected_arrival',
         ]);
+
+        // Convert input to proper datetime format
+        $validated['expected_arrival'] = Carbon::createFromFormat(
+            'Y-m-d\TH:i',
+            $validated['expected_arrival']
+        )->format('Y-m-d H:i:s');
+
+        $validated['visit_end'] = Carbon::createFromFormat(
+            'Y-m-d\TH:i',
+            $validated['visit_end']
+        )->format('Y-m-d H:i:s');
 
         // Associate the visitor with the logged-in user.
         $validated['user_id'] = auth()->id();
@@ -128,6 +139,11 @@ class VisitorController extends Controller
         ]);
 
         return redirect()->back();
+
+        \Log::info('Visitor created', [
+            'expected_arrival_type' => get_class($visitor->expected_arrival),
+            'visit_end_type' => get_class($visitor->visit_end)
+        ]);
     }
 
     public function destroy(Visitor $visitor)
