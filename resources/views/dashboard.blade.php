@@ -15,6 +15,10 @@
                     aria-expanded="false"
                     aria-controls="hs-scale-animation-modal"
                     data-hs-overlay="#hs-scale-animation-modal"
+                    @class([
+                        'cursor-not-allowed opacity-50' => Gate::denies('create-visitor'),
+                        'hover:bg-gray-600 focus:bg-gray-600' => !Gate::denies('create-visitor')
+                    ])
                     :disabled="Gate::denies('create-visitor')"
                 >
                     Create Visitor

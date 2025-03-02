@@ -133,7 +133,7 @@ class UserController extends Controller
         $user->user_details->update([
             'role' => $validated['role'],
             'status' => $validated['status'],
-            'blacklist' => $validated['blacklist'] ?? false,
+            'blacklist' => $validated['blacklist'],
             'school_id' => $validated['school_id'],
             'telephone' => $validated['telephone'],
         ]);
