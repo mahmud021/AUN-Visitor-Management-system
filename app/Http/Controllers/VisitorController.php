@@ -20,7 +20,7 @@ class VisitorController extends Controller
         return view('visitors.create');
     }
 
-    use Carbon\Carbon;
+
 
     public function store(Request $request)
     {
