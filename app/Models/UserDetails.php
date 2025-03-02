@@ -12,16 +12,16 @@ class UserDetails extends Model
     use HasFactory;
 
     const STATUS_INACTIVE = 'Inactive';
-    const STATUS_ACTIVE = 'Active';
-   // const STATUS_GRADUATED = 'Graduated';
+    const STATUS_ACTIVE = 'Enrolled';
+    const STATUS_GRADUATED = 'Graduated';
 
     // Optionally, define a method to return all statuses with labels
     public static function getStatuses(): array
     {
         return [
             self::STATUS_INACTIVE => 'Inactive',
-            self::STATUS_ACTIVE => 'Active',
-           // self::STATUS_GRADUATED => 'Graduated',
+            self::STATUS_ACTIVE => 'Enrolled',
+            self::STATUS_GRADUATED => 'Graduated',
         ];
     }
 

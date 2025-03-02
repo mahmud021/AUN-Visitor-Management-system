@@ -28,7 +28,7 @@ class DatabaseSeeder extends Seeder
             [
                 'school_id' => 'A00023961', // Ensure this is unique
                 'role'      => 'super admin',
-                'status'    => 'active',
+                'status'    => 'Enrolled',
                 'telephone' => '1234567890', // Change from integer to string
             ]
         );

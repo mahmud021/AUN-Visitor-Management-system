@@ -2,7 +2,7 @@
 
 @php
     $statusClasses = [
-        'Active' => 'bg-green-100 text-green-800 dark:bg-green-600/20 dark:text-green-400',
+        'Enrolled' => 'bg-green-100 text-green-800 dark:bg-green-600/20 dark:text-green-400',
         'Inactive' => 'bg-red-100 text-red-800 dark:bg-red-600/20 dark:text-red-400',
         'Graduated' => 'bg-blue-100 text-blue-800 dark:bg-blue-600/20 dark:text-blue-400',
         'pending'     => 'bg-yellow-100 text-yellow-800 dark:bg-yellow-600/20 dark:text-yellow-400',
