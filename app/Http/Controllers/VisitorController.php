@@ -86,22 +86,7 @@ class VisitorController extends Controller
             'status' => 'required|in:approved,denied,checked_in,checked_out',
         ]);
 
-        // Add time window check
-        if ($request->input('status') === 'checked_in') {
-            $now = now();
 
-            if ($now->lt($visitor->expected_arrival)) {
-                return redirect()->back()->withErrors([
-                    'checkin' => 'Too early - visit starts at '.$visitor->expected_arrival->format('g:i a')
-                ]);
-            }
-
-            if ($now->gt($visitor->visit_end)) {
-                return redirect()->back()->withErrors([
-                    'checkin' => 'Visit window ended at '.$visitor->visit_end->format('g:i a')
-                ]);
-            }
-        }
 
         // Update the visitor status.
         $visitor->status = $request->input('status');
@@ -133,11 +118,6 @@ class VisitorController extends Controller
         ]);
 
         return redirect()->back();
-
-        \Log::info('Visitor created', [
-            'expected_arrival_type' => get_class($visitor->expected_arrival),
-            'visit_end_type' => get_class($visitor->visit_end)
-        ]);
     }
 
     public function destroy(Visitor $visitor)

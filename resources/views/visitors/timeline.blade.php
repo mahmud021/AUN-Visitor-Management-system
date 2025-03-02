@@ -1,6 +1,9 @@
+
+
 <x-app-layout>
     <x-slot name="header">
         <div class="flex items-center justify-between">
+            <!-- Title on the left -->
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                 {{ __('Timeline') }}
             </h2>
@@ -13,25 +16,18 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <!-- Visitor Header -->
                     <div class="mb-8 border-b pb-4">
-                        <h1 class="text-2xl font-bold">
+                        <h1 class="text-2xl font-bold mb-2">
                             {{ $visitor->first_name }} {{ $visitor->last_name }}
                         </h1>
-                        <div class="mt-2 grid grid-cols-2 gap-4 text-sm">
-                            <div>
-                                <span class="text-gray-600 dark:text-neutral-400">Scheduled:</span>
-                                <span class="font-medium">
-                                    {{ $visitor->expected_arrival->format('M j, Y g:i A') }} -
-                                    {{ $visitor->visit_end->format('g:i A') }}
-                                </span>
-                            </div>
+                        <div class="text-sm text-gray-600 dark:text-neutral-400">
+                            <p>Scheduled:
+                                {{ \Carbon\Carbon::parse($visitor->expected_arrival)->format('M j, Y g:i A') }} -
+                                {{ \Carbon\Carbon::parse($visitor->visit_end)->format('g:i A') }}
+                            </p>
                             @if($visitor->checked_in_at)
-                                <div>
-                                    <span class="text-gray-600 dark:text-neutral-400">Actual Check-in:</span>
-                                    <span class="{{ $visitor->checkin_status_color }} font-medium">
-                                    {{ $visitor->checked_in_at->format('M j, Y g:i A') }}
-                                    ({{ $visitor->checkin_status }})
-                                </span>
-                                </div>
+                                <p class="mt-1">Checked in:
+                                    {{ \Carbon\Carbon::parse($visitor->checked_in_at)->format('M j, Y g:i A') }}
+                                </p>
                             @endif
                         </div>
                     </div>
@@ -39,80 +35,53 @@
                     <!-- Timeline -->
                     <div>
                         @forelse($visitor->timelineEvents as $event)
+                            <!-- Timeline Item -->
                             <div class="flex gap-x-3">
-                                <!-- Time Column -->
+                                <!-- Left Content: Time of the event -->
                                 <div class="w-16 text-end">
                                     <span class="text-xs text-gray-500 dark:text-neutral-400">
-                                        {{ $event->occurred_at->format('g:iA') }}
+                                        {{ \Carbon\Carbon::parse($event->created_at)->format('g:iA') }}
                                     </span>
                                 </div>
-
-                                <!-- Timeline Connector -->
+                                <!-- Icon -->
                                 <div class="relative last:after:hidden after:absolute after:top-7 after:bottom-0 after:start-3.5 after:w-px after:-translate-x-[0.5px] after:bg-gray-200 dark:after:bg-neutral-700">
                                     <div class="relative z-10 size-7 flex justify-center items-center">
-                                        @switch($event->event_type)
-                                            @case('window_set')
-                                                <i class="fa-regular fa-clock text-blue-500"></i>
-                                                @break
-                                            @case('checked_in')
-                                                <div class="size-2 rounded-full bg-green-500"></div>
-                                                @break
-                                            @case('checked_out')
-                                                <div class="size-2 rounded-full bg-red-500"></div>
-                                                @break
-                                            @default
-                                                <div class="size-2 rounded-full bg-gray-400 dark:bg-neutral-600"></div>
-                                        @endswitch
+                                        <div class="size-2 rounded-full bg-gray-400 dark:bg-neutral-600"></div>
                                     </div>
                                 </div>
-
-                                <!-- Event Details -->
+                                <!-- Right Content: Event details -->
                                 <div class="grow pt-0.5 pb-8">
                                     <h3 class="flex gap-x-1.5 font-semibold text-gray-800 dark:text-white">
-                                        @if($event->event_type == 'window_set')
-                                            <i class="fa-regular fa-clock mt-1 text-blue-500"></i>
-                                            Visit Window Scheduled
+                                        @if($event->event_type == 'created')
+                                            Created Visitor Record
+                                        @elseif($event->event_type == 'approved')
+                                            Approved Visitor Record
+                                        @elseif($event->event_type == 'denied')
+                                            Denied Visitor Record
+                                        @elseif($event->event_type == 'checked_in')
+                                            Checked In Visitor
+                                        @elseif($event->event_type == 'checked_out')
+                                            Checked Out Visitor
                                         @else
-                                            {{-- Existing event types --}}
+                                            {{ ucfirst($event->event_type) }}
                                         @endif
                                     </h3>
-
-                                    @if($event->event_type == 'window_set')
-                                        <div class="mt-2 p-3 bg-blue-50 rounded-lg dark:bg-blue-900/20">
-                                            <dl class="grid grid-cols-2 gap-4 text-sm">
-                                                <div>
-                                                    <dt class="text-gray-600 dark:text-blue-200">Start</dt>
-                                                    <dd class="font-medium">
-                                                        {{ $visitor->expected_arrival->format('M j, Y g:i A') }}
-                                                    </dd>
-                                                </div>
-                                                <div>
-                                                    <dt class="text-gray-600 dark:text-blue-200">End</dt>
-                                                    <dd class="font-medium">
-                                                        {{ $visitor->visit_end->format('M j, Y g:i A') }}
-                                                    </dd>
-                                                </div>
-                                            </dl>
-                                        </div>
-                                    @else
-                                        {{-- Existing event display --}}
-                                    @endif
-
-                                    <!-- User Badge -->
+                                    <p class="mt-1 text-sm text-gray-600 dark:text-neutral-400">
+                                        {{ $event->description ?? 'Null' }}
+                                    </p>
                                     @if($event->user)
-                                        <div class="mt-3">
-                                        <span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm dark:bg-neutral-900 dark:border-neutral-700 dark:text-white">
-                                            <i class="fa-regular fa-user"></i>
-                                            {{ $event->user->full_name }}
-                                        </span>
-                                        </div>
+                                        <button type="button" class="mt-1 -ms-1 p-1 inline-flex items-center gap-x-2 text-xs rounded-lg border border-transparent text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-400 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700">
+                                            {{ $event->user->first_name }} {{ $event->user->last_name }}
+                                        </button>
                                     @endif
                                 </div>
                             </div>
+                            <!-- End Timeline Item -->
                         @empty
                             <p class="text-center text-gray-600 dark:text-neutral-400">No timeline events available.</p>
                         @endforelse
                     </div>
+                    <!-- End Timeline -->
                 </div>
             </div>
         </div>
