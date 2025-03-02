@@ -51,7 +51,7 @@ class VisitorController extends Controller
         TimelineEvent::create([
             'visitor_id' => $visitor->id,
             'user_id' => auth()->id(),
-            'event_type' => 'window_set',
+            'event_type' => 'Created at',
             'description' => sprintf(
                 'Visit window: %s to %s',
                 $visitor->expected_arrival->format('M j, Y g:i a'),
