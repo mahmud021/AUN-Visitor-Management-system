@@ -28,6 +28,7 @@ class VisitorController extends Controller
             'last_name'        => 'required|string|max:20',
             'telephone'        => 'required|string|regex:/^0\d{10}$/|min:11|max:11',
             'expected_arrival' => 'required|date|after_or_equal:today',
+            'visit_end' => 'required|date|after:expected_arrival',
         ]);
 
         // Associate the visitor with the logged-in user.
@@ -41,10 +42,14 @@ class VisitorController extends Controller
 
         // Log the timeline event for visitor creation.
         TimelineEvent::create([
-            'visitor_id'  => $visitor->id,
-            'user_id'     => auth()->id(),
-            'event_type'  => 'created',
-            'description' => 'Visitor record created',
+            'visitor_id' => $visitor->id,
+            'user_id' => auth()->id(),
+            'event_type' => 'window_set',
+            'description' => sprintf(
+                'Visit window: %s to %s',
+                $visitor->expected_arrival->format('M j, Y g:i a'),
+                $visitor->visit_end->format('M j, Y g:i a')
+            ),
             'occurred_at' => now(),
         ]);
 
@@ -76,20 +81,19 @@ class VisitorController extends Controller
             'status' => 'required|in:approved,denied,checked_in,checked_out',
         ]);
 
-        // If updating status to "checked_in", ensure the visitor code is provided and correct.
+        // Add time window check
         if ($request->input('status') === 'checked_in') {
-            // Validate that visitor_code is an array and each item is required.
-            $request->validate([
-                'visitor_code'   => 'required|array',
-                'visitor_code.*' => 'required|string|size:1', // Ensures each input is a single character/digit.
-            ]);
+            $now = now();
 
-            // Combine the pin input digits into a single string.
-            $inputVisitorCode = implode('', $request->input('visitor_code'));
-
-            if ($visitor->visitor_code !== $inputVisitorCode) {
+            if ($now->lt($visitor->expected_arrival)) {
                 return redirect()->back()->withErrors([
-                    'visitor_code' => 'The visitor code entered does not match our records.'
+                    'checkin' => 'Too early - visit starts at '.$visitor->expected_arrival->format('g:i a')
+                ]);
+            }
+
+            if ($now->gt($visitor->visit_end)) {
+                return redirect()->back()->withErrors([
+                    'checkin' => 'Visit window ended at '.$visitor->visit_end->format('g:i a')
                 ]);
             }
         }

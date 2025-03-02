@@ -58,11 +58,21 @@
                                 <div class="space-y-2">
                                     <x-form.input
                                         name="expected_arrival"
-                                        label="Expected Arrival (Date & Time)"
+                                        label="Visit Start (Date & Time)"
                                         type="datetime-local"
                                         value="{{ old('expected_arrival') }}"
                                     />
                                     <x-input-error :messages="$errors->get('expected_arrival')" class="mt-1"/>
+                                </div>
+
+                                <div class="space-y-2">
+                                    <x-form.input
+                                        name="visit_end"
+                                        label="Visit End (Date & Time)"
+                                        type="datetime-local"
+                                        value="{{ old('visit_end') }}"
+                                    />
+                                    <x-input-error :messages="$errors->get('visit_end')" class="mt-1"/>
                                 </div>
                             </div>
                         </div>
