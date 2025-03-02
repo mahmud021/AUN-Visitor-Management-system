@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('telephone');
 
             // We keep expected_arrival as a date or datetime if you also want time
-            $table->date('expected_arrival')->nullable();
+            $table->dateTime('expected_arrival')->nullable();
             $table->string('visitor_code', 4)->nullable();
 
             // Expand status to include checked_in, checked_out, etc.

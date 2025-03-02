@@ -50,7 +50,7 @@ class VisitorController extends Controller
 
         // Create the visitor.
         $visitor = Visitor::create($validated);
-// Verify conversion worked
+// Debug log statement
         \Log::debug('Stored Visitor', [
             'expected_arrival' => $visitor->expected_arrival,
             'visit_end' => $visitor->visit_end,
@@ -58,6 +58,8 @@ class VisitorController extends Controller
                 'expected' => get_class($visitor->expected_arrival),
                 'end' => get_class($visitor->visit_end)
             ]
+        ]); // <-- Added missing closing
+
         // Log the timeline event for visitor creation.
         TimelineEvent::create([
             'visitor_id' => $visitor->id,
