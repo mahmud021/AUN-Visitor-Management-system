@@ -12,12 +12,14 @@
             <x-table-wrapper>
                 <x-table-header title="Users" description="Add users, edit and more.">
                     <x-slot name="actions">
+
                         <x-primary-button type="button"
                                           aria-haspopup="dialog" aria-expanded="false"
                                           aria-controls="hs-scale-animation-modal"
                                           data-hs-overlay="#hs-scale-animation-modal">
                             Create User
                         </x-primary-button>
+
                         <form method="POST" action="/user">
                             @csrf
                             <x-modal.wrapper id="hs-scale-animation-modal">
