@@ -48,7 +48,7 @@
                             title="Create Visitor"
                             modalId="hs-scale-animation-modal"
                         />
-                        <div class="p-4 overflow-y-auto bg-gray-900 text-gray-100">
+                        <div class="p-4 overflow-y-auto bg-brand-900 text-gray-100">
                             <div class="grid grid-cols-1 gap-4 lg:gap-4">
                                 <div class="space-y-2">
                                     <x-form.input
