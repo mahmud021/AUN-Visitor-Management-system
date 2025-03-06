@@ -2,7 +2,7 @@
     <div class="flex flex-col">
         <div class="-m-1.5 overflow-x-auto">
             <div class="p-1.5 min-w-full inline-block align-middle select-none">
-                <div class="bg-gray-700 border-gray-200 rounded-xl shadow-sm overflow-hidden dark:bg-gray-800 dark:border-neutral-700">
+                <div class=" border-gray-200 rounded-xl shadow-sm overflow-hidden dark:bg-brand-900 dark:border-neutral-700">
                     {{ $slot }}
                 </div>
             </div>
