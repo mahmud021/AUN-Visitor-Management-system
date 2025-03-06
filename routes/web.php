@@ -19,7 +19,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     // User Management
-    Route::prefix('user')->name('user.')->middleware('can:view-all-visitors')->group(function () {
+    // User Management (only accessible to super admin and HR Admin)
+    Route::prefix('user')->name('user.')->middleware('can:view-users')->group(function () {
         Route::get('/', [UserController::class, 'index'])->name('index');
         Route::post('/', [UserController::class, 'store'])->name('store');
         Route::get('/{user}', [UserController::class, 'show'])->name('show');
@@ -28,6 +29,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::put('/{user}/password', [UserController::class, 'updatePassword'])->name('password.update');
         Route::delete('/{user}', [UserController::class, 'destroy'])->name('destroy');
     });
+
 
 
     // Visitor Management

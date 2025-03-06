@@ -21,22 +21,21 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Define a gate to check if the user is a security officer or super admin
+        // Existing gate: allows Security, super admin, HR Admin for visitor management.
         Gate::define('view-all-visitors', function ($user) {
-            // Check if the user has one of the allowed roles
-            return in_array($user->user_details->role, ['Security', 'super admin','HR Admin']);
+            return in_array($user->user_details->role, ['Security', 'super admin', 'HR Admin']);
         });
 
         Gate::define('create-visitor', function ($user) {
-            // Ensure relationship is loaded
             if (!$user->relationLoaded('user_details')) {
                 $user->load('user_details');
             }
-
-            // Deny if blacklisted or missing user details
             return $user->user_details && !$user->user_details->blacklist;
         });
 
-
+        // New gate: only allow super admin and HR Admin to access user management routes.
+        Gate::define('view-users', function ($user) {
+            return in_array($user->user_details->role, ['super admin', 'HR Admin']);
+        });
     }
 }
