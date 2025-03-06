@@ -47,12 +47,14 @@
     <div class="relative flex flex-col h-full max-h-full">
 
         <!-- Logo Section -->
-        <div class="px-6 pt-4 flex items-center">
-            <a href="{{ route('dashboard') }}"
-               class="flex-none rounded-xl text-xl inline-block font-semibold focus:outline-none focus:opacity-80">
-                <x-application-logo class="w-28 h-auto dark:fill-white"/>
+        <div class="px-6 pt-6 pb-2 flex flex-col items-center">
+            <a href="{{ route('dashboard') }}" class="flex-none rounded-xl text-xl inline-block font-semibold focus:outline-none focus:opacity-80">
+                <img src="{{ asset('images/logo.svg') }}" class="w-32 h-auto dark:invert mx-auto" alt="AUN Logo">
             </a>
         </div>
+
+
+
         <!-- End Logo Section -->
 
         <!-- Header / Account Dropdown -->
@@ -105,27 +107,27 @@
                 <ul class="flex flex-col space-y-1">
                     <li>
                         <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                            <svg class="shrink-0 size-4" ...></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
                             Dashboard
                         </x-nav-link>
                     </li>
                     <li>
-                        <x-nav-link href="{{ route('user.index') }}" :active="request()->routeIs('user.index')">                            <svg class="shrink-0 size-4" ...></svg>
+                        <x-nav-link href="{{ route('user.index') }}" :active="request()->routeIs('user.index')">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-pen"><path d="M11.5 15H7a4 4 0 0 0-4 4v2"/><path d="M21.378 16.626a1 1 0 0 0-3.004-3.004l-4.01 4.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z"/><circle cx="10" cy="7" r="4"/></svg>
                             Users
                         </x-nav-link>
                     </li>
                     <li>
                         <x-nav-link href="{{ route('visitors.index') }}" :active="request()->routeIs('visitors.index')">
-                            <svg class="shrink-0 size-4" ...></svg>
-                            Visitors
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users-round"><path d="M18 21a8 8 0 0 0-16 0"/><circle cx="10" cy="8" r="5"/><path d="M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3"/></svg>                            Visitors
                         </x-nav-link>
                     </li>
-                    <li>
-                        <x-nav-link href="{{ route('appointment') }}" :active="request()->routeIs('appointment')">
-                            <svg class="shrink-0 size-4" ...></svg>
-                            Appointments
-                        </x-nav-link>
-                    </li>
+                    {{--                    <li>--}}
+                    {{--                        <x-nav-link href="{{ route('appointment') }}" :active="request()->routeIs('appointment')">--}}
+                    {{--                            <svg class="shrink-0 size-4" ...></svg>--}}
+                    {{--                            Appointments--}}
+                    {{--                        </x-nav-link>--}}
+                    {{--                    </li>--}}
                 </ul>
             </nav>
         </div>
