@@ -320,4 +320,36 @@
             </div>
         </div>
     </div>
+
+    <div class="container mx-auto px-4">
+        <!-- Responsive Grid: 1 column on mobile, 2 on small, 3 on medium, 4 on large -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <!-- Example Grid Items -->
+            <div class="bg-brand-900 text-white p-4 rounded shadow">
+                Item 1
+            </div>
+            <div class="bg-brand-900 text-white p-4 rounded shadow">
+                Item 2
+            </div>
+            <div class="bg-brand-900 text-white p-4 rounded shadow">
+                Item 3
+            </div>
+            <div class="bg-brand-900 text-white p-4 rounded shadow">
+                Item 4
+            </div>
+            <div class="bg-brand-900 text-white p-4 rounded shadow">
+                Item 5
+            </div>
+            <div class="bg-brand-900 text-white p-4 rounded shadow">
+                Item 6
+            </div>
+            <div class="bg-brand-900 text-white p-4 rounded shadow">
+                Item 7
+            </div>
+            <div class="bg-brand-900 text-white p-4 rounded shadow">
+                Item 8
+            </div>
+        </div>
+    </div>
+
 </x-app-layout>
