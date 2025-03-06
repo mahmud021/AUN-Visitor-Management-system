@@ -104,6 +104,10 @@
                                                 Telephone: {{ $allVisitor->telephone ?? 'Null' }}
                                             </p>
                                             <p class="text-sm text-gray-500 dark:text-neutral-500 mt-2">
+                                                Hosted By: {{ $allVisitor->user->user_details->school_id ?? 'Null' }}
+                                            </p>
+
+                                            <p class="text-sm text-gray-500 dark:text-neutral-500 mt-2">
                                                 {{ \Carbon\Carbon::parse($allVisitor->expected_arrival)->format('M d, h:i A') }}
                                             </p>
                                             <p class="mt-2">
@@ -114,17 +118,30 @@
                                             <div class="mt-3">
                                                 @if($allVisitor->status == 'pending')
                                                     @if(auth()->user()?->user_details?->role === 'HR Admin' || auth()->user()?->user_details?->role === 'super admin')
+                                                        <!-- Approve Form -->
                                                         <form action="{{ route('visitors.update', $allVisitor->id) }}" method="POST" class="inline">
                                                             @csrf
                                                             @method('PATCH')
                                                             <input type="hidden" name="status" value="approved">
                                                             <input type="hidden" name="redirect_to" value="{{ route('dashboard') }}">
-                                                            <x-primary-button>
+                                                            <x-primary-button class="bg-green-600 hover:bg-green-700">
                                                                 Approve
+                                                            </x-primary-button>
+                                                        </form>
+
+                                                        <!-- Deny Form -->
+                                                        <form action="{{ route('visitors.update', $allVisitor->id) }}" method="POST" class="inline ml-2">
+                                                            @csrf
+                                                            @method('PATCH')
+                                                            <input type="hidden" name="status" value="denied">
+                                                            <input type="hidden" name="redirect_to" value="{{ route('dashboard') }}">
+                                                            <x-primary-button class="bg-red-600 hover:bg-red-700">
+                                                                Deny
                                                             </x-primary-button>
                                                         </form>
                                                     @endif
                                                 @elseif($allVisitor->status == 'approved')
+                                                    <!-- Check-in Form with Code Input (Security) -->
                                                     <form action="{{ route('visitors.update', $allVisitor->id) }}" method="POST" class="inline">
                                                         @csrf
                                                         @method('PATCH')
@@ -169,9 +186,9 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-
                                                     </form>
                                                 @elseif($allVisitor->status == 'checked_in')
+                                                    <!-- Check-out Form -->
                                                     <form action="{{ route('visitors.update', $allVisitor->id) }}" method="POST" class="inline">
                                                         @csrf
                                                         @method('PATCH')
@@ -181,6 +198,8 @@
                                                             Check Out
                                                         </x-primary-button>
                                                     </form>
+                                                @elseif($allVisitor->status == 'denied')
+                                                    <span class="text-red-600 dark:text-red-400">Visitor denied</span>
                                                 @endif
                                             </div>
                                         </div>
