@@ -25,7 +25,7 @@
                     </svg>
                   </button>
                       <h3 id="hs-bordered-success-style-label" class="text-gray-800 font-semibold dark:text-white">
-                        Successfully updated.
+                        Action Successful.
                       </h3>
                       <p class="text-sm text-gray-700 dark:text-neutral-400">
                         You have successfully updated your email preferences.
