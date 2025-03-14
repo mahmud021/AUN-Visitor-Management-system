@@ -111,7 +111,79 @@
     <div class="py-12 bg-primary text-white min-h-screen">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="overflow-hidden shadow-sm sm:rounded-lg">
+                <nav class="flex justify-center gap-x-1" aria-label="Tabs" role="tablist" aria-orientation="horizontal">
+                    <button type="button" class="hs-tab-active:bg-gray-200 hs-tab-active:text-gray-800 hs-tab-active:hover:text-gray-800 dark:hs-tab-active:bg-neutral-700 dark:hs-tab-active:text-white py-3 px-4 inline-flex items-center gap-x-2 bg-transparent text-sm font-medium text-center text-gray-500 rounded-lg hover:text-blue-600 focus:outline-hidden focus:text-blue-600 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-500 dark:hover:text-neutral-400 dark:focus:text-neutral-400 active" id="pills-on-gray-color-item-1" aria-selected="true" data-hs-tab="#pills-on-gray-color-1" aria-controls="pills-on-gray-color-1" role="tab">
+                        EXPECTED VISITORS TODAY
+                    </button>
+                    <button type="button" class="hs-tab-active:bg-gray-200 hs-tab-active:text-gray-800 hs-tab-active:hover:text-gray-800 dark:hs-tab-active:bg-neutral-700 dark:hs-tab-active:text-white py-3 px-4 inline-flex items-center gap-x-2 bg-transparent text-sm font-medium text-center text-gray-500 rounded-lg hover:text-blue-600 focus:outline-hidden focus:text-blue-600 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-500 dark:hover:text-neutral-400 dark:focus:text-neutral-400" id="pills-on-gray-color-item-2" aria-selected="false" data-hs-tab="#pills-on-gray-color-2" aria-controls="pills-on-gray-color-2" role="tab">
+                        CHECKED-IN VISITORS
+                    </button>
+                    <button type="button" class="hs-tab-active:bg-gray-200 hs-tab-active:text-gray-800 hs-tab-active:hover:text-gray-800 dark:hs-tab-active:bg-neutral-700 dark:hs-tab-active:text-white py-3 px-4 inline-flex items-center gap-x-2 bg-transparent text-sm font-medium text-center text-gray-500 rounded-lg hover:text-blue-600 focus:outline-hidden focus:text-blue-600 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-500 dark:hover:text-neutral-400 dark:focus:text-neutral-400" id="pills-on-gray-color-item-3" aria-selected="false" data-hs-tab="#pills-on-gray-color-3" aria-controls="pills-on-gray-color-3" role="tab">
+                        CURRENTLY ON-CAMPUS VISITORS
+                    </button>
+                    <button type="button" class="hs-tab-active:bg-gray-200 hs-tab-active:text-gray-800 hs-tab-active:hover:text-gray-800 dark:hs-tab-active:bg-neutral-700 dark:hs-tab-active:text-white py-3 px-4 inline-flex items-center gap-x-2 bg-transparent text-sm font-medium text-center text-gray-500 rounded-lg hover:text-blue-600 focus:outline-hidden focus:text-blue-600 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-500 dark:hover:text-neutral-400 dark:focus:text-neutral-400" id="pills-on-gray-color-item-4" aria-selected="false" data-hs-tab="#pills-on-gray-color-4" aria-controls="pills-on-gray-color-4" role="tab">
+                        CHECKED-OUT VISITORS
+                    </button>
+                </nav>
 
+                <div class="mt-3 text-center">
+                    <div id="pills-on-gray-color-1" role="tabpanel" aria-labelledby="pills-on-gray-color-item-1">
+                        <div class="grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
+                            @foreach ($myVisitors as $myVisitor)
+                                <x-card class="text-gray-100 border border-gray-700">
+                                    <div class="flex justify-between items-center gap-x-3">
+                                        <div class="grow">
+                                            <h3 class="font-semibold text-lg mt-2">
+                                                {{ $myVisitor->first_name ?? 'Null' }} {{ $myVisitor->last_name ?? 'Null' }}
+                                            </h3>
+                                            <p class="text-sm text-gray-400 mt-2">
+                                                Telephone: {{ $myVisitor->telephone ?? 'Null' }}
+                                            </p>
+                                            <p class="mt-2 text-base font-semibold text-blue-400">
+                                                Access Code:
+                                                <span class="inline-block bg-gray-800 text-gray-100 rounded px-2 py-1 ml-1">
+                                                {{ $myVisitor->visitor_code ?? 'Null' }}
+                                            </span>
+                                            </p>
+                                            <p class="text-sm text-gray-400 mt-2">
+                                                {{ \Carbon\Carbon::parse($myVisitor->expected_arrival)->format('M d, h:i A') }}
+                                            </p>
+                                            <p class="mt-2">
+                                                <x-status-badge status="{{ $myVisitor->status ?? 'Null' }}" />
+                                            </p>
+                                        </div>
+                                        <a href="{{ route('visitors.timeline', $myVisitor->id) }}">
+                                            <svg class="shrink-0 size-5 text-gray-300" xmlns="http://www.w3.org/2000/svg"
+                                                 width="24" height="24" viewBox="0 0 24 24"
+                                                 fill="none" stroke="currentColor" stroke-width="2"
+                                                 stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="m9 18 6-6-6-6"/>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                </x-card>
+                            @endforeach
+                        </div>
+
+                    </div>
+                    <div id="pills-on-gray-color-2" class="hidden" role="tabpanel" aria-labelledby="pills-on-gray-color-item-2">
+                        <p class="text-gray-500 dark:text-neutral-400">
+                            This is the <em class="font-semibold text-gray-800 dark:text-neutral-200">second</em> item's tab body.
+                        </p>
+                    </div>
+                    <div id="pills-on-gray-color-3" class="hidden" role="tabpanel" aria-labelledby="pills-on-gray-color-item-3">
+                        <p class="text-gray-500 dark:text-neutral-400">
+                            This is the <em class="font-semibold text-gray-800 dark:text-neutral-200">third</em> item's tab body.
+                        </p>
+                    </div>
+                    <div id="pills-on-gray-color-4" class="hidden" role="tabpanel" aria-labelledby="pills-on-gray-color-item-4">
+                        <p class="text-gray-500 dark:text-neutral-400">
+                            This is the 4th one <em class="font-semibold text-gray-800 dark:text-neutral-200">third</em> item's tab body.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
                 <!-- All Visitors Section -->
                 @can('view-all-visitors')
                     <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8">
