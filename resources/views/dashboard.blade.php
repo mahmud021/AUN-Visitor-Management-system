@@ -111,27 +111,32 @@
     <div class="py-12 bg-primary text-white min-h-screen">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="overflow-hidden shadow-sm sm:rounded-lg">
-                <!-- Horizontally Scrollable and Centered Nav with Pill Buttons -->
+                <!-- Horizontally Scrollable and Centered Nav with Pill Buttons and Stat Badges -->
                 <nav class="pb-1 flex justify-center gap-x-1 overflow-x-auto [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500" aria-label="Tabs" role="tablist" aria-orientation="horizontal">
                     <!-- MY VISITORS -->
                     <button type="button" class="hs-tab-active:bg-gray-200 hs-tab-active:text-gray-800 hs-tab-active:hover:text-gray-800 dark:hs-tab-active:bg-neutral-700 dark:hs-tab-active:text-white py-3 px-4 inline-flex items-center gap-x-2 bg-transparent text-sm font-medium text-center text-gray-500 rounded-lg hover:text-blue-600 focus:outline-hidden focus:text-blue-600 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-500 dark:hover:text-neutral-400 dark:focus:text-neutral-400 active" id="pills-on-gray-color-item-1" aria-selected="true" data-hs-tab="#pills-on-gray-color-1" aria-controls="pills-on-gray-color-1" role="tab">
                         MY VISITORS
+                        <span class="ml-1 inline-block bg-blue-600 text-white rounded-full px-2 py-0.5 text-xs font-medium">32</span>
                     </button>
                     <!-- APPROVED VISITORS TODAY -->
                     <button type="button" class="hs-tab-active:bg-gray-200 hs-tab-active:text-gray-800 hs-tab-active:hover:text-gray-800 dark:hs-tab-active:bg-neutral-700 dark:hs-tab-active:text-white py-3 px-4 inline-flex items-center gap-x-2 bg-transparent text-sm font-medium text-center text-gray-500 rounded-lg hover:text-blue-600 focus:outline-hidden focus:text-blue-600 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-500 dark:hover:text-neutral-400 dark:focus:text-neutral-400" id="pills-on-gray-color-item-2" aria-selected="false" data-hs-tab="#pills-on-gray-color-2" aria-controls="pills-on-gray-color-2" role="tab">
                         APPROVED VISITORS TODAY
+                        <span class="ml-1 inline-block bg-blue-600 text-white rounded-full px-2 py-0.5 text-xs font-medium">32</span>
                     </button>
                     <!-- CHECKED‑IN VISITORS -->
                     <button type="button" class="hs-tab-active:bg-gray-200 hs-tab-active:text-gray-800 hs-tab-active:hover:text-gray-800 dark:hs-tab-active:bg-neutral-700 dark:hs-tab-active:text-white py-3 px-4 inline-flex items-center gap-x-2 bg-transparent text-sm font-medium text-center text-gray-500 rounded-lg hover:text-blue-600 focus:outline-hidden focus:text-blue-600 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-500 dark:hover:text-neutral-400 dark:focus:text-neutral-400" id="pills-on-gray-color-item-3" aria-selected="false" data-hs-tab="#pills-on-gray-color-3" aria-controls="pills-on-gray-color-3" role="tab">
                         CHECKED‑IN VISITORS
+                        <span class="ml-1 inline-block bg-blue-600 text-white rounded-full px-2 py-0.5 text-xs font-medium">32</span>
                     </button>
                     <!-- ALL VISITORS -->
                     <button type="button" class="hs-tab-active:bg-gray-200 hs-tab-active:text-gray-800 hs-tab-active:hover:text-gray-800 dark:hs-tab-active:bg-neutral-700 dark:hs-tab-active:text-white py-3 px-4 inline-flex items-center gap-x-2 bg-transparent text-sm font-medium text-center text-gray-500 rounded-lg hover:text-blue-600 focus:outline-hidden focus:text-blue-600 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-500 dark:hover:text-neutral-400 dark:focus:text-neutral-400" id="pills-on-gray-color-item-4" aria-selected="false" data-hs-tab="#pills-on-gray-color-4" aria-controls="pills-on-gray-color-4" role="tab">
                         ALL VISITORS
+                        <span class="ml-1 inline-block bg-blue-600 text-white rounded-full px-2 py-0.5 text-xs font-medium">32</span>
                     </button>
                     <!-- CHECKED‑OUT VISITORS -->
                     <button type="button" class="hs-tab-active:bg-gray-200 hs-tab-active:text-gray-800 hs-tab-active:hover:text-gray-800 dark:hs-tab-active:bg-neutral-700 dark:hs-tab-active:text-white py-3 px-4 inline-flex items-center gap-x-2 bg-transparent text-sm font-medium text-center text-gray-500 rounded-lg hover:text-blue-600 focus:outline-hidden focus:text-blue-600 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-500 dark:hover:text-neutral-400 dark:focus:text-neutral-400" id="pills-on-gray-color-item-5" aria-selected="false" data-hs-tab="#pills-on-gray-color-5" aria-controls="pills-on-gray-color-5" role="tab">
                         CHECKED‑OUT VISITORS
+                        <span class="ml-1 inline-block bg-blue-600 text-white rounded-full px-2 py-0.5 text-xs font-medium">32</span>
                     </button>
                 </nav>
 
