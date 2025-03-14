@@ -186,28 +186,6 @@
             </div>
                 <!-- All Visitors Section -->
                 @can('view-all-visitors')
-                    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8">
-                        <x-stat-card
-                            title="Expected Visitors Today"
-                            :value="$expectedVisitors"
-                            class="bg-gray-800 text-gray-100"
-                        />
-                        <x-stat-card
-                            title="Checked-In Visitors"
-                            :value="$checkedInCount"
-                            class="bg-gray-800 text-gray-100"
-                        />
-                        <x-stat-card
-                            title="Currently On-Campus Visitors"
-                            :value="$onCampusCount"
-                            class="bg-gray-800 text-gray-100"
-                        />
-                        <x-stat-card
-                            title="Checked-Out Visitors"
-                            :value="$checkedOutCount"
-                            class="bg-gray-800 text-gray-100"
-                        />
-                    </div>
                     <h3 class="font-semibold text-lg">
                         All Visitors
                     </h3>
