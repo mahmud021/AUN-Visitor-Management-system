@@ -24,7 +24,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/', [UserController::class, 'index'])->name('index');
         Route::post('/', [UserController::class, 'store'])->name('store');
         Route::get('/{user}', [UserController::class, 'show'])->name('show');
-        Route::get('/{user}/visitorLogs', [DashboardController::class, 'visitorLogs'])->name('visitorLogs');
+        Route::get('/{user}/visitorLogs', [UserController::class, 'visitorLogs'])->name('visitorLogs');
         Route::patch('/{user}', [UserController::class, 'update'])->name('update');
         Route::put('/{user}/password', [UserController::class, 'updatePassword'])->name('password.update');
         Route::delete('/{user}', [UserController::class, 'destroy'])->name('destroy');

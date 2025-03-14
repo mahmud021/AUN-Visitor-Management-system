@@ -161,6 +161,7 @@ class UserController extends Controller
             ->with('password_success', 'User password updated successfully.');
     }
 
+
     /**
      * Remove the specified resource from storage.
      */
