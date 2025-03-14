@@ -111,63 +111,33 @@
     <div class="py-12 bg-primary text-white min-h-screen">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="overflow-hidden shadow-sm sm:rounded-lg">
-                <nav class="flex justify-center gap-x-1" aria-label="Tabs" role="tablist" aria-orientation="horizontal">
+                <!-- Horizontally Scrollable and Centered Nav with Pill Buttons -->
+                <nav class="pb-1 flex justify-center gap-x-1 overflow-x-auto [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500" aria-label="Tabs" role="tablist" aria-orientation="horizontal">
                     <!-- MY VISITORS -->
-                    <button type="button"
-                            class="hs-tab-active:bg-gray-200 hs-tab-active:text-gray-800 hs-tab-active:hover:text-gray-800 dark:hs-tab-active:bg-neutral-700 dark:hs-tab-active:text-white py-3 px-4 inline-flex items-center gap-x-2 bg-transparent text-sm font-medium text-center text-gray-500 rounded-lg hover:text-blue-600 focus:outline-hidden focus:text-blue-600 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-500 dark:hover:text-neutral-400 dark:focus:text-neutral-400 active"
-                            id="pills-on-gray-color-item-1"
-                            aria-selected="true"
-                            data-hs-tab="#pills-on-gray-color-1"
-                            aria-controls="pills-on-gray-color-1"
-                            role="tab">
+                    <button type="button" class="hs-tab-active:bg-gray-200 hs-tab-active:text-gray-800 hs-tab-active:hover:text-gray-800 dark:hs-tab-active:bg-neutral-700 dark:hs-tab-active:text-white py-3 px-4 inline-flex items-center gap-x-2 bg-transparent text-sm font-medium text-center text-gray-500 rounded-lg hover:text-blue-600 focus:outline-hidden focus:text-blue-600 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-500 dark:hover:text-neutral-400 dark:focus:text-neutral-400 active" id="pills-on-gray-color-item-1" aria-selected="true" data-hs-tab="#pills-on-gray-color-1" aria-controls="pills-on-gray-color-1" role="tab">
                         MY VISITORS
                     </button>
                     <!-- APPROVED VISITORS TODAY -->
-                    <button type="button"
-                            class="hs-tab-active:bg-gray-200 hs-tab-active:text-gray-800 hs-tab-active:hover:text-gray-800 dark:hs-tab-active:bg-neutral-700 dark:hs-tab-active:text-white py-3 px-4 inline-flex items-center gap-x-2 bg-transparent text-sm font-medium text-center text-gray-500 rounded-lg hover:text-blue-600 focus:outline-hidden focus:text-blue-600 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-500 dark:hover:text-neutral-400 dark:focus:text-neutral-400"
-                            id="pills-on-gray-color-item-2"
-                            aria-selected="false"
-                            data-hs-tab="#pills-on-gray-color-2"
-                            aria-controls="pills-on-gray-color-2"
-                            role="tab">
+                    <button type="button" class="hs-tab-active:bg-gray-200 hs-tab-active:text-gray-800 hs-tab-active:hover:text-gray-800 dark:hs-tab-active:bg-neutral-700 dark:hs-tab-active:text-white py-3 px-4 inline-flex items-center gap-x-2 bg-transparent text-sm font-medium text-center text-gray-500 rounded-lg hover:text-blue-600 focus:outline-hidden focus:text-blue-600 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-500 dark:hover:text-neutral-400 dark:focus:text-neutral-400" id="pills-on-gray-color-item-2" aria-selected="false" data-hs-tab="#pills-on-gray-color-2" aria-controls="pills-on-gray-color-2" role="tab">
                         APPROVED VISITORS TODAY
                     </button>
-                    <!-- CHECKED-IN VISITORS -->
-                    <button type="button"
-                            class="hs-tab-active:bg-gray-200 hs-tab-active:text-gray-800 hs-tab-active:hover:text-gray-800 dark:hs-tab-active:bg-neutral-700 dark:hs-tab-active:text-white py-3 px-4 inline-flex items-center gap-x-2 bg-transparent text-sm font-medium text-center text-gray-500 rounded-lg hover:text-blue-600 focus:outline-hidden focus:text-blue-600 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-500 dark:hover:text-neutral-400 dark:focus:text-neutral-400"
-                            id="pills-on-gray-color-item-3"
-                            aria-selected="false"
-                            data-hs-tab="#pills-on-gray-color-3"
-                            aria-controls="pills-on-gray-color-3"
-                            role="tab">
+                    <!-- CHECKED‑IN VISITORS -->
+                    <button type="button" class="hs-tab-active:bg-gray-200 hs-tab-active:text-gray-800 hs-tab-active:hover:text-gray-800 dark:hs-tab-active:bg-neutral-700 dark:hs-tab-active:text-white py-3 px-4 inline-flex items-center gap-x-2 bg-transparent text-sm font-medium text-center text-gray-500 rounded-lg hover:text-blue-600 focus:outline-hidden focus:text-blue-600 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-500 dark:hover:text-neutral-400 dark:focus:text-neutral-400" id="pills-on-gray-color-item-3" aria-selected="false" data-hs-tab="#pills-on-gray-color-3" aria-controls="pills-on-gray-color-3" role="tab">
                         CHECKED‑IN VISITORS
                     </button>
                     <!-- ALL VISITORS -->
-                    <button type="button"
-                            class="hs-tab-active:bg-gray-200 hs-tab-active:text-gray-800 hs-tab-active:hover:text-gray-800 dark:hs-tab-active:bg-neutral-700 dark:hs-tab-active:text-white py-3 px-4 inline-flex items-center gap-x-2 bg-transparent text-sm font-medium text-center text-gray-500 rounded-lg hover:text-blue-600 focus:outline-hidden focus:text-blue-600 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-500 dark:hover:text-neutral-400 dark:focus:text-neutral-400"
-                            id="pills-on-gray-color-item-4"
-                            aria-selected="false"
-                            data-hs-tab="#pills-on-gray-color-4"
-                            aria-controls="pills-on-gray-color-4"
-                            role="tab">
+                    <button type="button" class="hs-tab-active:bg-gray-200 hs-tab-active:text-gray-800 hs-tab-active:hover:text-gray-800 dark:hs-tab-active:bg-neutral-700 dark:hs-tab-active:text-white py-3 px-4 inline-flex items-center gap-x-2 bg-transparent text-sm font-medium text-center text-gray-500 rounded-lg hover:text-blue-600 focus:outline-hidden focus:text-blue-600 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-500 dark:hover:text-neutral-400 dark:focus:text-neutral-400" id="pills-on-gray-color-item-4" aria-selected="false" data-hs-tab="#pills-on-gray-color-4" aria-controls="pills-on-gray-color-4" role="tab">
                         ALL VISITORS
                     </button>
                     <!-- CHECKED‑OUT VISITORS -->
-                    <button type="button"
-                            class="hs-tab-active:bg-gray-200 hs-tab-active:text-gray-800 hs-tab-active:hover:text-gray-800 dark:hs-tab-active:bg-neutral-700 dark:hs-tab-active:text-white py-3 px-4 inline-flex items-center gap-x-2 bg-transparent text-sm font-medium text-center text-gray-500 rounded-lg hover:text-blue-600 focus:outline-hidden focus:text-blue-600 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-500 dark:hover:text-neutral-400 dark:focus:text-neutral-400"
-                            id="pills-on-gray-color-item-5"
-                            aria-selected="false"
-                            data-hs-tab="#pills-on-gray-color-5"
-                            aria-controls="pills-on-gray-color-5"
-                            role="tab">
+                    <button type="button" class="hs-tab-active:bg-gray-200 hs-tab-active:text-gray-800 hs-tab-active:hover:text-gray-800 dark:hs-tab-active:bg-neutral-700 dark:hs-tab-active:text-white py-3 px-4 inline-flex items-center gap-x-2 bg-transparent text-sm font-medium text-center text-gray-500 rounded-lg hover:text-blue-600 focus:outline-hidden focus:text-blue-600 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-500 dark:hover:text-neutral-400 dark:focus:text-neutral-400" id="pills-on-gray-color-item-5" aria-selected="false" data-hs-tab="#pills-on-gray-color-5" aria-controls="pills-on-gray-color-5" role="tab">
                         CHECKED‑OUT VISITORS
                     </button>
                 </nav>
 
-                <div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
-
-                <div class="mt-3 ">
-                    <!-- MY VISITORS Tab Panel -->
+                <!-- Tab Panels -->
+                <div class="mt-3">
+                    <!-- MY VISITORS Panel -->
                     <div id="pills-on-gray-color-1" role="tabpanel" aria-labelledby="pills-on-gray-color-item-1">
                         <div class="grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
                             @foreach ($myVisitors as $visitor)
@@ -183,8 +153,8 @@
                                             <p class="mt-2 text-base font-semibold text-blue-400">
                                                 Access Code:
                                                 <span class="inline-block bg-gray-800 text-gray-100 rounded px-2 py-1 ml-1">
-                                    {{ $visitor->visitor_code ?? 'Null' }}
-                                </span>
+                        {{ $visitor->visitor_code ?? 'Null' }}
+                      </span>
                                             </p>
                                             <p class="text-sm text-gray-400 mt-2">
                                                 {{ \Carbon\Carbon::parse($visitor->expected_arrival)->format('M d, h:i A') }}
@@ -207,7 +177,7 @@
                         </div>
                     </div>
 
-                    <!-- APPROVED VISITORS TODAY Tab Panel -->
+                    <!-- APPROVED VISITORS TODAY Panel -->
                     <div id="pills-on-gray-color-2" role="tabpanel" aria-labelledby="pills-on-gray-color-item-2" class="hidden">
                         <div class="grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
                             @foreach ($approvedVisitorsList as $visitor)
@@ -241,7 +211,7 @@
                         </div>
                     </div>
 
-                    <!-- CHECKED‑IN VISITORS Tab Panel -->
+                    <!-- CHECKED‑IN VISITORS Panel -->
                     <div id="pills-on-gray-color-3" role="tabpanel" aria-labelledby="pills-on-gray-color-item-3" class="hidden">
                         <div class="grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
                             @foreach ($checkedInVisitors as $visitor)
@@ -254,7 +224,6 @@
                                             <p class="text-sm text-gray-400 mt-2">
                                                 Telephone: {{ $visitor->telephone ?? 'Null' }}
                                             </p>
-
                                             <p class="text-sm text-gray-400 mt-2">
                                                 {{ \Carbon\Carbon::parse($visitor->expected_arrival)->format('M d, h:i A') }}
                                             </p>
@@ -276,7 +245,7 @@
                         </div>
                     </div>
 
-                    <!-- ALL VISITORS Tab Panel -->
+                    <!-- ALL VISITORS Panel -->
                     <div id="pills-on-gray-color-4" role="tabpanel" aria-labelledby="pills-on-gray-color-item-4" class="hidden">
                         <div class="grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
                             @foreach ($allVisitors as $visitor)
@@ -289,110 +258,12 @@
                                             <p class="text-sm text-gray-400 mt-2">
                                                 Telephone: {{ $visitor->telephone ?? 'Null' }}
                                             </p>
-
                                             <p class="text-sm text-gray-400 mt-2">
                                                 {{ \Carbon\Carbon::parse($visitor->expected_arrival)->format('M d, h:i A') }}
                                             </p>
                                             <p class="mt-2">
                                                 <x-status-badge status="{{ $visitor->status ?? 'Null' }}" />
                                             </p>
-                                            <!-- Status actions -->
-                                            <div class="mt-3">
-                                                @if($visitor->status == 'pending')
-                                                    @if(auth()->user()?->user_details?->role === 'HR Admin' || auth()->user()?->user_details?->role === 'super admin')
-                                                        <!-- Approve Form -->
-                                                        <form action="{{ route('visitors.update', $visitor->id) }}" method="POST" class="inline">
-                                                            @csrf
-                                                            @method('PATCH')
-                                                            <input type="hidden" name="status" value="approved">
-                                                            <input type="hidden" name="redirect_to" value="{{ route('dashboard') }}">
-                                                            <x-primary-button class="bg-green-600 hover:bg-green-700 text-white">
-                                                                Approve
-                                                            </x-primary-button>
-                                                        </form>
-
-                                                        <!-- Deny Form -->
-                                                        <form action="{{ route('visitors.update', $visitor->id) }}" method="POST" class="inline ml-2">
-                                                            @csrf
-                                                            @method('PATCH')
-                                                            <input type="hidden" name="status" value="denied">
-                                                            <input type="hidden" name="redirect_to" value="{{ route('dashboard') }}">
-                                                            <x-primary-button class="bg-red-600 hover:bg-red-700 text-white">
-                                                                Deny
-                                                            </x-primary-button>
-                                                        </form>
-                                                    @endif
-                                                @elseif($visitor->status == 'approved')
-                                                    <!-- Check-in Form -->
-                                                    <form action="{{ route('visitors.update', $visitor->id) }}" method="POST" class="inline">
-                                                        @csrf
-                                                        @method('PATCH')
-                                                        <input type="hidden" name="status" value="checked_in">
-                                                        <input type="hidden" name="redirect_to" value="{{ route('dashboard') }}">
-
-                                                        <div class="flex items-center gap-2 mb-4">
-                                                            <x-primary-button class="bg-gray-700 hover:bg-gray-600 text-white">
-                                                                Check In
-                                                            </x-primary-button>
-                                                        </div>
-                                                        <div>
-                                                            <label for="visitor_code" class="block text-sm font-medium mb-2">
-                                                                Enter Visitor Code
-                                                            </label>
-                                                            <div class="py-2 px-3 bg-brand-900 border border-brand-700 rounded-lg">
-                                                                <div class="flex gap-x-3" data-hs-pin-input>
-                                                                    <input
-                                                                        id="visitor_code_1"
-                                                                        class="w-8 h-8 text-sm text-center p-0 border-brand-700 rounded-md focus:border-brand-500 focus:ring-brand-500 bg-brand-900 text-brand-200"
-                                                                        type="text"
-                                                                        placeholder="○"
-                                                                        data-hs-pin-input-item
-                                                                        autofocus
-                                                                        name="visitor_code[]"
-                                                                    >
-                                                                    <input
-                                                                        id="visitor_code_2"
-                                                                        class="w-8 h-8 text-sm text-center p-0 border-brand-700 rounded-md focus:border-brand-500 focus:ring-brand-500 bg-brand-900 text-brand-200"
-                                                                        type="text"
-                                                                        placeholder="○"
-                                                                        data-hs-pin-input-item
-                                                                        name="visitor_code[]"
-                                                                    >
-                                                                    <input
-                                                                        id="visitor_code_3"
-                                                                        class="w-8 h-8 text-sm text-center p-0 border-brand-700 rounded-md focus:border-brand-500 focus:ring-brand-500 bg-brand-900 text-brand-200"
-                                                                        type="text"
-                                                                        placeholder="○"
-                                                                        data-hs-pin-input-item
-                                                                        name="visitor_code[]"
-                                                                    >
-                                                                    <input
-                                                                        id="visitor_code_4"
-                                                                        class="w-8 h-8 text-sm text-center p-0 border-brand-700 rounded-md focus:border-brand-500 focus:ring-brand-500 bg-brand-900 text-brand-200"
-                                                                        type="text"
-                                                                        placeholder="○"
-                                                                        data-hs-pin-input-item
-                                                                        name="visitor_code[]"
-                                                                    >
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </form>
-                                                @elseif($visitor->status == 'checked_in')
-                                                    <!-- Check-out Form -->
-                                                    <form action="{{ route('visitors.update', $visitor->id) }}" method="POST" class="inline">
-                                                        @csrf
-                                                        @method('PATCH')
-                                                        <input type="hidden" name="status" value="checked_out">
-                                                        <input type="hidden" name="redirect_to" value="{{ route('dashboard') }}">
-                                                        <x-primary-button class="bg-gray-700 hover:bg-gray-600 text-white">
-                                                            Check Out
-                                                        </x-primary-button>
-                                                    </form>
-                                                @elseif($visitor->status == 'denied')
-                                                    <span class="text-red-400">Visitor denied</span>
-                                                @endif
-                                            </div>
                                         </div>
                                         <a href="{{ route('visitors.timeline', $visitor->id) }}">
                                             <svg class="shrink-0 size-5 text-gray-300" xmlns="http://www.w3.org/2000/svg"
@@ -408,7 +279,7 @@
                         </div>
                     </div>
 
-                    <!-- CHECKED‑OUT VISITORS Tab Panel -->
+                    <!-- CHECKED‑OUT VISITORS Panel -->
                     <div id="pills-on-gray-color-5" role="tabpanel" aria-labelledby="pills-on-gray-color-item-5" class="hidden">
                         <div class="grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
                             @foreach ($checkedOutVisitors as $visitor)
@@ -421,7 +292,6 @@
                                             <p class="text-sm text-gray-400 mt-2">
                                                 Telephone: {{ $visitor->telephone ?? 'Null' }}
                                             </p>
-
                                             <p class="text-sm text-gray-400 mt-2">
                                                 {{ \Carbon\Carbon::parse($visitor->expected_arrival)->format('M d, h:i A') }}
                                             </p>
@@ -442,8 +312,9 @@
                             @endforeach
                         </div>
                     </div>
+
                 </div>
-                </div>
+
             </div>
         </div>
     </div>
