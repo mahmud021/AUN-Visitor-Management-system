@@ -41,12 +41,11 @@ class DashboardController extends Controller
     // Shared Query Methods
     protected function getUserVisitors(User $user)
     {
-        return Visitor::where('user_id', $user->id)
-            ->with('user')
-            ->latest()
-            ->simplePaginate(8, ['*'], 'userVisitorsPage');
-    }
+        return Visitor::with('user') // Add this
+        ->latest()
+            ->simplePaginate(8, ['*'], 'allVisitorsPage');
 
+    }
 
     protected function getAllVisitors()
     {
