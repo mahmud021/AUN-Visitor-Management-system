@@ -6,102 +6,49 @@ use App\Models\User;
 use App\Models\Visitor;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate; // Add this
 
 class DashboardController extends Controller
 {
+    // Add middleware in constructor to ensure authenticated access
+
+
     // Main Dashboard View
     public function index()
     {
         $user = auth()->user();
 
-        return view('dashboard', [
+        // Prepare data based on user permissions
+        $data = [
             'user' => $user,
             'myVisitors' => $this->getUserVisitors($user),
-            'allVisitors' => $this->getAllVisitors(),
-            'expectedVisitors' => $this->getExpectedVisitorsCount($user),
-            'checkedInCount' => $this->getCheckedInCount(),
-            'checkedOutCount' => $this->getCheckedOutCount(),
-            'onCampusCount' => $this->getOnCampusCount()
-        ]);
+        ];
+
+        // Only include allVisitors if user has permission
+        if (Gate::allows('view-all-visitors', $user)) {
+            $data['allVisitors'] = $this->getAllVisitors();
+        }
+
+        return view('dashboard', $data);
     }
 
     // Shared Query Methods
     protected function getUserVisitors(User $user)
     {
-        return Visitor::with('user') // Add this
-        ->latest()
-            ->simplePaginate(8, ['*'], 'allVisitorsPage');
+        // Ensure user can only see their own visitors unless they have higher privileges
+        $query = Visitor::with('user')->latest();
 
+        if (!Gate::allows('view-all-visitors', $user)) {
+            $query->where('user_id', $user->id);
+        }
+
+        return $query->simplePaginate(8, ['*'], 'allVisitorsPage');
     }
 
     protected function getAllVisitors()
     {
+        // This method will only be called if user has view-all-visitors permission
         return Visitor::latest()
             ->simplePaginate(8, ['*'], 'allVisitorsPage');
-    }
-
-    protected function getExpectedVisitorsCount(User $user): int
-    {
-        return DB::table('timeline_events')
-            ->join('visitors', 'timeline_events.visitor_id', '=', 'visitors.id')
-            ->where('timeline_events.event_type', 'approved')
-            ->whereDate('timeline_events.occurred_at', Carbon::today())
-            ->where('visitors.user_id', $user->id)
-            ->distinct('timeline_events.visitor_id')
-            ->count('timeline_events.visitor_id');
-    }
-
-    protected function getCheckedInCount(): int
-    {
-        return DB::table('timeline_events')
-            ->where('event_type', 'checked_in')
-            ->whereDate('occurred_at', Carbon::today())
-            ->distinct('visitor_id')
-            ->count('visitor_id');
-    }
-
-    protected function getCheckedOutCount(): int
-    {
-        return DB::table('timeline_events')
-            ->where('event_type', 'checked_out')
-            ->whereDate('occurred_at', Carbon::today())
-            ->distinct('visitor_id')
-            ->count('visitor_id');
-    }
-
-    protected function getOnCampusCount(): int
-    {
-        return Visitor::whereHas('timelineEvents', function ($query) {
-            $query->whereDate('occurred_at', Carbon::today())
-                ->whereIn('event_type', ['checked_in', 'checked_out']);
-        })
-            ->get()
-            ->filter(fn ($visitor) => $visitor->timelineEvents()
-                    ->latest('occurred_at')
-                    ->first()?->event_type === 'checked_in'
-            )
-            ->count();
-    }
-
-    // User-Specific Count Methods
-    protected function getCheckedInCountForUser(User $user): int
-    {
-        return $user->visitors()
-            ->where('status', 'checked_in')
-            ->count();
-    }
-
-    protected function getOnCampusCountForUser(User $user): int
-    {
-        return $user->visitors()
-            ->where('status', 'checked_in')
-            ->count();
-    }
-
-    protected function getCheckedOutCountForUser(User $user): int
-    {
-        return $user->visitors()
-            ->where('status', 'checked_out')
-            ->count();
     }
 }
