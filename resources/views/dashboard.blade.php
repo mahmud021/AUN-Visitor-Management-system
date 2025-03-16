@@ -104,75 +104,237 @@
                 </form>
             </div>
         </div>
-    </x-slot>
 
+    </x-slot>
+    <!-- Card Section -->
+    <div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
+        <!-- Grid -->
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+            <!-- Card -->
+            <div class="flex flex-col bg-white border border-gray-200 shadow-2xs rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
+                <div class="p-4 md:p-5">
+                    <div class="flex items-center gap-x-2">
+                        <p class="text-xs uppercase text-gray-500 dark:text-neutral-500">
+                            Total Visitors Today
+                        </p>
+                        <div class="hs-tooltip">
+                            <div class="hs-tooltip-toggle">
+                                <svg class="shrink-0 size-4 text-gray-500 dark:text-neutral-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                                    <path d="M12 17h.01"/>
+                                </svg>
+                                <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-2xs dark:bg-neutral-700" role="tooltip">
+                                The number of daily users
+                            </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-1 flex items-center gap-x-2">
+                        <h3 class="text-xl sm:text-2xl font-medium text-gray-800 dark:text-neutral-200">
+                            {{ $dailyVisitorCount }}
+                        </h3>
+
+                    </div>
+                </div>
+            </div>
+            <!-- End Card -->
+            <!-- Card -->
+            <div class="flex flex-col bg-white border border-gray-200 shadow-2xs rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
+                <div class="p-4 md:p-5">
+                    <div class="flex items-center gap-x-2">
+                        <p class="text-xs uppercase text-gray-500 dark:text-neutral-500">
+                            Active Visitors Today
+                        </p>
+                    </div>
+                    <div class="mt-1 flex items-center gap-x-2">
+                        <h3 class="text-xl sm:text-2xl font-medium text-gray-800 dark:text-neutral-200">
+                            {{ $checkedInVisitorCount }}
+                        </h3>
+                    </div>
+                </div>
+            </div>
+            <!-- End Card -->
+            <!-- Card -->
+            <div class="flex flex-col bg-white border border-gray-200 shadow-2xs rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
+                <div class="p-4 md:p-5">
+                    <div class="flex items-center gap-x-2">
+                        <p class="text-xs uppercase text-gray-500 dark:text-neutral-500">
+                            Overstaying Visitors Today
+                        </p>
+                    </div>
+                    <div class="mt-1 flex items-center gap-x-2">
+                        <h3 class="text-xl sm:text-2xl font-medium text-gray-800 dark:text-neutral-200">
+                            56.8%
+                        </h3>
+                        <span class="flex items-center gap-x-1 text-red-600">
+                        <svg class="inline-block size-4 self-center" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 17 13.5 8.5 8.5 13.5 2 7"/><polyline points="16 17 22 17 22 11"/></svg>
+                        <span class="inline-block text-sm">
+                            1.7%
+                        </span>
+                    </span>
+                    </div>
+                </div>
+            </div>
+            <!-- End Card -->
+        </div>
+        <!-- End Grid -->
+    </div>
+    <!-- End Card Section -->
     <!-- Main dashboard content -->
     <!-- Use a dark background for the entire page -->
     <div class="py-12 bg-primary text-white min-h-screen">
+
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="overflow-hidden shadow-sm sm:rounded-lg">
-                <!-- Horizontally Scrollable and Centered Nav with Pill Buttons and Stat Badges -->
-                <nav class="pb-1 flex justify-center gap-x-1 overflow-x-auto [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500" aria-label="Tabs" role="tablist" aria-orientation="horizontal">
-                    <!-- MY VISITORS -->
-                    <button type="button" class="hs-tab-active:bg-gray-200 hs-tab-active:text-gray-800 hs-tab-active:hover:text-gray-800 dark:hs-tab-active:bg-neutral-700 dark:hs-tab-active:text-white py-3 px-4 inline-flex items-center gap-x-2 bg-transparent text-sm font-medium text-center text-gray-500 rounded-lg hover:text-blue-600 focus:outline-hidden focus:text-blue-600 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-500 dark:hover:text-neutral-400 dark:focus:text-neutral-400 active" id="pills-on-gray-color-item-1" aria-selected="true" data-hs-tab="#pills-on-gray-color-1" aria-controls="pills-on-gray-color-1" role="tab">
-                        MY VISITORS
-                        <span class="ml-1 inline-block bg-blue-600 text-white rounded-full px-2 py-0.5 text-xs font-medium">32</span>
-                    </button>
-                    <!-- APPROVED VISITORS TODAY -->
-                    <button type="button" class="hs-tab-active:bg-gray-200 hs-tab-active:text-gray-800 hs-tab-active:hover:text-gray-800 dark:hs-tab-active:bg-neutral-700 dark:hs-tab-active:text-white py-3 px-4 inline-flex items-center gap-x-2 bg-transparent text-sm font-medium text-center text-gray-500 rounded-lg hover:text-blue-600 focus:outline-hidden focus:text-blue-600 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-500 dark:hover:text-neutral-400 dark:focus:text-neutral-400" id="pills-on-gray-color-item-2" aria-selected="false" data-hs-tab="#pills-on-gray-color-2" aria-controls="pills-on-gray-color-2" role="tab">
-                        APPROVED VISITORS TODAY
-                        <span class="ml-1 inline-block bg-blue-600 text-white rounded-full px-2 py-0.5 text-xs font-medium">32</span>
-                    </button>
-                    <!-- CHECKED‑IN VISITORS -->
-                    <button type="button" class="hs-tab-active:bg-gray-200 hs-tab-active:text-gray-800 hs-tab-active:hover:text-gray-800 dark:hs-tab-active:bg-neutral-700 dark:hs-tab-active:text-white py-3 px-4 inline-flex items-center gap-x-2 bg-transparent text-sm font-medium text-center text-gray-500 rounded-lg hover:text-blue-600 focus:outline-hidden focus:text-blue-600 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-500 dark:hover:text-neutral-400 dark:focus:text-neutral-400" id="pills-on-gray-color-item-3" aria-selected="false" data-hs-tab="#pills-on-gray-color-3" aria-controls="pills-on-gray-color-3" role="tab">
-                        CHECKED‑IN VISITORS
-                        <span class="ml-1 inline-block bg-blue-600 text-white rounded-full px-2 py-0.5 text-xs font-medium">32</span>
-                    </button>
-                    <!-- ALL VISITORS -->
-                    <button type="button" class="hs-tab-active:bg-gray-200 hs-tab-active:text-gray-800 hs-tab-active:hover:text-gray-800 dark:hs-tab-active:bg-neutral-700 dark:hs-tab-active:text-white py-3 px-4 inline-flex items-center gap-x-2 bg-transparent text-sm font-medium text-center text-gray-500 rounded-lg hover:text-blue-600 focus:outline-hidden focus:text-blue-600 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-500 dark:hover:text-neutral-400 dark:focus:text-neutral-400" id="pills-on-gray-color-item-4" aria-selected="false" data-hs-tab="#pills-on-gray-color-4" aria-controls="pills-on-gray-color-4" role="tab">
-                        ALL VISITORS
-                        <span class="ml-1 inline-block bg-blue-600 text-white rounded-full px-2 py-0.5 text-xs font-medium">32</span>
-                    </button>
-                    <!-- CHECKED‑OUT VISITORS -->
-                    <button type="button" class="hs-tab-active:bg-gray-200 hs-tab-active:text-gray-800 hs-tab-active:hover:text-gray-800 dark:hs-tab-active:bg-neutral-700 dark:hs-tab-active:text-white py-3 px-4 inline-flex items-center gap-x-2 bg-transparent text-sm font-medium text-center text-gray-500 rounded-lg hover:text-blue-600 focus:outline-hidden focus:text-blue-600 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-500 dark:hover:text-neutral-400 dark:focus:text-neutral-400" id="pills-on-gray-color-item-5" aria-selected="false" data-hs-tab="#pills-on-gray-color-5" aria-controls="pills-on-gray-color-5" role="tab">
-                        CHECKED‑OUT VISITORS
-                        <span class="ml-1 inline-block bg-blue-600 text-white rounded-full px-2 py-0.5 text-xs font-medium">32</span>
-                    </button>
-                </nav>
 
-                <!-- Tab Panels -->
-                <div class="mt-3">
-                    <!-- MY VISITORS Panel -->
-                    <div id="pills-on-gray-color-1" role="tabpanel" aria-labelledby="pills-on-gray-color-item-1">
+                <!-- All Visitors Section -->
+                @can('view-all-visitors')
+                    <h3 class="font-semibold text-lg">
+                        All Visitors
+                    </h3>
+
+
+                    <div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
                         <div class="grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
-                            @foreach ($myVisitors as $visitor)
-                                <x-card class="text-gray-100 border border-gray-700 my-2">
+                            @foreach ($allVisitors as $allVisitor)
+                                <x-card class="bg-brand-900 text-gray-100 border border-gray-700">
                                     <div class="flex justify-between items-center gap-x-3">
                                         <div class="grow">
-                                            <h3 class="font-semibold text-lg mt-2">
-                                                {{ $visitor->first_name ?? 'Null' }} {{ $visitor->last_name ?? 'Null' }}
+                                            <h3 class="font-semibold text-lg">
+                                                {{ $allVisitor->first_name ?? 'Null' }} {{ $allVisitor->last_name ?? 'Null' }}
                                             </h3>
                                             <p class="text-sm text-gray-400 mt-2">
-                                                Telephone: {{ $visitor->telephone ?? 'Null' }}
-                                            </p>
-                                            <p class="mt-2 text-base font-semibold text-blue-400">
-                                                Access Code:
-                                                <span class="inline-block bg-gray-800 text-gray-100 rounded px-2 py-1 ml-1">
-                        {{ $visitor->visitor_code ?? 'Null' }}
-                      </span>
+                                                Telephone: {{ $allVisitor->telephone ?? 'Null' }}
                                             </p>
                                             <p class="text-sm text-gray-400 mt-2">
-                                                {{ \Carbon\Carbon::parse($visitor->expected_arrival)->format('M d, h:i A') }}
+                                                Hosted By: {{ $allVisitor->user->user_details->school_id ?? 'Null' }}
+                                            </p>
+                                            <p class="text-sm text-gray-400 mt-2">
+                                                {{ \Carbon\Carbon::parse($allVisitor->expected_arrival)->format('M d, h:i A') }}
                                             </p>
                                             <p class="mt-2">
-                                                <x-status-badge status="{{ $visitor->status ?? 'Null' }}" />
+                                                <x-status-badge status="{{ $allVisitor->status }}"/>
                                             </p>
+
+                                            <!-- Status actions -->
+                                            <div class="mt-3">
+                                                @if($allVisitor->status == 'pending')
+                                                    @if(auth()->user()?->user_details?->role === 'HR Admin' || auth()->user()?->user_details?->role === 'super admin')
+                                                        <!-- Approve Form -->
+                                                        <form action="{{ route('visitors.update', $allVisitor->id) }}"
+                                                              method="POST" class="inline">
+                                                            @csrf
+                                                            @method('PATCH')
+                                                            <input type="hidden" name="status" value="approved">
+                                                            <input type="hidden" name="redirect_to"
+                                                                   value="{{ route('dashboard') }}">
+                                                            <x-primary-button
+                                                                class="bg-green-600 hover:bg-green-700 text-white">
+                                                                Approve
+                                                            </x-primary-button>
+                                                        </form>
+
+                                                        <!-- Deny Form -->
+                                                        <form action="{{ route('visitors.update', $allVisitor->id) }}"
+                                                              method="POST" class="inline ml-2">
+                                                            @csrf
+                                                            @method('PATCH')
+                                                            <input type="hidden" name="status" value="denied">
+                                                            <input type="hidden" name="redirect_to"
+                                                                   value="{{ route('dashboard') }}">
+                                                            <x-primary-button
+                                                                class="bg-red-600 hover:bg-red-700 text-white">
+                                                                Deny
+                                                            </x-primary-button>
+                                                        </form>
+                                                    @endif
+                                                @elseif($allVisitor->status == 'approved')
+                                                    <!-- Check-in Form -->
+                                                    <form action="{{ route('visitors.update', $allVisitor->id) }}"
+                                                          method="POST" class="inline">
+                                                        @csrf
+                                                        @method('PATCH')
+                                                        <input type="hidden" name="status" value="checked_in">
+                                                        <input type="hidden" name="redirect_to"
+                                                               value="{{ route('dashboard') }}">
+
+                                                        <div class="flex items-center gap-2 mb-4">
+                                                            <x-primary-button
+                                                                class="bg-gray-700 hover:bg-gray-600 text-white">
+                                                                Check In
+                                                            </x-primary-button>
+                                                        </div>
+                                                        <div>
+                                                            <label for="visitor_code"
+                                                                   class="block text-sm font-medium mb-2">
+                                                                Enter Visitor Code
+                                                            </label>
+                                                            <div
+                                                                class="py-2 px-3 bg-brand-900 border border-brand-700 rounded-lg">
+                                                                <div class="flex gap-x-3" data-hs-pin-input>
+                                                                    <input
+                                                                        id="visitor_code_1"
+                                                                        class="w-8 h-8 text-sm text-center p-0 border-brand-700 rounded-md focus:border-brand-500 focus:ring-brand-500 bg-brand-900 text-brand-200"
+                                                                        type="text"
+                                                                        placeholder="○"
+                                                                        data-hs-pin-input-item
+                                                                        autofocus
+                                                                        name="visitor_code[]"
+                                                                    >
+                                                                    <input
+                                                                        id="visitor_code_2"
+                                                                        class="w-8 h-8 text-sm text-center p-0 border-brand-700 rounded-md focus:border-brand-500 focus:ring-brand-500 bg-brand-900 text-brand-200"
+                                                                        type="text"
+                                                                        placeholder="○"
+                                                                        data-hs-pin-input-item
+                                                                        name="visitor_code[]"
+                                                                    >
+                                                                    <input
+                                                                        id="visitor_code_3"
+                                                                        class="w-8 h-8 text-sm text-center p-0 border-brand-700 rounded-md focus:border-brand-500 focus:ring-brand-500 bg-brand-900 text-brand-200"
+                                                                        type="text"
+                                                                        placeholder="○"
+                                                                        data-hs-pin-input-item
+                                                                        name="visitor_code[]"
+                                                                    >
+                                                                    <input
+                                                                        id="visitor_code_4"
+                                                                        class="w-8 h-8 text-sm text-center p-0 border-brand-700 rounded-md focus:border-brand-500 focus:ring-brand-500 bg-brand-900 text-brand-200"
+                                                                        type="text"
+                                                                        placeholder="○"
+                                                                        data-hs-pin-input-item
+                                                                        name="visitor_code[]"
+                                                                    >
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                @elseif($allVisitor->status == 'checked_in')
+                                                    <!-- Check-out Form -->
+                                                    <form action="{{ route('visitors.update', $allVisitor->id) }}"
+                                                          method="POST" class="inline">
+                                                        @csrf
+                                                        @method('PATCH')
+                                                        <input type="hidden" name="status" value="checked_out">
+                                                        <input type="hidden" name="redirect_to"
+                                                               value="{{ route('dashboard') }}">
+                                                        <x-primary-button
+                                                            class="bg-gray-700 hover:bg-gray-600 text-white">
+                                                            Check Out
+                                                        </x-primary-button>
+                                                    </form>
+                                                @elseif($allVisitor->status == 'denied')
+                                                    <span class="text-red-400">Visitor denied</span>
+                                                @endif
+                                            </div>
                                         </div>
-                                        <a href="{{ route('visitors.timeline', $visitor->id) }}">
-                                            <svg class="shrink-0 size-5 text-gray-300" xmlns="http://www.w3.org/2000/svg"
-                                                 width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                 stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                 stroke-linejoin="round">
+                                        <a href="{{ route('visitors.timeline', $allVisitor->id) }}">
+                                            <svg class="shrink-0 size-5 text-gray-300"
+                                                 xmlns="http://www.w3.org/2000/svg"
+                                                 width="24" height="24" viewBox="0 0 24 24"
+                                                 fill="none" stroke="currentColor" stroke-width="2"
+                                                 stroke-linecap="round" stroke-linejoin="round">
                                                 <path d="m9 18 6-6-6-6"/>
                                             </svg>
                                         </a>
@@ -180,146 +342,58 @@
                                 </x-card>
                             @endforeach
                         </div>
-                    </div>
-
-                    <!-- APPROVED VISITORS TODAY Panel -->
-                    <div id="pills-on-gray-color-2" role="tabpanel" aria-labelledby="pills-on-gray-color-item-2" class="hidden">
-                        <div class="grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
-                            @foreach ($approvedVisitorsList as $visitor)
-                                <x-card class="text-gray-100 border border-gray-700 my-2">
-                                    <div class="flex justify-between items-center gap-x-3">
-                                        <div class="grow">
-                                            <h3 class="font-semibold text-lg mt-2">
-                                                {{ $visitor->first_name ?? 'Null' }} {{ $visitor->last_name ?? 'Null' }}
-                                            </h3>
-                                            <p class="text-sm text-gray-400 mt-2">
-                                                Telephone: {{ $visitor->telephone ?? 'Null' }}
-                                            </p>
-                                            <p class="text-sm text-gray-400 mt-2">
-                                                {{ \Carbon\Carbon::parse($visitor->expected_arrival)->format('M d, h:i A') }}
-                                            </p>
-                                            <p class="mt-2">
-                                                <x-status-badge status="{{ $visitor->status ?? 'Null' }}" />
-                                            </p>
-                                        </div>
-                                        <a href="{{ route('visitors.timeline', $visitor->id) }}">
-                                            <svg class="shrink-0 size-5 text-gray-300" xmlns="http://www.w3.org/2000/svg"
-                                                 width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                 stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                 stroke-linejoin="round">
-                                                <path d="m9 18 6-6-6-6"/>
-                                            </svg>
-                                        </a>
-                                    </div>
-                                </x-card>
-                            @endforeach
+                        <div class="mt-6 flex justify-center">
+                            {{ $allVisitors->links() }}
                         </div>
                     </div>
+                @endcan
 
-                    <!-- CHECKED‑IN VISITORS Panel -->
-                    <div id="pills-on-gray-color-3" role="tabpanel" aria-labelledby="pills-on-gray-color-item-3" class="hidden">
-                        <div class="grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
-                            @foreach ($checkedInVisitors as $visitor)
-                                <x-card class="text-gray-100 border border-gray-700 my-2">
-                                    <div class="flex justify-between items-center gap-x-3">
-                                        <div class="grow">
-                                            <h3 class="font-semibold text-lg mt-2">
-                                                {{ $visitor->first_name ?? 'Null' }} {{ $visitor->last_name ?? 'Null' }}
-                                            </h3>
-                                            <p class="text-sm text-gray-400 mt-2">
-                                                Telephone: {{ $visitor->telephone ?? 'Null' }}
-                                            </p>
-                                            <p class="text-sm text-gray-400 mt-2">
-                                                {{ \Carbon\Carbon::parse($visitor->expected_arrival)->format('M d, h:i A') }}
-                                            </p>
-                                            <p class="mt-2">
-                                                <x-status-badge status="{{ $visitor->status ?? 'Null' }}" />
-                                            </p>
-                                        </div>
-                                        <a href="{{ route('visitors.timeline', $visitor->id) }}">
-                                            <svg class="shrink-0 size-5 text-gray-300" xmlns="http://www.w3.org/2000/svg"
-                                                 width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                 stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                 stroke-linejoin="round">
-                                                <path d="m9 18 6-6-6-6"/>
-                                            </svg>
-                                        </a>
+                <!-- My Visitors Section -->
+                <h3 class="font-semibold text-lg">
+                    My Visitors
+                </h3>
+                <div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
+
+                    <div class="grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
+                        @foreach ($myVisitors as $myVisitor)
+                            <x-card class="text-gray-100 border border-gray-700">
+                                <div class="flex justify-between items-center gap-x-3">
+                                    <div class="grow">
+                                        <h3 class="font-semibold text-lg mt-2">
+                                            {{ $myVisitor->first_name ?? 'Null' }} {{ $myVisitor->last_name ?? 'Null' }}
+                                        </h3>
+                                        <p class="text-sm text-gray-400 mt-2">
+                                            Telephone: {{ $myVisitor->telephone ?? 'Null' }}
+                                        </p>
+                                        <p class="mt-2 text-base font-semibold text-blue-400">
+                                            Access Code:
+                                            <span class="inline-block bg-gray-800 text-gray-100 rounded px-2 py-1 ml-1">
+                                                {{ $myVisitor->visitor_code ?? 'Null' }}
+                                            </span>
+                                        </p>
+                                        <p class="text-sm text-gray-400 mt-2">
+                                            {{ \Carbon\Carbon::parse($myVisitor->expected_arrival)->format('M d, h:i A') }}
+                                        </p>
+                                        <p class="mt-2">
+                                            <x-status-badge status="{{ $myVisitor->status ?? 'Null' }}"/>
+                                        </p>
                                     </div>
-                                </x-card>
-                            @endforeach
-                        </div>
+                                    <a href="{{ route('visitors.timeline', $myVisitor->id) }}">
+                                        <svg class="shrink-0 size-5 text-gray-300" xmlns="http://www.w3.org/2000/svg"
+                                             width="24" height="24" viewBox="0 0 24 24"
+                                             fill="none" stroke="currentColor" stroke-width="2"
+                                             stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="m9 18 6-6-6-6"/>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </x-card>
+                        @endforeach
                     </div>
-
-                    <!-- ALL VISITORS Panel -->
-                    <div id="pills-on-gray-color-4" role="tabpanel" aria-labelledby="pills-on-gray-color-item-4" class="hidden">
-                        <div class="grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
-                            @foreach ($allVisitors as $visitor)
-                                <x-card class="text-gray-100 border border-gray-700 my-2">
-                                    <div class="flex justify-between items-center gap-x-3">
-                                        <div class="grow">
-                                            <h3 class="font-semibold text-lg mt-2">
-                                                {{ $visitor->first_name ?? 'Null' }} {{ $visitor->last_name ?? 'Null' }}
-                                            </h3>
-                                            <p class="text-sm text-gray-400 mt-2">
-                                                Telephone: {{ $visitor->telephone ?? 'Null' }}
-                                            </p>
-                                            <p class="text-sm text-gray-400 mt-2">
-                                                {{ \Carbon\Carbon::parse($visitor->expected_arrival)->format('M d, h:i A') }}
-                                            </p>
-                                            <p class="mt-2">
-                                                <x-status-badge status="{{ $visitor->status ?? 'Null' }}" />
-                                            </p>
-                                        </div>
-                                        <a href="{{ route('visitors.timeline', $visitor->id) }}">
-                                            <svg class="shrink-0 size-5 text-gray-300" xmlns="http://www.w3.org/2000/svg"
-                                                 width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                 stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                 stroke-linejoin="round">
-                                                <path d="m9 18 6-6-6-6"/>
-                                            </svg>
-                                        </a>
-                                    </div>
-                                </x-card>
-                            @endforeach
-                        </div>
+                    <div class="mt-6 flex justify-center">
+                        {{ $myVisitors->links() }}
                     </div>
-
-                    <!-- CHECKED‑OUT VISITORS Panel -->
-                    <div id="pills-on-gray-color-5" role="tabpanel" aria-labelledby="pills-on-gray-color-item-5" class="hidden">
-                        <div class="grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
-                            @foreach ($checkedOutVisitors as $visitor)
-                                <x-card class="text-gray-100 border border-gray-700 my-2">
-                                    <div class="flex justify-between items-center gap-x-3">
-                                        <div class="grow">
-                                            <h3 class="font-semibold text-lg mt-2">
-                                                {{ $visitor->first_name ?? 'Null' }} {{ $visitor->last_name ?? 'Null' }}
-                                            </h3>
-                                            <p class="text-sm text-gray-400 mt-2">
-                                                Telephone: {{ $visitor->telephone ?? 'Null' }}
-                                            </p>
-                                            <p class="text-sm text-gray-400 mt-2">
-                                                {{ \Carbon\Carbon::parse($visitor->expected_arrival)->format('M d, h:i A') }}
-                                            </p>
-                                            <p class="mt-2">
-                                                <x-status-badge status="{{ $visitor->status ?? 'Null' }}" />
-                                            </p>
-                                        </div>
-                                        <a href="{{ route('visitors.timeline', $visitor->id) }}">
-                                            <svg class="shrink-0 size-5 text-gray-300" xmlns="http://www.w3.org/2000/svg"
-                                                 width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                 stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                 stroke-linejoin="round">
-                                                <path d="m9 18 6-6-6-6"/>
-                                            </svg>
-                                        </a>
-                                    </div>
-                                </x-card>
-                            @endforeach
-                        </div>
-                    </div>
-
                 </div>
-
             </div>
         </div>
     </div>

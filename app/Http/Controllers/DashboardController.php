@@ -6,96 +6,54 @@ use App\Models\User;
 use App\Models\Visitor;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate; // Add this
 
 class DashboardController extends Controller
 {
-    // Main Dashboard View
     public function index()
     {
         $user = auth()->user();
 
-        // Filter visitors for the current user by status
-        $approvedVisitorsList = Visitor::where('user_id', $user->id)
-            ->where('status', 'approved')
-            ->get();
+        // Existing daily visitor count (example)
+        $dailyVisitorCount = Gate::allows('view-all-visitors', $user)
+            ? Visitor::whereDate('created_at', Carbon::today())->count()
+            : Visitor::where('user_id', $user->id)->whereDate('created_at', Carbon::today())->count();
 
-        $checkedInVisitors = Visitor::where('user_id', $user->id)
-            ->where('status', 'checked_in')
-            ->get();
+        // New checked-in visitor count
+        $checkedInVisitorCount = Gate::allows('view-all-visitors', $user)
+            ? Visitor::where('status', 'checked_in')->count()
+            : Visitor::where('user_id', $user->id)->where('status', 'checked_in')->count();
 
+        // Data to pass to the view
+        $data = [
+            'user' => $user,
+            'myVisitors' => $this->getUserVisitors($user),
+            'dailyVisitorCount' => $dailyVisitorCount,
+            'checkedInVisitorCount' => $checkedInVisitorCount,
+        ];
 
-        $checkedOutVisitors = Visitor::where('user_id', $user->id)
-            ->where('status', 'checked_out')
-            ->get();
+        // Add all visitors if user has permission (example)
+        if (Gate::allows('view-all-visitors', $user)) {
+            $data['allVisitors'] = $this->getAllVisitors();
+        }
 
-        return view('dashboard', [
-            'user'                  => $user,
-            'myVisitors'            => $this->getUserVisitors($user),
-            'allVisitors'           => $this->getAllVisitors(),
-            'approvedVisitorsList'  => $approvedVisitorsList,
-            'checkedInVisitors'     => $checkedInVisitors,
-            'checkedOutVisitors'    => $checkedOutVisitors,
-        ]);
+        return view('dashboard', $data);
     }
 
-
-    // Shared Query Methods
-
+    // Example method to get user's visitors (assumed existing)
     protected function getUserVisitors(User $user)
     {
-        return Visitor::where('user_id', $user->id)
-            ->with('user')
-            ->latest()
-            ->simplePaginate(8, ['*'], 'userVisitorsPage');
+        $query = Visitor::with('user')->latest();
+        if (!Gate::allows('view-all-visitors', $user)) {
+            $query->where('user_id', $user->id);
+        }
+        return $query->simplePaginate(8, ['*'], 'myVisitorsPage');
     }
 
+    // Example method to get all visitors (assumed existing)
     protected function getAllVisitors()
     {
-        return Visitor::latest()
-            ->simplePaginate(8, ['*'], 'allVisitorsPage');
+        return Visitor::latest()->simplePaginate(8, ['*'], 'allVisitorsPage');
     }
 
-    protected function getExpectedVisitorsCount(User $user): int
-    {
-        return DB::table('timeline_events')
-            ->join('visitors', 'timeline_events.visitor_id', '=', 'visitors.id')
-            ->where('timeline_events.event_type', 'approved')
-            ->whereDate('timeline_events.occurred_at', Carbon::today())
-            ->where('visitors.user_id', $user->id)
-            ->distinct('timeline_events.visitor_id')
-            ->count('timeline_events.visitor_id');
-    }
-
-    protected function getCheckedInCount(): int
-    {
-        return DB::table('timeline_events')
-            ->where('event_type', 'checked_in')
-            ->whereDate('occurred_at', Carbon::today())
-            ->distinct('visitor_id')
-            ->count('visitor_id');
-    }
-
-    protected function getCheckedOutCount(): int
-    {
-        return DB::table('timeline_events')
-            ->where('event_type', 'checked_out')
-            ->whereDate('occurred_at', Carbon::today())
-            ->distinct('visitor_id')
-            ->count('visitor_id');
-    }
-
-    protected function getOnCampusCount(): int
-    {
-        return Visitor::whereHas('timelineEvents', function ($query) {
-            $query->whereDate('occurred_at', Carbon::today())
-                ->whereIn('event_type', ['checked_in', 'checked_out']);
-        })
-            ->get()
-            ->filter(function ($visitor) {
-                return $visitor->timelineEvents()
-                        ->latest('occurred_at')
-                        ->first()?->event_type === 'checked_in';
-            })
-            ->count();
-    }
 }
