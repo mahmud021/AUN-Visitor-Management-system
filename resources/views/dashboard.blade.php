@@ -104,6 +104,7 @@
                 </form>
             </div>
         </div>
+        
     </x-slot>
 
     <!-- Main dashboard content -->

@@ -25,19 +25,6 @@ class DashboardController extends Controller
         ]);
     }
 
-    // Visitor Logs for Specific User
-    public function visitorLogs(User $user)
-    {
-        return view('users.visitor-logs', [
-            'user' => $user,
-            'visitors' => $user->visitors()->paginate(10),
-            'expectedVisitors' => $this->getExpectedVisitorsCount($user),
-            'checkedInVisitors' => $this->getCheckedInCountForUser($user),
-            'onCampusVisitors' => $this->getOnCampusCountForUser($user),
-            'checkedOutVisitors' => $this->getCheckedOutCountForUser($user),
-        ]);
-    }
-
     // Shared Query Methods
     protected function getUserVisitors(User $user)
     {
