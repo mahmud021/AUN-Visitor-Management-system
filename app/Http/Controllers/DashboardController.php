@@ -14,19 +14,25 @@ class DashboardController extends Controller
     {
         $user = auth()->user();
 
-        // Get daily visitor count based on permissions
+        // Existing daily visitor count (example)
         $dailyVisitorCount = Gate::allows('view-all-visitors', $user)
             ? Visitor::whereDate('created_at', Carbon::today())->count()
             : Visitor::where('user_id', $user->id)->whereDate('created_at', Carbon::today())->count();
 
-        // Prepare data based on user permissions
+        // New checked-in visitor count
+        $checkedInVisitorCount = Gate::allows('view-all-visitors', $user)
+            ? Visitor::where('status', 'checked_in')->count()
+            : Visitor::where('user_id', $user->id)->where('status', 'checked_in')->count();
+
+        // Data to pass to the view
         $data = [
             'user' => $user,
             'myVisitors' => $this->getUserVisitors($user),
             'dailyVisitorCount' => $dailyVisitorCount,
+            'checkedInVisitorCount' => $checkedInVisitorCount,
         ];
 
-        // Only include allVisitors if user has permission
+        // Add all visitors if user has permission (example)
         if (Gate::allows('view-all-visitors', $user)) {
             $data['allVisitors'] = $this->getAllVisitors();
         }
@@ -34,24 +40,20 @@ class DashboardController extends Controller
         return view('dashboard', $data);
     }
 
-    // Shared Query Methods
+    // Example method to get user's visitors (assumed existing)
     protected function getUserVisitors(User $user)
     {
-        // Ensure user can only see their own visitors unless they have higher privileges
         $query = Visitor::with('user')->latest();
-
         if (!Gate::allows('view-all-visitors', $user)) {
             $query->where('user_id', $user->id);
         }
-
         return $query->simplePaginate(8, ['*'], 'myVisitorsPage');
     }
 
+    // Example method to get all visitors (assumed existing)
     protected function getAllVisitors()
     {
-        // This method will only be called if user has view-all-visitors permission
-        return Visitor::latest()
-            ->simplePaginate(8, ['*'], 'allVisitorsPage');
+        return Visitor::latest()->simplePaginate(8, ['*'], 'allVisitorsPage');
     }
 
 }
