@@ -106,10 +106,90 @@
         </div>
 
     </x-slot>
-
+    <!-- Card Section -->
+    <div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
+        <!-- Grid -->
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+            <!-- Card -->
+            <div class="flex flex-col bg-white border border-gray-200 shadow-2xs rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
+                <div class="p-4 md:p-5">
+                    <div class="flex items-center gap-x-2">
+                        <p class="text-xs uppercase text-gray-500 dark:text-neutral-500">
+                            Total Visitors Today
+                        </p>
+                        <div class="hs-tooltip">
+                            <div class="hs-tooltip-toggle">
+                                <svg class="shrink-0 size-4 text-gray-500 dark:text-neutral-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                                    <path d="M12 17h.01"/>
+                                </svg>
+                                <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-2xs dark:bg-neutral-700" role="tooltip">
+                                The number of daily users
+                            </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-1 flex items-center gap-x-2">
+                        <h3 class="text-xl sm:text-2xl font-medium text-gray-800 dark:text-neutral-200">
+                            72,540
+                        </h3>
+                        <span class="flex items-center gap-x-1 text-green-600">
+                        <svg class="inline-block size-4 self-center" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+                        <span class="inline-block text-sm">
+                            1.7%
+                        </span>
+                    </span>
+                    </div>
+                </div>
+            </div>
+            <!-- End Card -->
+            <!-- Card -->
+            <div class="flex flex-col bg-white border border-gray-200 shadow-2xs rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
+                <div class="p-4 md:p-5">
+                    <div class="flex items-center gap-x-2">
+                        <p class="text-xs uppercase text-gray-500 dark:text-neutral-500">
+                            Active Visitors Today
+                        </p>
+                    </div>
+                    <div class="mt-1 flex items-center gap-x-2">
+                        <h3 class="text-xl sm:text-2xl font-medium text-gray-800 dark:text-neutral-200">
+                            29.4%
+                        </h3>
+                    </div>
+                </div>
+            </div>
+            <!-- End Card -->
+            <!-- Card -->
+            <div class="flex flex-col bg-white border border-gray-200 shadow-2xs rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
+                <div class="p-4 md:p-5">
+                    <div class="flex items-center gap-x-2">
+                        <p class="text-xs uppercase text-gray-500 dark:text-neutral-500">
+                            Overstaying Visitors Today
+                        </p>
+                    </div>
+                    <div class="mt-1 flex items-center gap-x-2">
+                        <h3 class="text-xl sm:text-2xl font-medium text-gray-800 dark:text-neutral-200">
+                            56.8%
+                        </h3>
+                        <span class="flex items-center gap-x-1 text-red-600">
+                        <svg class="inline-block size-4 self-center" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 17 13.5 8.5 8.5 13.5 2 7"/><polyline points="16 17 22 17 22 11"/></svg>
+                        <span class="inline-block text-sm">
+                            1.7%
+                        </span>
+                    </span>
+                    </div>
+                </div>
+            </div>
+            <!-- End Card -->
+        </div>
+        <!-- End Grid -->
+    </div>
+    <!-- End Card Section -->
     <!-- Main dashboard content -->
     <!-- Use a dark background for the entire page -->
     <div class="py-12 bg-primary text-white min-h-screen">
+
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="overflow-hidden shadow-sm sm:rounded-lg">
 
@@ -139,7 +219,7 @@
                                                 {{ \Carbon\Carbon::parse($allVisitor->expected_arrival)->format('M d, h:i A') }}
                                             </p>
                                             <p class="mt-2">
-                                                <x-status-badge status="{{ $allVisitor->status }}" />
+                                                <x-status-badge status="{{ $allVisitor->status }}"/>
                                             </p>
 
                                             <!-- Status actions -->
@@ -147,45 +227,56 @@
                                                 @if($allVisitor->status == 'pending')
                                                     @if(auth()->user()?->user_details?->role === 'HR Admin' || auth()->user()?->user_details?->role === 'super admin')
                                                         <!-- Approve Form -->
-                                                        <form action="{{ route('visitors.update', $allVisitor->id) }}" method="POST" class="inline">
+                                                        <form action="{{ route('visitors.update', $allVisitor->id) }}"
+                                                              method="POST" class="inline">
                                                             @csrf
                                                             @method('PATCH')
                                                             <input type="hidden" name="status" value="approved">
-                                                            <input type="hidden" name="redirect_to" value="{{ route('dashboard') }}">
-                                                            <x-primary-button class="bg-green-600 hover:bg-green-700 text-white">
+                                                            <input type="hidden" name="redirect_to"
+                                                                   value="{{ route('dashboard') }}">
+                                                            <x-primary-button
+                                                                class="bg-green-600 hover:bg-green-700 text-white">
                                                                 Approve
                                                             </x-primary-button>
                                                         </form>
 
                                                         <!-- Deny Form -->
-                                                        <form action="{{ route('visitors.update', $allVisitor->id) }}" method="POST" class="inline ml-2">
+                                                        <form action="{{ route('visitors.update', $allVisitor->id) }}"
+                                                              method="POST" class="inline ml-2">
                                                             @csrf
                                                             @method('PATCH')
                                                             <input type="hidden" name="status" value="denied">
-                                                            <input type="hidden" name="redirect_to" value="{{ route('dashboard') }}">
-                                                            <x-primary-button class="bg-red-600 hover:bg-red-700 text-white">
+                                                            <input type="hidden" name="redirect_to"
+                                                                   value="{{ route('dashboard') }}">
+                                                            <x-primary-button
+                                                                class="bg-red-600 hover:bg-red-700 text-white">
                                                                 Deny
                                                             </x-primary-button>
                                                         </form>
                                                     @endif
                                                 @elseif($allVisitor->status == 'approved')
                                                     <!-- Check-in Form -->
-                                                    <form action="{{ route('visitors.update', $allVisitor->id) }}" method="POST" class="inline">
+                                                    <form action="{{ route('visitors.update', $allVisitor->id) }}"
+                                                          method="POST" class="inline">
                                                         @csrf
                                                         @method('PATCH')
                                                         <input type="hidden" name="status" value="checked_in">
-                                                        <input type="hidden" name="redirect_to" value="{{ route('dashboard') }}">
+                                                        <input type="hidden" name="redirect_to"
+                                                               value="{{ route('dashboard') }}">
 
                                                         <div class="flex items-center gap-2 mb-4">
-                                                            <x-primary-button class="bg-gray-700 hover:bg-gray-600 text-white">
+                                                            <x-primary-button
+                                                                class="bg-gray-700 hover:bg-gray-600 text-white">
                                                                 Check In
                                                             </x-primary-button>
                                                         </div>
                                                         <div>
-                                                            <label for="visitor_code" class="block text-sm font-medium mb-2">
+                                                            <label for="visitor_code"
+                                                                   class="block text-sm font-medium mb-2">
                                                                 Enter Visitor Code
                                                             </label>
-                                                            <div class="py-2 px-3 bg-brand-900 border border-brand-700 rounded-lg">
+                                                            <div
+                                                                class="py-2 px-3 bg-brand-900 border border-brand-700 rounded-lg">
                                                                 <div class="flex gap-x-3" data-hs-pin-input>
                                                                     <input
                                                                         id="visitor_code_1"
@@ -226,12 +317,15 @@
                                                     </form>
                                                 @elseif($allVisitor->status == 'checked_in')
                                                     <!-- Check-out Form -->
-                                                    <form action="{{ route('visitors.update', $allVisitor->id) }}" method="POST" class="inline">
+                                                    <form action="{{ route('visitors.update', $allVisitor->id) }}"
+                                                          method="POST" class="inline">
                                                         @csrf
                                                         @method('PATCH')
                                                         <input type="hidden" name="status" value="checked_out">
-                                                        <input type="hidden" name="redirect_to" value="{{ route('dashboard') }}">
-                                                        <x-primary-button class="bg-gray-700 hover:bg-gray-600 text-white">
+                                                        <input type="hidden" name="redirect_to"
+                                                               value="{{ route('dashboard') }}">
+                                                        <x-primary-button
+                                                            class="bg-gray-700 hover:bg-gray-600 text-white">
                                                             Check Out
                                                         </x-primary-button>
                                                     </form>
@@ -241,7 +335,8 @@
                                             </div>
                                         </div>
                                         <a href="{{ route('visitors.timeline', $allVisitor->id) }}">
-                                            <svg class="shrink-0 size-5 text-gray-300" xmlns="http://www.w3.org/2000/svg"
+                                            <svg class="shrink-0 size-5 text-gray-300"
+                                                 xmlns="http://www.w3.org/2000/svg"
                                                  width="24" height="24" viewBox="0 0 24 24"
                                                  fill="none" stroke="currentColor" stroke-width="2"
                                                  stroke-linecap="round" stroke-linejoin="round">
@@ -285,7 +380,7 @@
                                             {{ \Carbon\Carbon::parse($myVisitor->expected_arrival)->format('M d, h:i A') }}
                                         </p>
                                         <p class="mt-2">
-                                            <x-status-badge status="{{ $myVisitor->status ?? 'Null' }}" />
+                                            <x-status-badge status="{{ $myVisitor->status ?? 'Null' }}"/>
                                         </p>
                                     </div>
                                     <a href="{{ route('visitors.timeline', $myVisitor->id) }}">
