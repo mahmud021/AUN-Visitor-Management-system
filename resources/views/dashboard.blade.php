@@ -44,65 +44,42 @@
                 <form method="POST" action="{{ route('visitors.store') }}">
                     @csrf
                     <x-modal.wrapper id="hs-scale-animation-modal">
-                        <x-modal.header
-                            title="Create Visitor"
-                            modalId="hs-scale-animation-modal"
-                        />
+                        <x-modal.header title="Create Visitor" modalId="hs-scale-animation-modal" />
                         <div class="p-4 overflow-y-auto bg-brand-900 text-gray-100">
                             <div class="grid grid-cols-1 gap-4 lg:gap-4">
                                 <div class="space-y-2">
-                                    <x-form.input
-                                        name="first_name"
-                                        label="First Name"
-                                        type="text"
-                                        value="{{ old('first_name') }}"
-                                        class="bg-gray-800 border-gray-700 text-gray-200"
-                                    />
+                                    <x-form.input name="first_name" label="First Name" type="text" value="{{ old('first_name') }}" class="bg-gray-800 border-gray-700 text-gray-200" />
                                     <x-input-error :messages="$errors->get('first_name')" class="mt-1"/>
                                 </div>
                                 <div class="space-y-2">
-                                    <x-form.input
-                                        name="last_name"
-                                        label="Last Name"
-                                        type="text"
-                                        value="{{ old('last_name') }}"
-                                        class="bg-gray-800 border-gray-700 text-gray-200"
-                                    />
+                                    <x-form.input name="last_name" label="Last Name" type="text" value="{{ old('last_name') }}" class="bg-gray-800 border-gray-700 text-gray-200" />
                                     <x-input-error :messages="$errors->get('last_name')" class="mt-1"/>
                                 </div>
                                 <div class="space-y-2">
-                                    <x-form.input
-                                        name="telephone"
-                                        label="Telephone Number"
-                                        type="text"
-                                        value="{{ old('telephone') }}"
-                                        class="bg-gray-800 border-gray-700 text-gray-200"
-                                    />
+                                    <x-form.input name="telephone" label="Telephone Number" type="text" value="{{ old('telephone') }}" class="bg-gray-800 border-gray-700 text-gray-200" />
                                     <x-input-error :messages="$errors->get('telephone')" class="mt-1"/>
                                 </div>
                                 <div class="space-y-2">
-                                    <x-form.input
-                                        name="expected_arrival"
-                                        label="Expected Arrival (Date & Time)"
-                                        type="datetime-local"
-                                        value="{{ old('expected_arrival') }}"
-                                        class="bg-gray-800 border-gray-700 text-gray-200"
-                                    />
-                                    <x-input-error :messages="$errors->get('expected_arrival')" class="mt-1"/>
+                                    <x-form.input name="visit_date" label="Visit Date" type="date" value="{{ old('visit_date') }}" class="bg-gray-800 border-gray-700 text-gray-200" />
+                                    <x-input-error :messages="$errors->get('visit_date')" class="mt-1"/>
+                                </div>
+                                <div class="space-y-2">
+                                    <x-form.input name="start_time" label="Start Time" type="time" value="{{ old('start_time') }}" class="bg-gray-800 border-gray-700 text-gray-200" />
+                                    <x-input-error :messages="$errors->get('start_time')" class="mt-1"/>
+                                </div>
+                                <div class="space-y-2">
+                                    <x-form.input name="end_time" label="End Time" type="time" value="{{ old('end_time') }}" class="bg-gray-800 border-gray-700 text-gray-200" />
+                                    <x-input-error :messages="$errors->get('end_time')" class="mt-1"/>
                                 </div>
                             </div>
                         </div>
                         <x-modal.footer class="bg-gray-900">
-                            <x-primary-button
-                                type="submit"
-                                class="bg-gray-700 hover:bg-gray-600 text-white"
-                            >
+                            <x-primary-button type="submit" class="bg-gray-700 hover:bg-gray-600 text-white">
                                 Submit
                             </x-primary-button>
                         </x-modal.footer>
                     </x-modal.wrapper>
-                </form>
-            </div>
+                </form>            </div>
         </div>
 
     </x-slot>
