@@ -188,7 +188,10 @@
                                                 Hosted By: {{ $allVisitor->user->user_details->school_id ?? 'Null' }}
                                             </p>
                                             <p class="text-sm text-gray-400 mt-2">
-                                                {{ \Carbon\Carbon::parse($allVisitor->expected_arrival)->format('M d, h:i A') }}
+                                                Visit Date: {{ \Carbon\Carbon::parse($allVisitor->visit_date)->format('M d') }}
+                                            </p>
+                                            <p class="text-sm text-gray-400 mt-2">
+                                                Time: {{ \Carbon\Carbon::parse($allVisitor->start_time)->format('h:i A') }} - {{ \Carbon\Carbon::parse($allVisitor->end_time)->format('h:i A') }}
                                             </p>
                                             <p class="mt-2">
                                                 <x-status-badge status="{{ $allVisitor->status }}"/>
@@ -349,8 +352,12 @@
                                             </span>
                                         </p>
                                         <p class="text-sm text-gray-400 mt-2">
-                                            {{ \Carbon\Carbon::parse($myVisitor->expected_arrival)->format('M d, h:i A') }}
+                                            Visit Date: {{ \Carbon\Carbon::parse($allVisitor->visit_date)->format('M d') }}
                                         </p>
+                                        <p class="text-sm text-gray-400 mt-2">
+                                            Time: {{ \Carbon\Carbon::parse($allVisitor->start_time)->format('h:i A') }} - {{ \Carbon\Carbon::parse($allVisitor->end_time)->format('h:i A') }}
+                                        </p>
+
                                         <p class="mt-2">
                                             <x-status-badge status="{{ $myVisitor->status ?? 'Null' }}"/>
                                         </p>
