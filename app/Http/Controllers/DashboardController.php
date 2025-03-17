@@ -6,7 +6,7 @@ use App\Models\User;
 use App\Models\Visitor;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Gate; // Add this
+use Illuminate\Support\Facades\Gate;
 
 class DashboardController extends Controller
 {
@@ -14,46 +14,49 @@ class DashboardController extends Controller
     {
         $user = auth()->user();
 
-        // Existing daily visitor count (example)
-        $dailyVisitorCount = Gate::allows('view-all-visitors', $user)
-            ? Visitor::whereDate('created_at', Carbon::today())->count()
-            : Visitor::where('user_id', $user->id)->whereDate('created_at', Carbon::today())->count();
+        // Check if user has permission to view all visitors
+        $canViewAll = Gate::allows('view-all-visitors', $user);
 
-        // New checked-in visitor count
-        $checkedInVisitorCount = Gate::allows('view-all-visitors', $user)
+        // Daily visitor count
+        $dailyVisitorCount = $canViewAll
+            ? Visitor::whereDate('created_at', Carbon::today())->count()
+            : $user->visitors()->whereDate('created_at', Carbon::today())->count();
+
+        // Checked-in visitor count
+        $checkedInVisitorCount = $canViewAll
             ? Visitor::where('status', 'checked_in')->count()
-            : Visitor::where('user_id', $user->id)->where('status', 'checked_in')->count();
+            : $user->visitors()->where('status', 'checked_in')->count();
 
         // Data to pass to the view
         $data = [
             'user' => $user,
-            'myVisitors' => $this->getUserVisitors($user),
+            'myVisitors' => $this->getUserVisitors($user),  // Always shows user's own visitors
             'dailyVisitorCount' => $dailyVisitorCount,
             'checkedInVisitorCount' => $checkedInVisitorCount,
         ];
 
-        // Add all visitors if user has permission (example)
-        if (Gate::allows('view-all-visitors', $user)) {
+        // Add all visitors if user has permission
+        if ($canViewAll) {
             $data['allVisitors'] = $this->getAllVisitors();
         }
 
         return view('dashboard', $data);
     }
 
-    // Example method to get user's visitors (assumed existing)
+    // Get authenticated user's visitors
     protected function getUserVisitors(User $user)
     {
-        $query = Visitor::with('user')->latest();
-        if (!Gate::allows('view-all-visitors', $user)) {
-            $query->where('user_id', $user->id);
-        }
-        return $query->simplePaginate(8, ['*'], 'myVisitorsPage');
+        return $user->visitors()
+            ->with('user')
+            ->latest()
+            ->simplePaginate(8, ['*'], 'myVisitorsPage');
     }
 
-    // Example method to get all visitors (assumed existing)
+    // Get all visitors (only for authorized users)
     protected function getAllVisitors()
     {
-        return Visitor::latest()->simplePaginate(8, ['*'], 'allVisitorsPage');
+        return Visitor::with('user')
+            ->latest()
+            ->simplePaginate(8, ['*'], 'allVisitorsPage');
     }
-
 }
