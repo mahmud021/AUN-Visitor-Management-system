@@ -30,8 +30,13 @@ class AppServiceProvider extends ServiceProvider
             if (!$user->relationLoaded('user_details')) {
                 $user->load('user_details');
             }
+            // Deny access if the user's role is 'security'
+            if ($user->user_details->role === 'Security') {
+                return false;
+            }
             return $user->user_details && !$user->user_details->blacklist;
         });
+
 
         // New gate: only allow super admin and HR Admin to access user management routes.
         Gate::define('view-users', function ($user) {

@@ -146,10 +146,12 @@
                             </div>
                         </div>
                         <!-- Eye Icon -->
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye text-gray-500 dark:text-neutral-500">
-                            <path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/>
-                            <circle cx="12" cy="12" r="3"/>
-                        </svg>
+                        <button type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-basic-modal" data-hs-overlay="#hs-basic-modal">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye text-gray-500 dark:text-neutral-500">
+                                <path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/>
+                                <circle cx="12" cy="12" r="3"/>
+                            </svg>
+                        </button>
                     </div>
                     <div class="mt-1 flex items-center gap-x-2">
                         <h3 class="text-xl sm:text-2xl font-medium text-gray-800 dark:text-neutral-200">
@@ -183,10 +185,10 @@
                         </div>
                         <!-- Eye Icon -->
                         <button type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-basic-modal" data-hs-overlay="#hs-basic-modal">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye text-gray-500 dark:text-neutral-500">
-                            <path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/>
-                            <circle cx="12" cy="12" r="3"/>
-                        </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye text-gray-500 dark:text-neutral-500">
+                                <path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/>
+                                <circle cx="12" cy="12" r="3"/>
+                            </svg>
                         </button>
                     </div>
                     <div class="mt-1 flex items-center gap-x-2">
@@ -463,10 +465,10 @@
                                             </span>
                                         </p>
                                         <p class="text-sm text-gray-400 mt-2">
-                                            Visit Date: {{ \Carbon\Carbon::parse($allVisitor->visit_date)->format('M d') }}
+                                            Visit Date: {{ \Carbon\Carbon::parse($myVisitor->visit_date)->format('M d') }}
                                         </p>
                                         <p class="text-sm text-gray-400 mt-2">
-                                            Time: {{ \Carbon\Carbon::parse($allVisitor->start_time)->format('h:i A') }} - {{ \Carbon\Carbon::parse($allVisitor->end_time)->format('h:i A') }}
+                                            Time: {{ \Carbon\Carbon::parse($myVisitor->start_time)->format('h:i A') }} - {{ \Carbon\Carbon::parse($myVisitor->end_time)->format('h:i A') }}
                                         </p>
 
                                         <p class="mt-2">
