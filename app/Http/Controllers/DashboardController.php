@@ -26,6 +26,11 @@ class DashboardController extends Controller
             ? Visitor::where('status', 'checked_in')->count()
             : $user->visitors()->where('status', 'checked_in')->count();
 
+        $checkedInVisitors = $canViewAll
+            ? Visitor::where('status', 'checked_in')->get()
+            : $user->visitors()->where('status', 'checked_in')->get();
+
+
         // Overstaying visitors count.
         $overstayingVisitorCount = $canViewAll
             ? Visitor::where('status', 'checked_in')
@@ -42,6 +47,8 @@ class DashboardController extends Controller
             'dailyVisitorCount' => $dailyVisitorCount,
             'checkedInVisitorCount' => $checkedInVisitorCount,
             'overstayingVisitorCount' => $overstayingVisitorCount,
+            'checkedInVisitors'      => $checkedInVisitors, // Always pass the collection
+
         ];
 
         // Add all visitors if user has permission.
