@@ -1,7 +1,10 @@
 <div class="flex items-center justify-between">
-    <h2 class="font-semibold text-xl leading-tight text-white">
-        {{ $user->user_details->role }} Dashboard View
-    </h2>
+    <h1 class="text-xl font-bold text-white">
+        Welcome, {{ $user->user_details->user->first_name }}!
+    </h1>
+    <p class="text-sm text-gray-300">
+        {{ $user->user_details->role }} Dashboard
+    </p>
     <div class="flex items-center gap-4">
         <!-- Create Visitor Button -->
         <x-primary-button
