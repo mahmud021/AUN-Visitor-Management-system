@@ -21,6 +21,11 @@ class DashboardController extends Controller
             ? Visitor::whereDate('created_at', Carbon::today())->count()
             : $user->visitors()->whereDate('created_at', Carbon::today())->count();
 
+        // List of total visitors for today.
+        $totalVisitors = $canViewAll
+            ? Visitor::whereDate('created_at', Carbon::today())->get()
+            : $user->visitors()->whereDate('created_at', Carbon::today())->get();
+
         // Checked-in visitor count.
         $checkedInVisitorCount = $canViewAll
             ? Visitor::where('status', 'checked_in')->count()
@@ -44,6 +49,7 @@ class DashboardController extends Controller
             'dailyVisitorCount' => $dailyVisitorCount,
             'checkedInVisitorCount' => $checkedInVisitorCount,
             'overstayingVisitorCount' => $overstayingVisitorCount,
+            'totalVisitors' => $totalVisitors, // Pass the total visitors collection
             'overstayingVisitors' => $overstayingVisitors, // Pass the overstaying visitors collection
             'checkedInVisitors' => $canViewAll
                 ? Visitor::where('status', 'checked_in')->get()
