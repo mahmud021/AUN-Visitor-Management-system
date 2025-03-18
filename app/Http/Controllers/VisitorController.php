@@ -32,6 +32,9 @@ class VisitorController extends Controller
             'end_time'     => 'required|date_format:H:i|after:start_time',
         ]);
 
+        // Combine visit_date and end_time to ensure end_time is at the end of the day
+        $validated['end_time'] = Carbon::parse($validated['visit_date'] . ' ' . $validated['end_time']);
+
         // Associate the visitor with the logged-in user
         $validated['user_id'] = auth()->id();
 
@@ -52,7 +55,6 @@ class VisitorController extends Controller
 
         return redirect()->back()->with('success', 'Visitor created successfully.');
     }
-
     public function show(Visitor $visitor)
     {
         // Show a single visitor
@@ -75,7 +77,9 @@ class VisitorController extends Controller
             'status' => 'required|in:approved,denied,checked_in,checked_out',
         ]);
 
+        // Check if the visitor is trying to check in
         if ($request->input('status') === 'checked_in') {
+            // Validate the visitor code
             $request->validate([
                 'visitor_code'   => 'required|array',
                 'visitor_code.*' => 'required|string|size:1',
@@ -88,16 +92,26 @@ class VisitorController extends Controller
                 ]);
             }
 
+            // Ensure the visitor is checking in on the correct date
+            if (!Carbon::parse($visitor->visit_date)->isToday()) {
+                return redirect()->back()->withErrors([
+                    'checkin' => 'Visitors can only check in on their scheduled date.'
+                ]);
+            }
+
             $visitor->checked_in_at = now();
         }
 
+        // Handle check-out
         if ($request->input('status') === 'checked_out') {
             $visitor->checked_out_at = now();
         }
 
+        // Update the visitor status
         $visitor->status = $request->input('status');
         $visitor->save();
 
+        // Log the timeline event
         $description = match ($visitor->status) {
             'approved'   => 'Visitor approved by HR',
             'denied'     => 'Visitor denied',

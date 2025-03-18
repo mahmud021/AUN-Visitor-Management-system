@@ -33,105 +33,37 @@
                             @if($allVisitor->status == 'pending')
                                 @if(auth()->user()?->user_details?->role === 'HR Admin' || auth()->user()?->user_details?->role === 'super admin')
                                     <!-- Approve Form -->
-                                    <form action="{{ route('visitors.update', $allVisitor->id) }}"
-                                          method="POST" class="inline">
+                                    <form action="{{ route('visitors.update', $allVisitor->id) }}" method="POST" class="inline">
                                         @csrf
                                         @method('PATCH')
                                         <input type="hidden" name="status" value="approved">
-                                        <input type="hidden" name="redirect_to"
-                                               value="{{ route('dashboard') }}">
-                                        <x-primary-button
-                                            class="bg-green-600 hover:bg-green-700 text-white">
+                                        <input type="hidden" name="redirect_to" value="{{ route('dashboard') }}">
+                                        <x-primary-button class="bg-green-600 hover:bg-green-700 text-white">
                                             Approve
                                         </x-primary-button>
                                     </form>
 
                                     <!-- Deny Form -->
-                                    <form action="{{ route('visitors.update', $allVisitor->id) }}"
-                                          method="POST" class="inline ml-2">
+                                    <form action="{{ route('visitors.update', $allVisitor->id) }}" method="POST" class="inline ml-2">
                                         @csrf
                                         @method('PATCH')
                                         <input type="hidden" name="status" value="denied">
-                                        <input type="hidden" name="redirect_to"
-                                               value="{{ route('dashboard') }}">
-                                        <x-primary-button
-                                            class="bg-red-600 hover:bg-red-700 text-white">
+                                        <input type="hidden" name="redirect_to" value="{{ route('dashboard') }}">
+                                        <x-primary-button class="bg-red-600 hover:bg-red-700 text-white">
                                             Deny
                                         </x-primary-button>
                                     </form>
                                 @endif
                             @elseif($allVisitor->status == 'approved')
-                                <!-- Check-in Form -->
-                                <form action="{{ route('visitors.update', $allVisitor->id) }}"
-                                      method="POST" class="inline">
-                                    @csrf
-                                    @method('PATCH')
-                                    <input type="hidden" name="status" value="checked_in">
-                                    <input type="hidden" name="redirect_to"
-                                           value="{{ route('dashboard') }}">
-
-                                    <div class="flex items-center gap-2 mb-4">
-                                        <x-primary-button
-                                            class="bg-gray-700 hover:bg-gray-600 text-white">
-                                            Check In
-                                        </x-primary-button>
-                                    </div>
-                                    <div>
-                                        <label for="visitor_code"
-                                               class="block text-sm font-medium mb-2">
-                                            Enter Visitor Code
-                                        </label>
-                                        <div
-                                            class="py-2 px-3 bg-brand-900 border border-brand-700 rounded-lg">
-                                            <div class="flex gap-x-3" data-hs-pin-input>
-                                                <input
-                                                    id="visitor_code_1"
-                                                    class="w-8 h-8 text-sm text-center p-0 border-brand-700 rounded-md focus:border-brand-500 focus:ring-brand-500 bg-brand-900 text-brand-200"
-                                                    type="text"
-                                                    placeholder="○"
-                                                    data-hs-pin-input-item
-                                                    autofocus
-                                                    name="visitor_code[]"
-                                                >
-                                                <input
-                                                    id="visitor_code_2"
-                                                    class="w-8 h-8 text-sm text-center p-0 border-brand-700 rounded-md focus:border-brand-500 focus:ring-brand-500 bg-brand-900 text-brand-200"
-                                                    type="text"
-                                                    placeholder="○"
-                                                    data-hs-pin-input-item
-                                                    name="visitor_code[]"
-                                                >
-                                                <input
-                                                    id="visitor_code_3"
-                                                    class="w-8 h-8 text-sm text-center p-0 border-brand-700 rounded-md focus:border-brand-500 focus:ring-brand-500 bg-brand-900 text-brand-200"
-                                                    type="text"
-                                                    placeholder="○"
-                                                    data-hs-pin-input-item
-                                                    name="visitor_code[]"
-                                                >
-                                                <input
-                                                    id="visitor_code_4"
-                                                    class="w-8 h-8 text-sm text-center p-0 border-brand-700 rounded-md focus:border-brand-500 focus:ring-brand-500 bg-brand-900 text-brand-200"
-                                                    type="text"
-                                                    placeholder="○"
-                                                    data-hs-pin-input-item
-                                                    name="visitor_code[]"
-                                                >
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
+                                @include('visitors.partials.checkin_form', ['visitor' => $allVisitor])
                             @elseif($allVisitor->status == 'checked_in')
                                 <!-- Check-out Form -->
-                                <form action="{{ route('visitors.update', $allVisitor->id) }}"
-                                      method="POST" class="inline">
+                                <form action="{{ route('visitors.update', $allVisitor->id) }}" method="POST" class="inline">
                                     @csrf
                                     @method('PATCH')
                                     <input type="hidden" name="status" value="checked_out">
-                                    <input type="hidden" name="redirect_to"
-                                           value="{{ route('dashboard') }}">
-                                    <x-primary-button
-                                        class="bg-gray-700 hover:bg-gray-600 text-white">
+                                    <input type="hidden" name="redirect_to" value="{{ route('dashboard') }}">
+                                    <x-primary-button class="bg-gray-700 hover:bg-gray-600 text-white">
                                         Check Out
                                     </x-primary-button>
                                 </form>
