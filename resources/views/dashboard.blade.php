@@ -31,7 +31,8 @@
     </div>
 
     <!-- Create Visitor Modal -->
-    <form method="POST" action="{{ route('visitors.store') }}">
+    <!-- Create Visitor Modal -->
+    <form method="POST" action="{{ route('visitors.store') }}" onsubmit="disableSubmitButton(this)">
         @csrf
         <x-modal.wrapper id="hs-scale-animation-modal">
             <x-modal.header title="Create Visitor" modalId="hs-scale-animation-modal" />
@@ -57,22 +58,23 @@
                     </div>
                     <div class="space-y-2">
                         <x-form.input name="visit_date" label="Visit Date" type="date"
-                                      value="{{ old('visit_date') }}"
+                                      value="{{ old('visit_date', \Carbon\Carbon::now()->toDateString()) }}"
                                       class="bg-gray-800 border-gray-700 text-gray-200"/>
                         <x-input-error :messages="$errors->get('visit_date')" class="mt-1"/>
                     </div>
                     <div class="space-y-2">
                         <x-form.input name="start_time" label="Start Time" type="time"
-                                      value="{{ old('start_time') }}"
+                                      value="{{ old('start_time', \Carbon\Carbon::now()->format('H:i')) }}"
                                       class="bg-gray-800 border-gray-700 text-gray-200"/>
                         <x-input-error :messages="$errors->get('start_time')" class="mt-1"/>
                     </div>
                     <div class="space-y-2">
                         <x-form.input name="end_time" label="End Time" type="time"
-                                      value="{{ old('end_time') }}"
+                                      value="{{ old('end_time', \Carbon\Carbon::now()->addHour()->format('H:i')) }}"
                                       class="bg-gray-800 border-gray-700 text-gray-200"/>
                         <x-input-error :messages="$errors->get('end_time')" class="mt-1"/>
                     </div>
+
                 </div>
             </div>
             <x-modal.footer class="bg-gray-900">
@@ -82,6 +84,18 @@
             </x-modal.footer>
         </x-modal.wrapper>
     </form>
+
+    <script>
+        function disableSubmitButton(form) {
+            // Get the submit button inside the form.
+            const submitButton = form.querySelector('button[type="submit"], input[type="submit"], x-primary-button');
+            if (submitButton) {
+                submitButton.disabled = true;
+                // Optionally change the button text to provide feedback.
+                submitButton.innerText = 'Submitting...';
+            }
+        }
+    </script>
 
     <!-- Other Modals (Total Visitors, Active Visitors, Overstaying Visitors) -->
     <x-dashboard.modals
