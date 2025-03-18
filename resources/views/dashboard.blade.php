@@ -1,15 +1,15 @@
-
 <x-app-layout>
-
     <x-slot name="header">
-        <!-- Extracted header component -->
+        <!-- Header with Create Visitor and Logout buttons -->
         <x-dashboard.header :user="$user" />
     </x-slot>
 
+    <!-- Dashboard Cards -->
     <div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
-        <p class="text-cyan-700">Current time: {{ \Illuminate\Support\Carbon::now()->format('h:i A') }}</p>
+        <p class="text-cyan-700">
+            Current time: {{ \Illuminate\Support\Carbon::now()->format('h:i A') }}
+        </p>
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-            <!-- Reusable card components -->
             <x-dashboard.card
                 title="Total Visitors Today"
                 :count="$dailyVisitorCount"
@@ -30,13 +30,66 @@
         </div>
     </div>
 
-    <!-- Include modal components -->
+    <!-- Create Visitor Modal -->
+    <form method="POST" action="{{ route('visitors.store') }}">
+        @csrf
+        <x-modal.wrapper id="hs-scale-animation-modal">
+            <x-modal.header title="Create Visitor" modalId="hs-scale-animation-modal" />
+            <div class="p-4 overflow-y-auto bg-brand-900 text-gray-100">
+                <div class="grid grid-cols-1 gap-4 lg:gap-4">
+                    <div class="space-y-2">
+                        <x-form.input name="first_name" label="First Name" type="text"
+                                      value="{{ old('first_name') }}"
+                                      class="bg-gray-800 border-gray-700 text-gray-200"/>
+                        <x-input-error :messages="$errors->get('first_name')" class="mt-1"/>
+                    </div>
+                    <div class="space-y-2">
+                        <x-form.input name="last_name" label="Last Name" type="text"
+                                      value="{{ old('last_name') }}"
+                                      class="bg-gray-800 border-gray-700 text-gray-200"/>
+                        <x-input-error :messages="$errors->get('last_name')" class="mt-1"/>
+                    </div>
+                    <div class="space-y-2">
+                        <x-form.input name="telephone" label="Telephone Number" type="text"
+                                      value="{{ old('telephone') }}"
+                                      class="bg-gray-800 border-gray-700 text-gray-200"/>
+                        <x-input-error :messages="$errors->get('telephone')" class="mt-1"/>
+                    </div>
+                    <div class="space-y-2">
+                        <x-form.input name="visit_date" label="Visit Date" type="date"
+                                      value="{{ old('visit_date') }}"
+                                      class="bg-gray-800 border-gray-700 text-gray-200"/>
+                        <x-input-error :messages="$errors->get('visit_date')" class="mt-1"/>
+                    </div>
+                    <div class="space-y-2">
+                        <x-form.input name="start_time" label="Start Time" type="time"
+                                      value="{{ old('start_time') }}"
+                                      class="bg-gray-800 border-gray-700 text-gray-200"/>
+                        <x-input-error :messages="$errors->get('start_time')" class="mt-1"/>
+                    </div>
+                    <div class="space-y-2">
+                        <x-form.input name="end_time" label="End Time" type="time"
+                                      value="{{ old('end_time') }}"
+                                      class="bg-gray-800 border-gray-700 text-gray-200"/>
+                        <x-input-error :messages="$errors->get('end_time')" class="mt-1"/>
+                    </div>
+                </div>
+            </div>
+            <x-modal.footer class="bg-gray-900">
+                <x-primary-button type="submit" class="bg-gray-700 hover:bg-gray-600 text-white">
+                    Submit
+                </x-primary-button>
+            </x-modal.footer>
+        </x-modal.wrapper>
+    </form>
+
+    <!-- Other Modals (Total Visitors, Active Visitors, Overstaying Visitors) -->
     <x-dashboard.modals
         :totalVisitors="$totalVisitors"
         :checkedInVisitors="$checkedInVisitors"
         :overstayingVisitors="$overstayingVisitors" />
 
-    <!-- Dashboard content for all visitors and my visitors -->
+    <!-- Additional Dashboard Content -->
     <div class="py-12 bg-primary text-white min-h-screen">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="overflow-hidden shadow-sm sm:rounded-lg">
