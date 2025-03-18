@@ -196,8 +196,8 @@
             <!-- End Card 2 -->
 
             <!-- Card 3: Overstaying Visitors Today -->
-            <div
-                class="flex flex-col bg-white border border-gray-200 shadow-2xs rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
+            <!-- Card 3: Overstaying Visitors Today -->
+            <div class="flex flex-col bg-white border border-gray-200 shadow-2xs rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
                 <div class="p-4 md:p-5">
                     <div class="flex items-center justify-between gap-x-2">
                         <div class="flex items-center gap-x-2">
@@ -217,19 +217,18 @@
                                     <span
                                         class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-2xs dark:bg-neutral-700"
                                         role="tooltip">
-                                    The number of overstaying users
-                                </span>
+                            The number of overstaying users
+                        </span>
                                 </div>
                             </div>
                         </div>
                         <!-- Eye Icon -->
                         <button type="button" aria-haspopup="dialog" aria-expanded="false"
-                                aria-controls="hs-basic-modal" data-hs-overlay="#hs-basic-modal">
+                                aria-controls="hs-overstaying-modal" data-hs-overlay="#hs-overstaying-modal">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
                                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                  stroke-linejoin="round" class="lucide lucide-eye text-gray-500 dark:text-neutral-500">
-                                <path
-                                    d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/>
+                                <path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/>
                                 <circle cx="12" cy="12" r="3"/>
                             </svg>
                         </button>
@@ -248,7 +247,7 @@
     <!-- Button to Open the Modal -->
 
 
-    <!-- Updated Modal with Scroll Effect and Visitor List -->
+    <!-- Active visitors -->
     <div id="hs-basic-modal"
          class="hs-overlay hidden size-full fixed top-0 start-0 z-[80] overflow-x-hidden overflow-y-auto" role="dialog"
          tabindex="-1" aria-labelledby="hs-basic-modal-label">
@@ -274,7 +273,7 @@
                         </svg>
                     </button>
                 </div>
-                <!-- Modal Body with Scroll -->
+                <!-- Modal Body with Scroll for Active vistors -->
                 <div class="p-4 overflow-y-auto">
                     <!-- Filter Input -->
                     <div class="mb-4">
@@ -328,6 +327,92 @@
                     <button type="button"
                             class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-2xs hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
                             data-hs-overlay="#hs-basic-modal">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal for Overstaying Visitors -->
+    <div id="hs-overstaying-modal"
+         class="hs-overlay hidden size-full fixed top-0 start-0 z-[80] overflow-x-hidden overflow-y-auto" role="dialog"
+         tabindex="-1" aria-labelledby="hs-overstaying-modal-label">
+        <div
+            class="hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 mt-0 opacity-0 ease-out transition-all sm:max-w-lg sm:w-full m-3 sm:mx-auto h-[calc(100%-56px)]">
+            <div
+                class="max-h-full overflow-hidden flex flex-col bg-white border border-gray-200 shadow-2xs rounded-xl pointer-events-auto dark:bg-neutral-800 dark:border-neutral-700 dark:shadow-neutral-700/70">
+                <!-- Modal Header -->
+                <div
+                    class="flex justify-between items-center py-3 px-4 border-b border-gray-200 dark:border-neutral-700">
+                    <h3 id="hs-overstaying-modal-label" class="font-bold text-gray-800 dark:text-white">
+                        Overstaying Visitors
+                    </h3>
+                    <button type="button"
+                            class="size-8 inline-flex justify-center items-center gap-x-2 rounded-full border border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 focus:outline-none focus:bg-gray-200 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-700 dark:hover:bg-neutral-600 dark:text-neutral-400 dark:focus:bg-neutral-600"
+                            aria-label="Close" data-hs-overlay="#hs-overstaying-modal">
+                        <span class="sr-only">Close</span>
+                        <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                             stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 6 6 18"></path>
+                            <path d="m6 6 12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+                <!-- Modal Body with Scroll for Overstaying Visitors -->
+                <div class="p-4 overflow-y-auto">
+                    <!-- Filter Input -->
+                    <div class="mb-4">
+                        <input type="text" id="overstaying-filter" placeholder="Search overstaying visitors..."
+                               class="w-full py-2 px-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:placeholder-neutral-400">
+                    </div>
+                    <!-- Visitor Table -->
+                    <table class="min-w-full divide-y divide-gray-200 dark:divide-neutral-700">
+                        <thead>
+                        <tr>
+                            <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase dark:text-neutral-400">
+                                Name
+                            </th>
+                            <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase dark:text-neutral-400">
+                                Visit End Time
+                            </th>
+                            <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase dark:text-neutral-400">
+                                Host
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody id="overstaying-table-body" class="divide-y divide-gray-200 dark:divide-neutral-700">
+                        @foreach ($overstayingVisitors as $visitor)
+                            <tr class="visitor-row">
+                                <td class="px-4 py-2 whitespace-nowrap">
+                                <span class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">
+                                    {{ $visitor->first_name ?? 'Null' }} {{ $visitor->last_name ?? 'Null' }}
+                                </span>
+                                    <span class="block text-sm text-gray-500 dark:text-neutral-500">
+                                    {{ $visitor->telephone ?? 'Null' }}
+                                </span>
+                                </td>
+                                <td class="px-4 py-2 whitespace-nowrap">
+                                <span class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">
+                                    {{ Carbon::parse($visitor->end_time)->format('h:i A') }}
+                                </span>
+                                </td>
+                                <td class="px-4 py-2 whitespace-nowrap">
+                                <span class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">
+                                    {{ $visitor->user->user_details->school_id ?? 'Null' }}
+                                </span>
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Modal Footer -->
+                <div
+                    class="flex justify-end items-center gap-x-2 py-3 px-4 border-t border-gray-200 dark:border-neutral-700">
+                    <button type="button"
+                            class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-2xs hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
+                            data-hs-overlay="#hs-overstaying-modal">
                         Close
                     </button>
                 </div>

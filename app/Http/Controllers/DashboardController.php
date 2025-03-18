@@ -26,19 +26,16 @@ class DashboardController extends Controller
             ? Visitor::where('status', 'checked_in')->count()
             : $user->visitors()->where('status', 'checked_in')->count();
 
-        $checkedInVisitors = $canViewAll
-            ? Visitor::where('status', 'checked_in')->get()
-            : $user->visitors()->where('status', 'checked_in')->get();
-
-
-        // Overstaying visitors count.
-        $overstayingVisitorCount = $canViewAll
+        // Overstaying visitors count and list.
+        $overstayingVisitors = $canViewAll
             ? Visitor::where('status', 'checked_in')
                 ->where('end_time', '<', Carbon::now())
-                ->count()
+                ->get()
             : $user->visitors()->where('status', 'checked_in')
                 ->where('end_time', '<', Carbon::now())
-                ->count();
+                ->get();
+
+        $overstayingVisitorCount = $overstayingVisitors->count();
 
         // Data to pass to the view.
         $data = [
@@ -47,8 +44,10 @@ class DashboardController extends Controller
             'dailyVisitorCount' => $dailyVisitorCount,
             'checkedInVisitorCount' => $checkedInVisitorCount,
             'overstayingVisitorCount' => $overstayingVisitorCount,
-            'checkedInVisitors'      => $checkedInVisitors, // Always pass the collection
-
+            'overstayingVisitors' => $overstayingVisitors, // Pass the overstaying visitors collection
+            'checkedInVisitors' => $canViewAll
+                ? Visitor::where('status', 'checked_in')->get()
+                : $user->visitors()->where('status', 'checked_in')->get(),
         ];
 
         // Add all visitors if user has permission.
@@ -58,7 +57,6 @@ class DashboardController extends Controller
 
         return view('dashboard', $data);
     }
-
     // Get authenticated user's visitors.
     protected function getUserVisitors(User $user)
     {
