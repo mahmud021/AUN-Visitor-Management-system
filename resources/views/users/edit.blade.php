@@ -10,7 +10,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
 
             <!-- User Information Update Section -->
-            <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
+            <div class="p-4 sm:p-8  bg-brand-900 shadow sm:rounded-lg">
                 <div class="max-w-xl">
                     <section>
                         <header>
@@ -147,7 +147,7 @@
                 </div>
             </div>
             <!-- Update Password Section -->
-            <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
+            <div class="p-4 sm:p-8 bg-brand-900 shadow sm:rounded-lg">
                 <div class="max-w-xl">
                     <section>
                         <header>
@@ -201,7 +201,7 @@
             </div>
 
             <!-- Delete User Section -->
-            <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
+            <div class="p-4 sm:p-8 bg-brand-900 shadow sm:rounded-lg">
                 <div class="max-w-xl">
                     <section class="space-y-6">
                         <header>
