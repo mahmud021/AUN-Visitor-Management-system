@@ -32,19 +32,20 @@ class VisitorController extends Controller
             'end_time'     => 'required|date_format:H:i|after:start_time',
         ]);
 
-        // Combine visit_date and end_time to ensure end_time is at the end of the day
+        // Combine visit_date and end_time to ensure proper datetime handling
         $validated['end_time'] = Carbon::parse($validated['visit_date'] . ' ' . $validated['end_time']);
 
-        // Associate the visitor with the logged-in user
+        // Associate the visitor with the logged-in user and set initial status to pending
         $validated['user_id'] = auth()->id();
+        $validated['status'] = 'pending';
 
         // Generate a random 4-digit visitor code
         $validated['visitor_code'] = str_pad(rand(0, 9999), 4, '0', STR_PAD_LEFT);
 
-        // Create the visitor
+        // Create the visitor record
         $visitor = Visitor::create($validated);
 
-        // Log the timeline event for visitor creation
+        // Log timeline event for visitor creation
         TimelineEvent::create([
             'visitor_id'  => $visitor->id,
             'user_id'     => auth()->id(),
@@ -52,6 +53,18 @@ class VisitorController extends Controller
             'description' => 'Visitor record created',
             'occurred_at' => now(),
         ]);
+
+        // Check if the user's details have bypass_hr_approval enabled
+        if (auth()->user()->user_details->bypass_hr_approval) {
+            $visitor->update(['status' => 'approved']);
+            TimelineEvent::create([
+                'visitor_id'  => $visitor->id,
+                'user_id'     => auth()->id(),
+                'event_type'  => 'approved',
+                'description' => 'Visitor auto-approved',
+                'occurred_at' => now(),
+            ]);
+        }
 
         return redirect()->back()->with('success', 'Visitor created successfully.');
     }

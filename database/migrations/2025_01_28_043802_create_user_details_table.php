@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('status');
             $table->string('telephone');
             $table->boolean('blacklist')->default(false);
+            $table->boolean('bypass_hr_approval')->default(true);
             $table->timestamps();
         });
     }

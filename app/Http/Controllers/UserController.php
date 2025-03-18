@@ -21,7 +21,6 @@ class UserController extends Controller
         return view('users.index', compact('users'));
     }
 
-
     public function visitorLogs(User $user)
     {
         // Get visitors for this user
@@ -33,8 +32,6 @@ class UserController extends Controller
             'visitors' => $visitors,  // collection of visitors
         ]);
     }
-
-
 
     /**
      * Show the form for creating a new resource.
@@ -60,16 +57,15 @@ class UserController extends Controller
             'first_name' => 'required|string|max:20',
             'last_name' => 'required|string|max:20',
             'email' => 'required|email|max:255|unique:users,email',
-            'password' => 'required|min:8|',
+            'password' => 'required|min:8',
             'role' => ['required', Rule::in(array_keys(UserDetails::getRoles()))],
             'status' => ['required', Rule::in(array_keys(UserDetails::getStatuses()))],
             'school_id' => 'required|string|unique:user_details,school_id',
             'telephone' => ['required', 'string', 'regex:/^0\d{10}$/', 'min:11', 'max:11'],
-            'blacklist' => 'boolean', // Ensure it accepts true/false
-
+            'blacklist' => 'boolean',
+            // bypass_hr_approval is not required here because the migration default is true.
         ], [
             'school_id.unique' => 'This School ID is already assigned to another user.',
-
         ]);
 
         // Create the user
@@ -81,13 +77,17 @@ class UserController extends Controller
             'remember_token' => Str::random(60),
         ]);
 
-        // Create the user details record
+        // Create the user details record.
+        // Note: bypass_hr_approval will default to true per your migration if not provided.
         UserDetails::create([
             'role' => $validated['role'],
             'status' => $validated['status'],
             'school_id' => $validated['school_id'],
             'telephone' => $validated['telephone'],
+            'blacklist' => $validated['blacklist'] ?? false,
             'user_id' => $user->id,
+            // If you need to explicitly set bypass_hr_approval during creation,
+            // you could do so here (e.g., 'bypass_hr_approval' => $request->input('bypass_hr_approval', true)).
         ]);
 
         return redirect()->route('user.index')
@@ -109,7 +109,7 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        // In your controller
+        // Validate the incoming data including the new bypass toggle.
         $validated = $request->validate([
             'first_name' => 'required|string',
             'last_name' => 'required|string',
@@ -119,7 +119,7 @@ class UserController extends Controller
             'school_id' => 'required|string',
             'blacklist' => 'boolean',
             'telephone' => ['required', 'string', 'regex:/^0\d{10}$/', 'min:11', 'max:11'],
-
+            'bypass_hr_approval' => 'sometimes|boolean',
         ]);
 
         // Update the user's basic information
@@ -129,13 +129,15 @@ class UserController extends Controller
             'email' => $validated['email'],
         ]);
 
-        // Update the user's related details
+        // Update the user's related details, including the bypass flag.
         $user->user_details->update([
             'role' => $validated['role'],
             'status' => $validated['status'],
             'blacklist' => $validated['blacklist'],
             'school_id' => $validated['school_id'],
             'telephone' => $validated['telephone'],
+            // Use the validated value if provided; otherwise, keep the current value.
+            'bypass_hr_approval' => $validated['bypass_hr_approval'] ?? $user->user_details->bypass_hr_approval,
         ]);
 
         return redirect()->route('user.show', $user->id)
@@ -160,7 +162,6 @@ class UserController extends Controller
         return redirect()->route('user.show', $user->id)
             ->with('password_success', 'User password updated successfully.');
     }
-
 
     /**
      * Remove the specified resource from storage.
