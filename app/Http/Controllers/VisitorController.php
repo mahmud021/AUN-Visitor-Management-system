@@ -75,7 +75,7 @@ class VisitorController extends Controller
 
     public function edit(Visitor $visitor)
     {
-        // Edit visitor form
+        return view('visitors.edit', compact('visitor'));
     }
 
     public function timeline(Visitor $visitor)

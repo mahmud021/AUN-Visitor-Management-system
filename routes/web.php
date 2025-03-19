@@ -35,14 +35,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Visitor Management
     Route::prefix('visitors')->name('visitors.')->group(function () {
         Route::get('/', [VisitorController::class, 'index'])->name('index')->middleware('can:view-all-visitors');
-        Route::get('/create', [VisitorController::class, 'create'])
-            ->name('create');
-        Route::post('/', [VisitorController::class, 'store'])
-            ->name('store')
-            ->middleware('can:create-visitor');
-        Route::get('/{visitor}/timeline', [VisitorController::class, 'timeline'])->name('timeline');
+        Route::get('/create', [VisitorController::class, 'create'])->name('create');
+        Route::post('/', [VisitorController::class, 'store'])->name('store')->middleware('can:create-visitor');
+        Route::get('/{visitor}/edit', [VisitorController::class, 'edit'])->name('edit');
         Route::patch('/{visitor}', [VisitorController::class, 'update'])->name('update')->middleware('can:view-all-visitors');
+        Route::get('/{visitor}/timeline', [VisitorController::class, 'timeline'])->name('timeline');
     });
+
 
     // Appointment
     Route::get('/appointment', [AppointmentController::class, 'index'])->name('appointment');
