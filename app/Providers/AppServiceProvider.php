@@ -26,14 +26,23 @@ class AppServiceProvider extends ServiceProvider
             return in_array($user->user_details->role, ['Security', 'super admin', 'HR Admin']);
         });
 
-        Gate::define('edit-visitor', function ($user, $visitor) {
-            // If the visitor is checked in, only allow editing for HR Admin and super admin.
-            if ($visitor->status === 'checked_in') {
-                return in_array($user->user_details->role, ['HR Admin', 'super admin']);
+        Gate::define('update-visitor', function ($user, $visitor) {
+            // Super admin and HR Admin can update any visitor record.
+            if (in_array($user->user_details->role, ['HR Admin', 'super admin'])) {
+                return true;
             }
-            // Otherwise, anyone with access to visitor management can edit.
-            return true;
+
+            // For all other users:
+            // If the visitor is already checked in, disallow updating.
+            if ($visitor->status === 'checked_in') {
+                return false;
+            }
+
+            // Otherwise, allow update if the visitor belongs to the user.
+            return $visitor->user_id === $user->id;
         });
+
+
 
 
         Gate::define('create-visitor', function ($user) {

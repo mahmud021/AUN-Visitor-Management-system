@@ -149,7 +149,7 @@ class VisitorController extends Controller
         }
 
         // Use the new 'edit-visitor' gate to check if the user can update personal details.
-        Gate::authorize('edit-visitor', $visitor);
+        Gate::authorize('update-visitor', $visitor);
 
         // Validate personal details.
         $validated = $request->validate([
