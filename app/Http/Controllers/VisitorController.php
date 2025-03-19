@@ -6,6 +6,7 @@ use App\Models\TimelineEvent;
 use App\Models\Visitor;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Gate;
 
 class VisitorController extends Controller
 {
@@ -87,15 +88,15 @@ class VisitorController extends Controller
      */
     public function update(Request $request, Visitor $visitor)
     {
-        // If the request includes a 'status', assume it’s a check-in/out update.
+        // If the request includes a 'status', process check‑in/out logic.
         if ($request->has('status')) {
             $request->validate([
                 'status' => 'required|in:approved,denied,checked_in,checked_out',
             ]);
 
-            // Check if the visitor is trying to check in
+            // Check if the visitor is trying to check in.
             if ($request->input('status') === 'checked_in') {
-                // Validate the visitor code
+                // Validate the visitor code.
                 $request->validate([
                     'visitor_code'   => 'required|array',
                     'visitor_code.*' => 'required|string|size:1',
@@ -108,7 +109,7 @@ class VisitorController extends Controller
                     ]);
                 }
 
-                // Ensure the visitor is checking in on the correct date
+                // Ensure the visitor is checking in on the correct date.
                 if (!Carbon::parse($visitor->visit_date)->isToday()) {
                     return redirect()->back()->withErrors([
                         'checkin' => 'Visitors can only check in on their scheduled date.'
@@ -118,16 +119,16 @@ class VisitorController extends Controller
                 $visitor->checked_in_at = now();
             }
 
-            // Handle check-out
+            // Handle check-out.
             if ($request->input('status') === 'checked_out') {
                 $visitor->checked_out_at = now();
             }
 
-            // Update the visitor status
+            // Update the visitor status.
             $visitor->status = $request->input('status');
             $visitor->save();
 
-            // Log the timeline event based on status
+            // Log the timeline event.
             $description = match ($visitor->status) {
                 'approved'   => 'Visitor approved by HR',
                 'denied'     => 'Visitor denied',
@@ -147,15 +148,10 @@ class VisitorController extends Controller
             return redirect()->back()->with('success', 'Visitor status updated successfully.');
         }
 
-        // Otherwise, assume it's a personal details update.
-        // If the visitor is already checked in and the user isn't HR, disallow editing.
-        if ($visitor->status === 'checked_in' && !auth()->user()->is_hr) {
-            return redirect()->back()->withErrors([
-                'error' => 'Visitor details cannot be edited once they have checked in.'
-            ]);
-        }
+        // Use the new 'edit-visitor' gate to check if the user can update personal details.
+        Gate::authorize('edit-visitor', $visitor);
 
-        // Validate personal details
+        // Validate personal details.
         $validated = $request->validate([
             'first_name' => 'required|string|max:20',
             'last_name'  => 'required|string|max:20',
@@ -165,7 +161,7 @@ class VisitorController extends Controller
             'end_time'   => 'required|date_format:H:i|after:start_time',
         ]);
 
-        // Assign each field explicitly (model casts will format these properly)
+        // Explicitly assign each field.
         $visitor->first_name = $validated['first_name'];
         $visitor->last_name  = $validated['last_name'];
         $visitor->telephone  = $validated['telephone'];
@@ -174,7 +170,7 @@ class VisitorController extends Controller
         $visitor->end_time   = $validated['end_time'];
         $visitor->save();
 
-        // Log a timeline event for updating personal details
+        // Log a timeline event for updating personal details.
         TimelineEvent::create([
             'visitor_id'  => $visitor->id,
             'user_id'     => auth()->id(),
