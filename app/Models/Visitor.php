@@ -11,7 +11,14 @@ class Visitor extends Model
     /** @use HasFactory<\Database\Factories\VisitorFactory> */
     use HasFactory;
 
-    protected $guarded = [];
+    protected $casts = [
+        'visit_date' => 'date',
+        'start_time' => 'datetime:H:i',
+        'end_time' => 'datetime:H:i',
+    ];
+
+    protected $fillable = ['first_name', 'last_name', 'telephone', 'visit_date', 'start_time', 'end_time'];
+
 
     public function user(): belongsTo
     {

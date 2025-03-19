@@ -57,7 +57,7 @@
                             <div>
                                 <x-input-label for="visit_date" :value="__('Date')"/>
                                 <x-text-input id="visit_date" name="visit_date" type="date" class="mt-1 block w-full"
-                                              :value="old('visit_date', $visitor->visit_date)" required/>
+                                              value="{{ old('visit_date', $visitor->visit_date ? $visitor->visit_date->format('Y-m-d') : '') }}" required/>
                                 <x-input-error class="mt-2" :messages="$errors->get('visit_date')"/>
                             </div>
 
@@ -65,17 +65,15 @@
                             <div>
                                 <x-input-label for="start_time" :value="__('Start Time')"/>
                                 <x-text-input id="start_time" name="start_time" type="time" class="mt-1 block w-full"
-                                              :value="old('start_time', $visitor->start_time)" required/>
+                                              value="{{ old('start_time', $visitor->start_time ? $visitor->start_time->format('H:i') : '') }}" required/>
                                 <x-input-error class="mt-2" :messages="$errors->get('start_time')"/>
                             </div>
-
-
 
                             <!-- End Time -->
                             <div>
                                 <x-input-label for="end_time" :value="__('End Time')"/>
                                 <x-text-input id="end_time" name="end_time" type="time" class="mt-1 block w-full"
-                                              :value="old('end_time', $visitor->end_time)" required/>
+                                              value="{{ old('end_time', $visitor->end_time ? $visitor->end_time->format('H:i') : '') }}" required/>
                                 <x-input-error class="mt-2" :messages="$errors->get('end_time')"/>
                             </div>
 
