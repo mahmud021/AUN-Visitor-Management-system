@@ -17,7 +17,7 @@ class Visitor extends Model
         'end_time' => 'datetime:H:i',
     ];
 
-    protected $fillable = ['first_name', 'last_name', 'telephone', 'visit_date', 'start_time', 'end_time'];
+    protected $guarded = [ ];
 
 
     public function user(): belongsTo
