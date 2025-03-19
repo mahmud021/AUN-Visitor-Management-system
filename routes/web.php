@@ -37,11 +37,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/', [VisitorController::class, 'index'])->name('index')->middleware('can:view-all-visitors');
         Route::get('/create', [VisitorController::class, 'create'])->name('create');
         Route::post('/', [VisitorController::class, 'store'])->name('store')->middleware('can:create-visitor');
-        Route::get('/{visitor}/edit', [VisitorController::class, 'edit'])->name('edit');
+        Route::get('/{visitor}/edit', [VisitorController::class, 'edit'])
+            ->name('edit')
+            ->middleware('can:update-visitor,visitor');
         Route::patch('/{visitor}', [VisitorController::class, 'update'])
             ->name('update')
             ->middleware('can:update-visitor,visitor');
-        Route::get('/{visitor}/timeline', [VisitorController::class, 'timeline'])->name('timeline');
+        Route::get('/{visitor}/timeline', [VisitorController::class, 'timeline'])
+            ->name('timeline')
+            ->middleware('can:update-visitor,visitor');
     });
 
 
