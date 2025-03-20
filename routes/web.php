@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AnalyticsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
@@ -47,6 +48,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
             ->name('timeline')
             ->middleware('can:update-visitor,visitor');
     });
+
+
+    Route::get('/analytics', [AnalyticsController::class, 'index'])->name('analytics.index');
+
+
 
 
     // Appointment

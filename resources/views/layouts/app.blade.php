@@ -13,7 +13,7 @@
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-
+    <link rel="stylesheet" href="./node_modules/apexcharts/dist/apexcharts.css">
     <!-- Preline CSS -->
 {{--    <link href="https://cdn.jsdelivr.net/npm/preline@latest/dist/preline.min.css" rel="stylesheet">--}}
 
@@ -49,5 +49,7 @@
 @include('components.flash-toast')
 <script src="https://cdn.jsdelivr.net/npm/preline@2.7.0/dist/preline.min.js"></script>
 <script src="/public/js/preline.min.js"></script>
+<script src="./node_modules/lodash/lodash.min.js"></script>
+<script src="./node_modules/apexcharts/dist/apexcharts.min.js"></script>
 </body>
 </html>
