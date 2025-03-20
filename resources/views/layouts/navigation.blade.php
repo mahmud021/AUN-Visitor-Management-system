@@ -1,17 +1,16 @@
 <!-- Sidebar Component: resources/views/components/sidebar.blade.php -->
 
 <!-- Breadcrumb (Mobile only) -->
-<div class="sticky top-0 inset-x-0 z-20 border-y px-4 sm:px-6 lg:px-8 lg:hidden bg-brand-900 dark:border-neutral-700">
+<div class="sticky top-0 inset-x-0 z-20 border-y px-4 sm:px-6 lg:px-8 lg:hidden bg-brand-900 border-neutral-700">
     <div class="flex items-center py-2">
         <!-- Navigation Toggle -->
         <button type="button"
-                class="size-8 flex justify-center items-center gap-x-2 border border-gray-200 text-gray-800 hover:bg-brand-900 focus:outline-none focus:bg-brand-900 disabled:opacity-50 disabled:pointer-events-none dark:border-neutral-700 dark:text-neutral-200 "
+                class="size-8 flex justify-center items-center gap-x-2 border border-neutral-700 text-neutral-200 hover:bg-brand-900 focus:outline-none focus:bg-brand-900 disabled:opacity-50 disabled:pointer-events-none"
                 aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-application-sidebar"
                 aria-label="Toggle navigation" data-hs-overlay="#hs-application-sidebar">
             <span class="sr-only">Toggle Navigation</span>
             <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                 stroke-linecap="round" stroke-linejoin="round">
+                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <rect width="18" height="18" x="3" y="3" rx="2"/>
                 <path d="M15 3v18"/>
                 <path d="m8 9 3 3-3 3"/>
@@ -21,15 +20,15 @@
 
         <!-- Breadcrumb -->
         <ol class="ms-3 flex items-center whitespace-nowrap">
-            <li class="flex items-center text-sm text-gray-800 dark:text-neutral-400">
+            <li class="flex items-center text-sm text-neutral-200">
                 Application Layout
-                <svg class="shrink-0 mx-3 overflow-visible size-2.5 text-gray-400 dark:text-neutral-500"
+                <svg class="shrink-0 mx-3 overflow-visible size-2.5 text-neutral-500"
                      width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M5 1L10.6869 7.16086C10.8637 7.35239 10.8637 7.64761 10.6869 7.83914L5 14"
                           stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                 </svg>
             </li>
-            <li class="text-sm font-semibold text-gray-800 truncate dark:text-neutral-400" aria-current="page">
+            <li class="text-sm font-semibold text-neutral-200 truncate" aria-current="page">
                 Dashboard
             </li>
         </ol>
@@ -41,38 +40,38 @@
 <!-- Sidebar Container -->
 <div id="hs-application-sidebar"
      class="hs-overlay [--auto-close:lg] hs-overlay-open:translate-x-0 -translate-x-full transition-all duration-300 transform
-            w-[260px] h-full hidden fixed inset-y-0 start-0 z-[60] bg-brand-900 lg:block lg:translate-x-0 lg:end-auto lg:bottom-0 dark:border-neutral-700"
+            w-[260px] h-full hidden fixed inset-y-0 start-0 z-[60] bg-brand-900 lg:block lg:translate-x-0 lg:end-auto lg:bottom-0 border-neutral-700"
      role="dialog" tabindex="-1" aria-label="Sidebar">
     <div class="relative flex flex-col h-full max-h-full">
 
         <!-- Logo Section -->
         <div class="px-6 pt-6 pb-2 flex flex-col items-center">
             <a href="{{ route('dashboard') }}" class="flex-none rounded-xl text-xl inline-block font-semibold focus:outline-none focus:opacity-80">
-                <img src="{{ asset('images/logo.svg') }}" class="w-32 h-auto dark:invert mx-auto" alt="AUN Logo">
+                <img src="{{ asset('images/logo.svg') }}" class="w-32 h-auto invert mx-auto" alt="AUN Logo">
             </a>
         </div>
         <!-- End Logo Section -->
 
         <!-- Header / Account Dropdown -->
-        <div class="mt-auto p-2 border-y border-gray-200 dark:border-neutral-700">
+        <div class="mt-auto p-2 border-y border-neutral-700">
             <div class="hs-dropdown [--strategy:absolute] [--auto-close:inside] relative w-full inline-flex">
                 <button id="hs-sidebar-header-example-with-dropdown" type="button"
-                        class="w-full inline-flex shrink-0 items-center gap-x-2 p-2 text-start text-sm text-gray-800 rounded-md hover:bg-brand-900 focus:outline-none focus:bg-brand-900 dark:text-neutral-200 "
+                        class="w-full inline-flex shrink-0 items-center gap-x-2 p-2 text-start text-sm text-neutral-200 rounded-md hover:bg-brand-900 focus:outline-none focus:bg-brand-900"
                         aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
                     {{ Auth::user()->first_name . ' ' . Auth::user()->last_name }}
                     <svg class="shrink-0 size-3.5 ms-auto" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                         stroke-linejoin="round">
+                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                         stroke-linecap="round" stroke-linejoin="round">
                         <path d="m7 15 5 5 5-5"/>
                         <path d="m7 9 5-5 5 5"/>
                     </svg>
                 </button>
 
                 <!-- Account Dropdown Menu -->
-                <div class="hs-dropdown-menu hs-dropdown-open:opacity-100 w-60 transition-[opacity,margin] duration opacity-0 hidden z-20 bg-brand-900 border border-gray-200 rounded-lg shadow-lg dark:border-neutral-700"
+                <div class="hs-dropdown-menu hs-dropdown-open:opacity-100 w-60 transition-[opacity,margin] duration opacity-0 hidden z-20 bg-brand-900 border border-neutral-700 rounded-lg shadow-lg"
                      role="menu" aria-orientation="vertical" aria-labelledby="hs-sidebar-header-example-with-dropdown">
                     <div class="p-1">
-                        <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-brand-900 disabled:opacity-50 disabled:pointer-events-none focus:outline-none  dark:text-neutral-300  focus:bg-brand-900"
+                        <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-neutral-200 hover:bg-brand-900 focus:outline-none focus:bg-brand-900"
                            href="{{ route('profile.edit') }}">
                             {{ __('Profile') }}
                         </a>
@@ -94,12 +93,14 @@
         <!-- Menu Items -->
         <div class="h-full overflow-y-auto
                 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full
-                [&::-webkit-scrollbar-track]:bg-brand-900 [&::-webkit-scrollbar-thumb]:bg-brand-900 dark:[&::-webkit-scrollbar-track]:bg-brand-900 dark:[&::-webkit-scrollbar-thumb]:bg-brand-900">
+                [&::-webkit-scrollbar-track]:bg-brand-900 [&::-webkit-scrollbar-thumb]:bg-brand-900">
             <nav class="hs-accordion-group p-3 w-full flex flex-col flex-wrap" data-hs-accordion-always-open>
                 <ul class="flex flex-col space-y-1">
                     <li>
                         <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                 stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house">
                                 <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/>
                                 <path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
                             </svg>
@@ -108,7 +109,9 @@
                     </li>
                     <li>
                         <x-nav-link href="{{ route('user.index') }}" :active="request()->routeIs('user.index')">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-pen">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                 stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-pen">
                                 <path d="M11.5 15H7a4 4 0 0 0-4 4v2"/>
                                 <path d="M21.378 16.626a1 1 0 0 0-3.004-3.004l-4.01 4.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z"/>
                                 <circle cx="10" cy="7" r="4"/>
@@ -118,7 +121,9 @@
                     </li>
                     <li>
                         <x-nav-link href="{{ route('visitors.index') }}" :active="request()->routeIs('visitors.index')">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users-round">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                 stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users-round">
                                 <path d="M18 21a8 8 0 0 0-16 0"/>
                                 <circle cx="10" cy="8" r="5"/>
                                 <path d="M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3"/>
@@ -126,10 +131,11 @@
                             Visitors
                         </x-nav-link>
                     </li>
-
                     <li>
                         <x-nav-link href="{{ route('analytics.index') }}" :active="request()->routeIs('analytics.index')">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users-round">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                 stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users-round">
                                 <path d="M18 21a8 8 0 0 0-16 0"/>
                                 <circle cx="10" cy="8" r="5"/>
                                 <path d="M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3"/>
