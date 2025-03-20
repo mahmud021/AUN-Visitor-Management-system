@@ -1,10 +1,10 @@
 @props(['title', 'count', 'tooltip', 'modalTarget'])
 
-<div class="flex flex-col border shadow-2xs rounded-xl dark:bg-brand-900 dark:border-neutral-700">
+<div class="flex flex-col border shadow-2xs rounded-xl bg-brand-900 border-neutral-700">
     <div class="p-4 md:p-5">
         <div class="flex items-center justify-between gap-x-2">
             <div class="flex items-center gap-x-2">
-                <p class="text-xs uppercase text-gray-500 dark:text-neutral-500">{{ $title }}</p>
+                <p class="text-xs uppercase text-neutral-100">{{ $title }}</p>
                 <div class="hs-tooltip">
                     <div class="hs-tooltip-toggle">
                         <svg class="shrink-0 size-4 text-gray-500 dark:text-neutral-500"
@@ -33,7 +33,7 @@
             </button>
         </div>
         <div class="mt-1 flex items-center gap-x-2">
-            <h3 class="text-xl sm:text-2xl font-medium text-gray-800 dark:text-neutral-200">
+            <h3 class="text-xl sm:text-2xl font-medium text-gray-800 text-neutral-200">
                 {{ $count }}
             </h3>
         </div>
