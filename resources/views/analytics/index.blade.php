@@ -35,6 +35,9 @@
                 <!-- Main Detailed Analytics: Daily Visitors -->
                 <div class="md:col-span-4 md:row-span-3 md:row-start-2 p-4 shadow rounded border border-brand-300 bg-transparent text-white">
                     <h3 class="font-bold text-lg">Detailed Analytics: Daily Visitors</h3>
+                    <p class="text-sm text-gray-300">
+                        Total Visitors : {{ $totalVisitors }}
+                    </p>
                     <div id="hs-multiple-area-charts"></div>
                 </div>
 

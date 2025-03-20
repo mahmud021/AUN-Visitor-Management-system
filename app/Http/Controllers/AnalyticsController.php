@@ -11,10 +11,7 @@ class AnalyticsController extends Controller
     public function index()
     {
         $startOfWeek = Carbon::now()->startOfWeek(); // Monday
-        $endOfWeek = Carbon::now()->endOfWeek();     // Sunday
-
-        // For MySQL/MariaDB:
-        // $dailyVisitors = Visitor::selectRaw("DATE(visit_date) as day, COUNT(*) as total")
+        $endOfWeek = Carbon::now()->endOfWeek();       // Sunday
 
         // For SQLite:
         $dailyVisitors = Visitor::selectRaw("strftime('%Y-%m-%d', visit_date) as day, COUNT(*) as total")
@@ -31,17 +28,21 @@ class AnalyticsController extends Controller
         }
 
         // Prepare arrays for the 7 days in the week
-        $labels = [];     // e.g. ['Monday', 'Tuesday', ...]
-        $chartData = [];  // numeric counts
+        $labels = [];      // e.g. ['Monday', 'Tuesday', ...]
+        $chartData = [];   // numeric counts
         $datesOfWeek = []; // store the actual 'YYYY-MM-DD'
 
         for ($i = 0; $i < 7; $i++) {
             $currentDate = $startOfWeek->copy()->addDays($i)->format('Y-m-d');
             $labels[] = Carbon::parse($currentDate)->format('l'); // e.g. "Monday"
-            $datesOfWeek[] = $currentDate;                        // "2025-03-19"
+            $datesOfWeek[] = $currentDate;                        // e.g. "2025-03-17"
             $chartData[] = $visitorsByDate[$currentDate] ?? 0;
         }
 
-        return view('analytics.index', compact('chartData', 'labels', 'datesOfWeek'));
+        // Calculate total visitors for the week
+        $totalVisitors = array_sum($chartData);
+
+        return view('analytics.index', compact('chartData', 'labels', 'datesOfWeek', 'totalVisitors'));
     }
+
 }
