@@ -14,12 +14,13 @@ class AnalyticsController extends Controller
         $endOfWeek = Carbon::now()->endOfWeek();       // Sunday
 
         // For SQLite:
-        $dailyVisitors = Visitor::selectRaw("strftime('%Y-%m-%d', visit_date) as day, COUNT(*) as total")
-            ->whereBetween('visit_date', [$startOfWeek, $endOfWeek])
+        $dailyVisitors = Visitor::selectRaw("to_char(visit_date, 'YYYY-MM-DD') as day, COUNT(*) as total")
+            ->whereBetween('visit_date', [$startOfWeek->format('Y-m-d'), $endOfWeek->format('Y-m-d')])
             ->groupBy('day')
             ->orderBy('day')
             ->get()
             ->toArray();
+
 
         // Build an array keyed by 'YYYY-MM-DD'
         $visitorsByDate = [];
