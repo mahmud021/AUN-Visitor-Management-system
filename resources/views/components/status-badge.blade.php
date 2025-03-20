@@ -2,18 +2,18 @@
 
 @php
     $statusClasses = [
-        'Enrolled' => 'bg-green-100 text-green-800 dark:bg-green-600/20 dark:text-green-400',
-        'Inactive' => 'bg-red-100 text-red-800 dark:bg-red-600/20 dark:text-red-400',
-        'Graduated' => 'bg-blue-100 text-blue-800 dark:bg-blue-600/20 dark:text-blue-400',
-        'pending'     => 'bg-yellow-100 text-yellow-800 dark:bg-yellow-600/20 dark:text-yellow-400',
-        'approved'    => 'bg-blue-100 text-blue-800 dark:bg-blue-600/20 dark:text-blue-400',
-        'denied'      => 'bg-red-100 text-red-800 dark:bg-red-600/20 dark:text-red-400',
-        'checked_in'  => 'bg-green-100 text-green-800 dark:bg-green-600/20 dark:text-green-400',
-        'checked_out' => 'bg-gray-100 text-gray-800 dark:bg-gray-600/20 dark:text-gray-400',
+        'Enrolled'    => 'bg-green-600/20 text-green-400',
+        'Inactive'    => 'bg-red-600/20 text-red-400',
+        'Graduated'   => 'bg-blue-600/20 text-blue-400',
+        'pending'     => 'bg-yellow-600/20 text-yellow-400',
+        'approved'    => 'bg-blue-600/20 text-blue-400',
+        'denied'      => 'bg-red-600/20 text-red-400',
+        'checked_in'  => 'bg-green-600/20 text-green-400',
+        'checked_out' => 'bg-gray-600/20 text-gray-400',
     ];
 
     $defaultClasses = 'py-1 px-2 inline-flex items-center gap-x-1 text-xs font-medium rounded-full';
-    $statusClass = $statusClasses[$status] ?? 'bg-gray-100 text-gray-800 dark:bg-gray-600/20 dark:text-gray-400';
+    $statusClass = $statusClasses[$status] ?? 'bg-gray-600/20 text-gray-400';
 @endphp
 
 <span class="{{ $defaultClasses }} {{ $statusClass }}">
