@@ -7,7 +7,8 @@
     <div class="grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
         @foreach ($allVisitors as $allVisitor)
             <x-card class="bg-brand-900 text-gray-100 border border-gray-700">
-                <div class="flex justify-between items-center gap-x-3">
+                <div class="flex justify-between items-start gap-x-3">
+                    <!-- Main Content -->
                     <div class="grow">
                         <h3 class="font-semibold text-lg">
                             {{ $allVisitor->first_name ?? 'Null' }} {{ $allVisitor->last_name ?? 'Null' }}
@@ -72,18 +73,49 @@
                             @endif
                         </div>
                     </div>
-                    <a href="{{ route('visitors.timeline', $allVisitor->id) }}">
-                        <svg class="shrink-0 size-5 text-gray-300"
-                             xmlns="http://www.w3.org/2000/svg"
-                             width="24" height="24" viewBox="0 0 24 24"
-                             fill="none" stroke="currentColor" stroke-width="2"
-                             stroke-linecap="round" stroke-linejoin="round">
-                            <path d="m9 18 6-6-6-6"/>
-                        </svg>
-                    </a>
+
+                    <!-- Dropdown Menu -->
+                    <div class="hs-dropdown [--placement:bottom-end] relative inline-flex self-start">
+                        <button
+                            id="hs-table-dropdown-{{ $allVisitor->id }}"
+                            type="button"
+                            class="hs-dropdown-toggle py-1.5 px-2 inline-flex justify-center items-center gap-2 rounded-lg text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 text-sm"
+                            aria-haspopup="menu"
+                            aria-expanded="false"
+                            aria-label="Dropdown"
+                        >
+                            <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg"
+                                 width="24" height="24" fill="none" stroke="currentColor"
+                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="1"/>
+                                <circle cx="19" cy="12" r="1"/>
+                                <circle cx="5" cy="12" r="1"/>
+                            </svg>
+                        </button>
+
+                        <div
+                            class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-40 z-20 bg-white shadow-2xl rounded-lg p-2 mt-2 dark:bg-neutral-800"
+                            role="menu"
+                            aria-orientation="vertical"
+                            aria-labelledby="hs-table-dropdown-{{ $allVisitor->id }}"
+                        >
+                            <div class="py-2">
+                    <span class="block py-2 px-3 text-xs font-medium uppercase text-gray-400 dark:text-neutral-600">
+                        Actions
+                    </span>
+                                <a href="{{ route('visitors.edit', $allVisitor->id) }}"
+                                   class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300">
+                                    Edit
+                                </a>
+                                <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300"
+                                   href="{{ route('visitors.timeline', $allVisitor->id) }}">
+                                    View Timeline
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </x-card>
-        @endforeach
+            </x-card>        @endforeach
     </div>
     <div class="mt-6 flex justify-center">
         {{ $allVisitors->links() }}

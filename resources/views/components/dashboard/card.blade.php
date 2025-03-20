@@ -1,6 +1,6 @@
 @props(['title', 'count', 'tooltip', 'modalTarget'])
 
-<div class="flex flex-col bg-white border border-gray-200 shadow-2xs rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
+<div class="flex flex-col border shadow-2xs rounded-xl dark:bg-brand-900 dark:border-neutral-700">
     <div class="p-4 md:p-5">
         <div class="flex items-center justify-between gap-x-2">
             <div class="flex items-center gap-x-2">
