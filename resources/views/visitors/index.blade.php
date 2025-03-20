@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <h2 class="font-semibold text-xl text-neutral-200 leading-tight">
             {{ __('Visitors') }}
         </h2>
     </x-slot>
@@ -76,37 +76,37 @@
                             <th scope="col" class="ps-6 py-3 text-start"></th>
                             <th scope="col" class="ps-6 lg:ps-3 xl:ps-0 pe-6 py-3 text-start">
                                 <div class="flex items-center gap-x-2">
-                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-neutral-200">
-                        Name
-                    </span>
+                                    <span class="text-xs font-semibold uppercase tracking-wide text-neutral-200">
+                                        Name
+                                    </span>
                                 </div>
                             </th>
                             <th scope="col" class="px-6 py-3 text-start">
                                 <div class="flex items-center gap-x-2">
-                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-neutral-200">
-                        Telephone
-                    </span>
+                                    <span class="text-xs font-semibold uppercase tracking-wide text-neutral-200">
+                                        Telephone
+                                    </span>
                                 </div>
                             </th>
                             <th scope="col" class="px-6 py-3 text-start">
                                 <div class="flex items-center gap-x-2">
-                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-neutral-200">
-                        Expected Arrival
-                    </span>
+                                    <span class="text-xs font-semibold uppercase tracking-wide text-neutral-200">
+                                        Expected Arrival
+                                    </span>
                                 </div>
                             </th>
                             <th scope="col" class="px-6 py-3 text-start">
                                 <div class="flex items-center gap-x-2">
-                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-neutral-200">
-                        Status
-                    </span>
+                                    <span class="text-xs font-semibold uppercase tracking-wide text-neutral-200">
+                                        Status
+                                    </span>
                                 </div>
                             </th>
                             <th scope="col" class="px-6 py-3 text-start">
                                 <div class="flex items-center gap-x-2">
-                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-neutral-200">
-                        Created
-                    </span>
+                                    <span class="text-xs font-semibold uppercase tracking-wide text-neutral-200">
+                                        Created
+                                    </span>
                                 </div>
                             </th>
                             <th scope="col" class="px-6 py-3 text-end"></th>
@@ -123,13 +123,13 @@
                                     <div class="ps-6 lg:ps-3 xl:ps-0 pe-6 py-3">
                                         <div class="flex items-center gap-x-3">
                                             <div class="grow">
-                                <span class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">
-                                    {{ $visitor->first_name ?? 'Null' }} {{ $visitor->last_name ?? 'Null' }}
-                                </span>
+                                                <span class="block text-sm font-semibold text-neutral-200">
+                                                    {{ $visitor->first_name ?? 'Null' }} {{ $visitor->last_name ?? 'Null' }}
+                                                </span>
                                                 @if($visitor->user)
-                                                    <span class="block text-sm text-gray-500 dark:text-neutral-500">
-                                        Hosted by: {{ $visitor->user->user_details->school_id ?? 'Null' }}
-                                    </span>
+                                                    <span class="block text-sm text-neutral-500">
+                                                        Hosted by: {{ $visitor->user->user_details->school_id ?? 'Null' }}
+                                                    </span>
                                                 @endif
                                             </div>
                                         </div>
@@ -139,18 +139,18 @@
                                 <!-- Telephone Column -->
                                 <td class="size-px whitespace-nowrap">
                                     <div class="px-6 py-3">
-                        <span class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">
-                            {{ $visitor->telephone ?? 'Null' }}
-                        </span>
+                                        <span class="block text-sm font-semibold text-neutral-200">
+                                            {{ $visitor->telephone ?? 'Null' }}
+                                        </span>
                                     </div>
                                 </td>
 
                                 <!-- Expected Arrival Column -->
                                 <td class="size-px whitespace-nowrap">
                                     <div class="px-6 py-3">
-                        <span class="block text-sm text-gray-500 dark:text-neutral-500">
-                            {{ \Carbon\Carbon::parse($visitor->expected_arrival)->format('M d, h:i A') }}
-                        </span>
+                                        <span class="block text-sm text-neutral-500">
+                                            {{ \Carbon\Carbon::parse($visitor->expected_arrival)->format('M d, h:i A') }}
+                                        </span>
                                     </div>
                                 </td>
 
@@ -164,9 +164,9 @@
                                 <!-- Created Column -->
                                 <td class="size-px whitespace-nowrap">
                                     <div class="px-6 py-3">
-                        <span class="text-sm text-gray-500 dark:text-neutral-500">
-                            {{ \Carbon\Carbon::parse($visitor->created_at)->format('d M, Y') }}
-                        </span>
+                                        <span class="text-sm text-neutral-500">
+                                            {{ \Carbon\Carbon::parse($visitor->created_at)->format('d M, Y') }}
+                                        </span>
                                     </div>
                                 </td>
 
@@ -177,7 +177,7 @@
                                             <button
                                                 id="hs-table-dropdown-{{ $visitor->id }}"
                                                 type="button"
-                                                class="hs-dropdown-toggle py-1.5 px-2 inline-flex justify-center items-center gap-2 rounded-lg text-gray-700 dark:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 text-sm"
+                                                class="hs-dropdown-toggle py-1.5 px-2 inline-flex justify-center items-center gap-2 rounded-lg text-neutral-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 text-sm"
                                                 aria-haspopup="menu"
                                                 aria-expanded="false"
                                                 aria-label="Dropdown"
@@ -191,7 +191,7 @@
                                                 </svg>
                                             </button>
                                             <div
-                                                class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden divide-y divide-gray-200 min-w-40 z-20 bg-white shadow-2xl rounded-lg p-2 mt-2 dark:divide-neutral-700 dark:bg-neutral-800"
+                                                class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden divide-y divide-neutral-700 min-w-40 z-20 bg-neutral-800 shadow-2xl rounded-lg p-2 mt-2 border border-neutral-700"
                                                 role="menu"
                                                 aria-orientation="vertical"
                                                 aria-labelledby="hs-table-dropdown-{{ $visitor->id }}"
@@ -199,19 +199,17 @@
 
                                                 <!-- Actions Section -->
                                                 <div class="py-2">
-                                    <span
-                                        class="block py-2 px-3 text-xs font-medium uppercase text-gray-400 dark:text-neutral-600">
-                                        Actions
-                                    </span>
+                                                    <span class="block py-2 px-3 text-xs font-medium uppercase text-neutral-400">
+                                                        Actions
+                                                    </span>
 
                                                     {{-- Example Edit link --}}
-                                                    <a href="{{ route('visitors.edit', $visitor->id) }}" class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700 dark:focus:text-neutral-300">
+                                                    <a href="{{ route('visitors.edit', $visitor->id) }}" class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-neutral-200 hover:bg-neutral-700 focus:outline-none focus:bg-neutral-700">
                                                         Edit
                                                     </a>
 
-
                                                     {{-- Timeline link --}}
-                                                    <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700 dark:focus:text-neutral-300"
+                                                    <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-neutral-200 hover:bg-neutral-700 focus:outline-none focus:bg-neutral-700"
                                                        href="{{ route('visitors.timeline', $visitor->id) }}">
                                                         View Timeline
                                                     </a>
@@ -220,9 +218,8 @@
                                                         <form action="{{ route('visitors.update', $visitor->id) }}" method="POST" style="display: inline;">
                                                             @csrf
                                                             @method('PATCH')
-                                                            <!-- When pending, clicking will change status to 'approved' -->
                                                             <input type="hidden" name="status" value="approved">
-                                                            <button type="submit" class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700 dark:focus:text-neutral-300">
+                                                            <button type="submit" class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-neutral-200 hover:bg-neutral-700 focus:outline-none focus:bg-neutral-700">
                                                                 Approve
                                                             </button>
                                                         </form>
@@ -230,9 +227,8 @@
                                                         <form action="{{ route('visitors.update', $visitor->id) }}" method="POST" style="display: inline;">
                                                             @csrf
                                                             @method('PATCH')
-                                                            <!-- When approved, clicking will change status to 'checked_in' -->
                                                             <input type="hidden" name="status" value="checked_in">
-                                                            <button type="submit" class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700 dark:focus:text-neutral-300">
+                                                            <button type="submit" class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-neutral-200 hover:bg-neutral-700 focus:outline-none focus:bg-neutral-700">
                                                                 Check In
                                                             </button>
                                                         </form>
@@ -240,20 +236,17 @@
                                                         <form action="{{ route('visitors.update', $visitor->id) }}" method="POST" style="display: inline;">
                                                             @csrf
                                                             @method('PATCH')
-                                                            <!-- When checked in, clicking will change status to 'checked_out' -->
                                                             <input type="hidden" name="status" value="checked_out">
-                                                            <button type="submit" class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700 dark:focus:text-neutral-300">
+                                                            <button type="submit" class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-neutral-200 hover:bg-neutral-700 focus:outline-none focus:bg-neutral-700">
                                                                 Check Out
                                                             </button>
                                                         </form>
                                                     @endif
-
-
                                                 </div>
 
                                                 <!-- Delete Section -->
                                                 <div class="py-2">
-                                                    <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-red-600 hover:bg-gray-100 dark:text-red-500 dark:hover:text-neutral-300"
+                                                    <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-red-500 hover:bg-neutral-700 focus:outline-none focus:bg-neutral-700"
                                                        href="/visitor/{{ $visitor->id }}/delete">
                                                         Delete
                                                     </a>
@@ -271,12 +264,10 @@
                     </x-slot>
                 </x-table>
 
-
                 <x-table-footer totalResults="">
                     <x-slot name="pagination">
                         {{ $visitors->links() }}
                     </x-slot>
-
                 </x-table-footer>
             </x-table-wrapper>
             <!-- End Table Section -->
