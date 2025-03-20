@@ -5,7 +5,7 @@
     <div class="flex items-center py-2">
         <!-- Navigation Toggle -->
         <button type="button"
-                class="size-8 flex justify-center items-center gap-x-2 border border-gray-200 text-gray-800 hover:bg-brand-900 focus:outline-none focus:bg-brand-900 disabled:opacity-50 disabled:pointer-events-none dark:border-neutral-700 dark:text-neutral-200 hover:bg-brand-900 focus:bg-brand-900"
+                class="size-8 flex justify-center items-center gap-x-2 border border-gray-200 text-gray-800 hover:bg-brand-900 focus:outline-none focus:bg-brand-900 disabled:opacity-50 disabled:pointer-events-none dark:border-neutral-700 dark:text-neutral-200 "
                 aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-application-sidebar"
                 aria-label="Toggle navigation" data-hs-overlay="#hs-application-sidebar">
             <span class="sr-only">Toggle Navigation</span>
@@ -57,7 +57,7 @@
         <div class="mt-auto p-2 border-y border-gray-200 dark:border-neutral-700">
             <div class="hs-dropdown [--strategy:absolute] [--auto-close:inside] relative w-full inline-flex">
                 <button id="hs-sidebar-header-example-with-dropdown" type="button"
-                        class="w-full inline-flex shrink-0 items-center gap-x-2 p-2 text-start text-sm text-gray-800 rounded-md hover:bg-brand-900 focus:outline-none focus:bg-brand-900 dark:text-neutral-200 hover:bg-brand-900 focus:bg-brand-900"
+                        class="w-full inline-flex shrink-0 items-center gap-x-2 p-2 text-start text-sm text-gray-800 rounded-md hover:bg-brand-900 focus:outline-none focus:bg-brand-900 dark:text-neutral-200 "
                         aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
                     {{ Auth::user()->first_name . ' ' . Auth::user()->last_name }}
                     <svg class="shrink-0 size-3.5 ms-auto" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -72,7 +72,7 @@
                 <div class="hs-dropdown-menu hs-dropdown-open:opacity-100 w-60 transition-[opacity,margin] duration opacity-0 hidden z-20 bg-brand-900 border border-gray-200 rounded-lg shadow-lg dark:border-neutral-700"
                      role="menu" aria-orientation="vertical" aria-labelledby="hs-sidebar-header-example-with-dropdown">
                     <div class="p-1">
-                        <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-brand-900 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:bg-brand-900 dark:text-neutral-300 hover:bg-brand-900 focus:bg-brand-900"
+                        <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-brand-900 disabled:opacity-50 disabled:pointer-events-none focus:outline-none  dark:text-neutral-300  focus:bg-brand-900"
                            href="{{ route('profile.edit') }}">
                             {{ __('Profile') }}
                         </a>
