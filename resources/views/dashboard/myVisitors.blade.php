@@ -4,7 +4,7 @@
 <div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
     <div class="grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
         @foreach ($myVisitors as $myVisitor)
-            <x-card class="text-gray-100 border border-gray-700">
+            <x-card class="text-gray-100 border border-gray-700 bg-brand-900">
                 <div class="flex justify-between items-center gap-x-3">
                     <!-- Left Side: Visitor Details -->
                     <div class="grow">

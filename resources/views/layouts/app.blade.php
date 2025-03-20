@@ -25,7 +25,7 @@
 <body class="font-sans antialiased">
 @include('layouts.navigation')
 <div class="w-full lg:ps-64">
-    <div class="min-h-screen  dark:bg-primary">
+    <div class="min-h-screen  bg-primary">
         <!-- Page Heading -->
         @isset($header)
             <header class=" shadow">

@@ -1,4 +1,4 @@
-<div class="flex items-center justify-between">
+<div class="flex items-center justify-between ">
     <h1 class="text-xl font-bold text-white">
         Welcome, {{ $user->user_details->user->first_name }}!
     </h1>
