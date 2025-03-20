@@ -58,14 +58,32 @@
             </div>
         </div>
     </div>
+    <div class="mb-6 p-4 bg-gray-800 text-white rounded">
+        <h3 class="font-bold mb-2">Daily Visitor Counts (Debug)</h3>
+        <ul>
+            @foreach ($datesOfWeek as $index => $date)
+                <li>
+                    <strong>{{ $labels[$index] }}</strong> ({{ $date }}):
+                    <span>{{ $chartData[$index] }}</span>
+                </li>
+            @endforeach
+        </ul>
+    </div>
+
 
     <!-- Push JavaScript dependencies to the scripts stack -->
+
     <script>
-        window.visitorsData = @json($visitorsData);
+        window.chartData = @json($chartData);
+        window.labels = @json($labels);
+        window.datesOfWeek = @json($datesOfWeek);
     </script>
-    @push('scripts')
+    <script src="https://preline.co/assets/js/hs-apexcharts-helpers.js"></script>
+
+@push('scripts')
         @vite('resources/js/analytics.js')
     @endpush
+
 
 
 </x-app-layout>
