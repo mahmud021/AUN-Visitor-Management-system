@@ -11,62 +11,77 @@
             <x-table-wrapper>
                 <x-table-header title="Visitors" description="Manage your visitor records.">
                     <x-slot name="actions">
-                        <x-primary-button type="button"
-                                          aria-haspopup="dialog" aria-expanded="false"
-                                          aria-controls="hs-scale-animation-modal"
-                                          data-hs-overlay="#hs-scale-animation-modal">
+                        <x-primary-button
+                            type="button"
+                            x-data
+                            @click="$dispatch('open-modal', 'create-visitor-modal')"
+                        >
                             Create Visitor
                         </x-primary-button>
-                        <form method="POST" action="/visitor">
-                            @csrf
-                            <x-modal.wrapper id="hs-scale-animation-modal">
-                                <x-modal.header title="Create Visitor" modalId="hs-scale-animation-modal"/>
-                                <div class="p-4 overflow-y-auto">
+
+
+                        <x-modal name="create-visitor-modal" maxWidth="lg">
+                            <div class="p-6">
+                                <h3 class="text-lg font-bold text-neutral-200 mb-4">Create Visitor</h3>
+
+                                <form method="POST" action="/visitor">
+                                    @csrf
+
                                     <div class="grid grid-cols-1 gap-4 lg:gap-4">
                                         <!-- First Name -->
                                         <div class="space-y-2">
-                                            <x-form.input name="first_name" label="First Name" type="text"
-                                                          value="{{ old('first_name') }}"/>
+                                            <x-form.input name="first_name" label="First Name" type="text" value="{{ old('first_name') }}"/>
                                             <x-input-error :messages="$errors->get('first_name')" class="mt-1"/>
                                         </div>
+
                                         <!-- Last Name -->
                                         <div class="space-y-2">
-                                            <x-form.input name="last_name" label="Last Name" type="text"
-                                                          value="{{ old('last_name') }}"/>
+                                            <x-form.input name="last_name" label="Last Name" type="text" value="{{ old('last_name') }}"/>
                                             <x-input-error :messages="$errors->get('last_name')" class="mt-1"/>
                                         </div>
+
                                         <!-- Telephone -->
                                         <div class="space-y-2">
-                                            <x-form.input name="telephone" label="Telephone Number" type="text"
-                                                          value="{{ old('telephone') }}"/>
+                                            <x-form.input name="telephone" label="Telephone Number" type="text" value="{{ old('telephone') }}"/>
                                             <x-input-error :messages="$errors->get('telephone')" class="mt-1"/>
                                         </div>
+
                                         <!-- Expected Arrival -->
                                         <div class="space-y-2">
-                                            <x-form.input name="expected_arrival" label="Expected Arrival" type="date"
-                                                          value="{{ old('expected_arrival') }}"/>
+                                            <x-form.input name="expected_arrival" label="Expected Arrival" type="date" value="{{ old('expected_arrival') }}"/>
                                             <x-input-error :messages="$errors->get('expected_arrival')" class="mt-1"/>
                                         </div>
-                                        <!-- Optional: Status (if you wish to allow manual setting) -->
+
+                                        <!-- Optional Status Field (Commented Out) -->
                                         <!--
-                                        <div class="space-y-2">
-                                            <x-form.select name="status" label="Status">
-                                                <option value="pending" {{ old('status') == 'pending' ? 'selected' : '' }}>Pending</option>
-                                                <option value="approved" {{ old('status') == 'approved' ? 'selected' : '' }}>Approved</option>
-                                                <option value="denied" {{ old('status') == 'denied' ? 'selected' : '' }}>Denied</option>
-                                            </x-form.select>
-                                            <x-input-error :messages="$errors->get('status')" class="mt-1"/>
-                                        </div>
-                                        -->
+                <div class="space-y-2">
+                    <x-form.select name="status" label="Status">
+                        <option value="pending" {{ old('status') == 'pending' ? 'selected' : '' }}>Pending</option>
+                        <option value="approved" {{ old('status') == 'approved' ? 'selected' : '' }}>Approved</option>
+                        <option value="denied" {{ old('status') == 'denied' ? 'selected' : '' }}>Denied</option>
+                    </x-form.select>
+                    <x-input-error :messages="$errors->get('status')" class="mt-1"/>
+                </div>
+                -->
+
                                     </div>
-                                </div>
-                                <x-modal.footer>
-                                    <x-primary-button type="submit">
-                                        Submit
-                                    </x-primary-button>
-                                </x-modal.footer>
-                            </x-modal.wrapper>
-                        </form>
+
+                                    <div class="mt-5 flex justify-end gap-x-2">
+                                        <button
+                                            type="button"
+                                            class="px-4 py-2 bg-gray-500 hover:bg-gray-400 text-white rounded-md"
+                                            @click.prevent="$dispatch('close-modal', 'create-visitor-modal')">
+                                            Cancel
+                                        </button>
+
+                                        <x-primary-button type="submit">
+                                            Submit
+                                        </x-primary-button>
+                                    </div>
+                                </form>
+                            </div>
+                        </x-modal>
+
                     </x-slot>
                 </x-table-header>
 

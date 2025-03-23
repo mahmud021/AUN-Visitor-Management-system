@@ -9,18 +9,18 @@
         <!-- Create Visitor Button -->
         <x-primary-button
             type="button"
-            aria-haspopup="dialog"
-            aria-expanded="false"
-            aria-controls="hs-scale-animation-modal"
-            data-hs-overlay="#hs-scale-animation-modal"
+            x-data
+            @click="$dispatch('open-modal', 'create-visitor-modal')"
             @class([
-                'bg-gray-700 hover:bg-gray-600 text-white',
+                'bg-brand-700 hover:bg-brand-600 text-white',
                 'cursor-not-allowed opacity-50' => Gate::denies('create-visitor'),
             ])
             :disabled="Gate::denies('create-visitor')"
         >
             Create Visitor
         </x-primary-button>
+
+
         <!-- Logout Form -->
         <form method="POST" action="{{ route('logout') }}" class="inline">
             @csrf
