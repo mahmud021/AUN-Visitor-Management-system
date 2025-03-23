@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Inventory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class InventoryController extends Controller
 {
@@ -20,7 +21,7 @@ class InventoryController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -28,7 +29,31 @@ class InventoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Validate form data
+        $validated = $request->validate([
+            'appliance_name' => 'required|string|max:255',
+            'location' => 'nullable|string|max:255',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
+        ]);
+
+        // Handle image upload
+        $imagePath = null;
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('appliance_images', 'public');
+        }
+
+        // Create inventory record
+        Inventory::create([
+            'user_id' => Auth::id(),
+            'appliance_name' => $validated['appliance_name'],
+            'location' => $validated['location'],
+            'image_path' => $imagePath,
+            'checked_in_at' => now(),
+        ]);
+
+        // Redirect with success message
+        return redirect()->route('inventory.index')
+            ->with('success', 'Appliance added successfully!');
     }
 
     /**

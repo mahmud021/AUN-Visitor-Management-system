@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Inventory extends Model
 {
     use HasFactory;
+    protected $guarded;
     public function user(): belongsTo
     {
         return $this->belongsTo(User::class);
