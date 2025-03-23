@@ -11,57 +11,75 @@
             <x-table-wrapper>
                 <x-table-header title="Users" description="Add users, edit and more.">
                     <x-slot name="actions">
-                        <x-primary-button type="button"
-                                          aria-haspopup="dialog" aria-expanded="false"
-                                          aria-controls="hs-scale-animation-modal"
-                                          data-hs-overlay="#hs-scale-animation-modal">
+                        <x-primary-button
+                            type="button"
+                            x-data
+                            @click="$dispatch('open-modal', 'create-user-modal')"
+                            class="bg-brand-700 hover:bg-brand-600 text-white"
+                        >
                             Create User
                         </x-primary-button>
-                        <form method="POST" action="/user">
-                            @csrf
-                            <x-modal.wrapper id="hs-scale-animation-modal">
-                                <x-modal.header title="Create User" modalId="hs-scale-animation-modal"/>
-                                <div class="p-4 overflow-y-auto">
+
+                        <x-modal name="create-user-modal" maxWidth="lg">
+                            <div class="p-4 bg-brand-900 text-brand-100 overflow-y-auto">
+                                <h3 class="text-xl font-semibold mb-4">Create User</h3>
+
+                                <form method="POST" action="/user">
+                                    @csrf
+
                                     <div class="grid grid-cols-2 gap-4 lg:gap-4">
                                         <!-- First Name -->
                                         <div class="space-y-2">
-                                            <x-form.input name="first_name" label="First Name" type="text" value="{{ old('first_name') }}"/>
-                                            <x-input-error :messages="$errors->get('first_name')" class="mt-1"/>
+                                            <x-form.input name="first_name" label="First Name" type="text"
+                                                          value="{{ old('first_name') }}"
+                                                          class="bg-brand-800 border-brand-700 text-brand-100 placeholder-brand-300"/>
+                                            <x-input-error :messages="$errors->get('first_name')" class="mt-1 text-brand-400"/>
                                         </div>
 
                                         <!-- Last Name -->
                                         <div class="space-y-2">
-                                            <x-form.input name="last_name" label="Last Name" type="text" value="{{ old('last_name') }}"/>
-                                            <x-input-error :messages="$errors->get('last_name')" class="mt-1"/>
+                                            <x-form.input name="last_name" label="Last Name" type="text"
+                                                          value="{{ old('last_name') }}"
+                                                          class="bg-brand-800 border-brand-700 text-brand-100 placeholder-brand-300"/>
+                                            <x-input-error :messages="$errors->get('last_name')" class="mt-1 text-brand-400"/>
                                         </div>
 
-                                        <!-- Email (Full Width) -->
+                                        <!-- Email -->
                                         <div class="col-span-2 space-y-2">
-                                            <x-form.input name="email" label="AUN Email" type="email" value="{{ old('email') }}"/>
-                                            <x-input-error :messages="$errors->get('email')" class="mt-1"/>
+                                            <x-form.input name="email" label="AUN Email" type="email"
+                                                          value="{{ old('email') }}"
+                                                          class="bg-brand-800 border-brand-700 text-brand-100 placeholder-brand-300"/>
+                                            <x-input-error :messages="$errors->get('email')" class="mt-1 text-brand-400"/>
                                         </div>
 
-                                        <!-- Password (Full Width) -->
+                                        <!-- Password -->
                                         <div class="col-span-2 space-y-2">
-                                            <x-form.input name="password" label="Password" type="password" required autocomplete="new-password"/>
-                                            <x-input-error :messages="$errors->get('password')" class="mt-1"/>
+                                            <x-form.input name="password" label="Password" type="password" required
+                                                          autocomplete="new-password"
+                                                          class="bg-brand-800 border-brand-700 text-brand-100 placeholder-brand-300"/>
+                                            <x-input-error :messages="$errors->get('password')" class="mt-1 text-brand-400"/>
                                         </div>
 
                                         <!-- Telephone -->
                                         <div class="space-y-2">
-                                            <x-form.input name="telephone" label="Telephone Number" type="text" value="{{ old('telephone') }}"/>
-                                            <x-input-error :messages="$errors->get('telephone')" class="mt-1"/>
+                                            <x-form.input name="telephone" label="Telephone Number" type="text"
+                                                          value="{{ old('telephone') }}"
+                                                          class="bg-brand-800 border-brand-700 text-brand-100 placeholder-brand-300"/>
+                                            <x-input-error :messages="$errors->get('telephone')" class="mt-1 text-brand-400"/>
                                         </div>
 
                                         <!-- School ID -->
                                         <div class="space-y-2">
-                                            <x-form.input name="school_id" label="ID Number" type="text" value="{{ old('school_id') }}"/>
-                                            <x-input-error :messages="$errors->get('school_id')" class="mt-1"/>
+                                            <x-form.input name="school_id" label="ID Number" type="text"
+                                                          value="{{ old('school_id') }}"
+                                                          class="bg-brand-800 border-brand-700 text-brand-100 placeholder-brand-300"/>
+                                            <x-input-error :messages="$errors->get('school_id')" class="mt-1 text-brand-400"/>
                                         </div>
 
                                         <!-- Role -->
                                         <div class="space-y-2">
-                                            <x-form.select name="role" label="Select Role">
+                                            <x-form.select name="role" label="Select Role"
+                                                           class="bg-brand-800 border-brand-700 text-brand-100">
                                                 <option selected disabled>Open this select menu</option>
                                                 @foreach (App\Models\UserDetails::getRoles() as $value => $label)
                                                     <option value="{{ $value }}" {{ old('role') == $value ? 'selected' : '' }}>
@@ -69,12 +87,13 @@
                                                     </option>
                                                 @endforeach
                                             </x-form.select>
-                                            <x-input-error :messages="$errors->get('role')" class="mt-1"/>
+                                            <x-input-error :messages="$errors->get('role')" class="mt-1 text-brand-400"/>
                                         </div>
 
                                         <!-- Status -->
                                         <div class="space-y-2">
-                                            <x-form.select name="status" label="Select Status">
+                                            <x-form.select name="status" label="Select Status"
+                                                           class="bg-brand-800 border-brand-700 text-brand-100">
                                                 <option selected disabled>Open this select menu</option>
                                                 @foreach (App\Models\UserDetails::getStatuses() as $value => $label)
                                                     <option value="{{ $value }}" {{ old('status') == $value ? 'selected' : '' }}>
@@ -82,18 +101,26 @@
                                                     </option>
                                                 @endforeach
                                             </x-form.select>
-                                            <x-input-error :messages="$errors->get('status')" class="mt-1"/>
+                                            <x-input-error :messages="$errors->get('status')" class="mt-1 text-brand-400"/>
                                         </div>
                                     </div>
-                                </div>
 
-                                <x-modal.footer>
-                                    <x-primary-button type="submit">
-                                        Submit
-                                    </x-primary-button>
-                                </x-modal.footer>
-                            </x-modal.wrapper>
-                        </form>
+                                    <!-- Modal Footer -->
+                                    <div class="mt-6 flex justify-end gap-x-2 bg-brand-900 py-3 px-4 rounded-md border-t border-brand-700">
+                                        <button type="button"
+                                                class="px-4 py-2 bg-brand-700 hover:bg-brand-600 text-white rounded-md transition"
+                                                @click.prevent="$dispatch('close-modal', 'create-user-modal')">
+                                            Cancel
+                                        </button>
+
+                                        <x-primary-button type="submit" class="bg-brand-700 hover:bg-brand-600 text-white">
+                                            Submit
+                                        </x-primary-button>
+                                    </div>
+                                </form>
+                            </div>
+                        </x-modal>
+
                     </x-slot>
                 </x-table-header>
 
