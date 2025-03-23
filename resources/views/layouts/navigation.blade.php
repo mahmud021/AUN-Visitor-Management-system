@@ -46,7 +46,8 @@
 
         <!-- Logo Section -->
         <div class="px-6 pt-6 pb-2 flex flex-col items-center">
-            <a href="{{ route('dashboard') }}" class="flex-none rounded-xl text-xl inline-block font-semibold focus:outline-none focus:opacity-80">
+            <a href="{{ route('dashboard') }}"
+               class="flex-none rounded-xl text-xl inline-block font-semibold focus:outline-none focus:opacity-80">
                 <img src="{{ asset('images/logo.svg') }}" class="w-32 h-auto invert mx-auto" alt="AUN Logo">
             </a>
         </div>
@@ -68,8 +69,9 @@
                 </button>
 
                 <!-- Account Dropdown Menu -->
-                <div class="hs-dropdown-menu hs-dropdown-open:opacity-100 w-60 transition-[opacity,margin] duration opacity-0 hidden z-20 bg-brand-900 border border-neutral-700 rounded-lg shadow-lg"
-                     role="menu" aria-orientation="vertical" aria-labelledby="hs-sidebar-header-example-with-dropdown">
+                <div
+                    class="hs-dropdown-menu hs-dropdown-open:opacity-100 w-60 transition-[opacity,margin] duration opacity-0 hidden z-20 bg-brand-900 border border-neutral-700 rounded-lg shadow-lg"
+                    role="menu" aria-orientation="vertical" aria-labelledby="hs-sidebar-header-example-with-dropdown">
                     <div class="p-1">
                         <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-neutral-200 hover:bg-brand-900 focus:outline-none focus:bg-brand-900"
                            href="{{ route('profile.edit') }}">
@@ -102,7 +104,8 @@
                                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                  stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house">
                                 <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/>
-                                <path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                                <path
+                                    d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
                             </svg>
                             Dashboard
                         </x-nav-link>
@@ -113,7 +116,8 @@
                                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                  stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-pen">
                                 <path d="M11.5 15H7a4 4 0 0 0-4 4v2"/>
-                                <path d="M21.378 16.626a1 1 0 0 0-3.004-3.004l-4.01 4.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z"/>
+                                <path
+                                    d="M21.378 16.626a1 1 0 0 0-3.004-3.004l-4.01 4.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z"/>
                                 <circle cx="10" cy="7" r="4"/>
                             </svg>
                             Users
@@ -132,29 +136,34 @@
                         </x-nav-link>
                     </li>
                     <li>
-                        <x-nav-link href="{{ route('inventory.index') }}" :active="request()->routeIs('inventory.index')">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                 stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users-round">
-                                <path d="M18 21a8 8 0 0 0-16 0"/>
-                                <circle cx="10" cy="8" r="5"/>
-                                <path d="M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3"/>
+                        <x-nav-link href="{{ route('inventory.index') }}"
+                                    :active="request()->routeIs('inventory.index')">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                 fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"
+                                 stroke-linejoin="round" class="lucide lucide-notebook-pen">
+                                <path d="M13.4 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7.4"/>
+                                <path d="M2 6h4"/>
+                                <path d="M2 10h4"/>
+                                <path d="M2 14h4"/>
+                                <path d="M2 18h4"/>
+                                <path
+                                    d="M21.378 5.626a1 1 0 1 0-3.004-3.004l-5.01 5.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z"/>
                             </svg>
                             Inventory
                         </x-nav-link>
                     </li>
-{{--                    <li>--}}
-{{--                        <x-nav-link href="{{ route('analytics.index') }}" :active="request()->routeIs('analytics.index')">--}}
-{{--                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"--}}
-{{--                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"--}}
-{{--                                 stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users-round">--}}
-{{--                                <path d="M18 21a8 8 0 0 0-16 0"/>--}}
-{{--                                <circle cx="10" cy="8" r="5"/>--}}
-{{--                                <path d="M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3"/>--}}
-{{--                            </svg>--}}
-{{--                            Analytics--}}
-{{--                        </x-nav-link>--}}
-{{--                    </li>--}}
+                    {{--                    <li>--}}
+                    {{--                        <x-nav-link href="{{ route('analytics.index') }}" :active="request()->routeIs('analytics.index')">--}}
+                    {{--                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"--}}
+                    {{--                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"--}}
+                    {{--                                 stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users-round">--}}
+                    {{--                                <path d="M18 21a8 8 0 0 0-16 0"/>--}}
+                    {{--                                <circle cx="10" cy="8" r="5"/>--}}
+                    {{--                                <path d="M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3"/>--}}
+                    {{--                            </svg>--}}
+                    {{--                            Analytics--}}
+                    {{--                        </x-nav-link>--}}
+                    {{--                    </li>--}}
                     {{-- Other nav items --}}
                 </ul>
             </nav>
