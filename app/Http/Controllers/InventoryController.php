@@ -30,19 +30,21 @@ class InventoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+
     public function store(Request $request)
     {
         // Validate form data
         $validated = $request->validate([
             'appliance_name' => 'required|string|max:255',
-            'location' => 'nullable|string|max:255',
+            'location' => 'required|string|max:255', // Location is now selected from a dropdown, so make it required
+            'brand' => 'required|string|max:255',
             'image' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
         ]);
 
         // Handle image upload
         $imagePath = null;
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('appliance_images');
+            $imagePath = $request->file('image')->store('appliance_images', 'public');
         }
 
         // Create inventory record
@@ -50,6 +52,7 @@ class InventoryController extends Controller
             'user_id' => Auth::id(),
             'appliance_name' => $validated['appliance_name'],
             'location' => $validated['location'],
+            'brand' => $validated['brand'],
             'image_path' => $imagePath,
             'checked_in_at' => now(),
         ]);
@@ -58,6 +61,7 @@ class InventoryController extends Controller
         return redirect()->route('inventory.index')
             ->with('success', 'Appliance added successfully!');
     }
+
 
     /**
      * Display the specified resource.

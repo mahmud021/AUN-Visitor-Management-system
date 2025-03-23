@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->string('appliance_name');
+            $table->string('brand');
             $table->string('location')->nullable();
             $table->enum('status', [
                 'pending',

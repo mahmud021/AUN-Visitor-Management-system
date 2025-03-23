@@ -35,12 +35,38 @@
                                             <x-input-error :messages="$errors->get('appliance_name')" class="mt-1 text-brand-400"/>
                                         </div>
 
+                                        <div class="space-y-2">
+                                            <x-form.input name="brand" label="Brand" type="text"
+                                                          value="{{ old('brand') }}"
+                                                          class="bg-brand-800 border-brand-700 text-brand-100 placeholder-brand-300"/>
+                                            <x-input-error :messages="$errors->get('brand')" class="mt-1 text-brand-400"/>
+                                        </div>
+
                                         <!-- Location -->
                                         <div class="space-y-2">
-                                            <x-form.input name="location" label="Location" type="text"
-                                                          value="{{ old('location') }}"
-                                                          class="bg-brand-800 border-brand-700 text-brand-100 placeholder-brand-300"/>
+                                            <x-form.select name="location" label="Location">
+                                                <option value="" disabled selected>Select a location</option>
+                                                <option value="Library">Library</option>
+                                                <option value="Admin 2">Admin 2</option>
+                                                <option value="Admin 1 / Student Hub">Admin 1 / Student Hub</option>
+                                                <option value="POH">POH</option>
+                                                <option value="Commencement Hall">Commencement Hall</option>
+                                                <option value="SAS">SAS</option>
+                                                <option value="SOE">SOE</option>
+                                                <option value="SOL">SOL</option>
+                                                <option value="Dorm AA">Dorm AA</option>
+                                                <option value="Dorm BB">Dorm BB</option>
+                                                <option value="Dorm CC">Dorm CC</option>
+                                                <option value="Dorm DD">Dorm DD</option>
+                                                <option value="Dorm EE">Dorm EE</option>
+                                                <option value="Dorm FF">Dorm FF</option>
+                                                <option value="Aisha Kande">Aisha Kande</option>
+                                                <option value="Gabrreile Volpi Boys">Gabrreile Volpi Boys</option>
+                                                <option value="Rossaiare Volpi Girls">Rossaiare Volpi Girls</option>
+                                                <option value="Cafeteria">Cafeteria</option>
+                                            </x-form.select>
                                             <x-input-error :messages="$errors->get('location')" class="mt-1 text-brand-400"/>
+
                                         </div>
 
                                         <!-- Image Upload -->
