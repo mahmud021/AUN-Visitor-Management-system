@@ -13,9 +13,16 @@ return new class extends Migration
     {
         Schema::create('inventories', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->string('appliance_name');
+            $table->string('location')->nullable();
+            $table->string('image_path')->nullable(); // Added field for storing image path
+            $table->timestamp('checked_in_at')->useCurrent();
+            $table->timestamp('checked_out_at')->nullable();
             $table->timestamps();
         });
     }
+
 
     /**
      * Reverse the migrations.
