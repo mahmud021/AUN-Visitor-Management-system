@@ -11,46 +11,61 @@
             <x-table-wrapper>
                 <x-table-header title="Inventory" description="View and Manage All Appliances.">
                     <x-slot name="actions">
-                        <x-primary-button type="button"
-                                          aria-haspopup="dialog"
-                                          aria-expanded="false"
-                                          aria-controls="inventory-modal"
-                                          data-hs-overlay="#inventory-modal">
+                        <x-primary-button
+                            type="button"
+                            x-data
+                            @click="$dispatch('open-modal', 'inventory-modal')"
+                        >
                             Create Appliance
                         </x-primary-button>
 
-                        <form method="POST" action="{{ route('inventory.store') }}" enctype="multipart/form-data">
-                            @csrf
-                            <x-modal.wrapper id="inventory-modal">
-                                <x-modal.header title="Add Appliance" modalId="inventory-modal"/>
-                                <div class="p-4 overflow-y-auto">
+                        <x-modal name="inventory-modal" maxWidth="2xl">
+                            <div class="p-4 bg-brand-900 text-brand-100 overflow-y-auto">
+                                <h3 class="text-xl font-semibold mb-4">Add Appliance</h3>
+
+                                <form method="POST" action="{{ route('inventory.store') }}" enctype="multipart/form-data" onsubmit="disableSubmitButton(this)">
+                                    @csrf
+
                                     <div class="grid grid-cols-1 gap-4 lg:gap-4">
                                         <!-- Appliance Name -->
                                         <div class="space-y-2">
-                                            <x-form.input name="appliance_name" label="Appliance Name" type="text" value="{{ old('appliance_name') }}" required/>
-                                            <x-input-error :messages="$errors->get('appliance_name')" class="mt-1"/>
+                                            <x-form.input name="appliance_name" label="Appliance Name" type="text"
+                                                          value="{{ old('appliance_name') }}"
+                                                          class="bg-brand-800 border-brand-700 text-brand-100 placeholder-brand-300"/>
+                                            <x-input-error :messages="$errors->get('appliance_name')" class="mt-1 text-brand-400"/>
                                         </div>
 
                                         <!-- Location -->
                                         <div class="space-y-2">
-                                            <x-form.input name="location" label="Location" type="text" value="{{ old('location') }}"/>
-                                            <x-input-error :messages="$errors->get('location')" class="mt-1"/>
+                                            <x-form.input name="location" label="Location" type="text"
+                                                          value="{{ old('location') }}"
+                                                          class="bg-brand-800 border-brand-700 text-brand-100 placeholder-brand-300"/>
+                                            <x-input-error :messages="$errors->get('location')" class="mt-1 text-brand-400"/>
                                         </div>
 
                                         <!-- Image Upload -->
                                         <div class="space-y-2">
-                                            <x-form.input name="image" label="Appliance Image" type="file" accept="image/*"/>
-                                            <x-input-error :messages="$errors->get('image')" class="mt-1"/>
+                                            <x-form.input name="image" label="Appliance Image" type="file" accept="image/*"
+                                                          class="bg-brand-800 border-brand-700 text-brand-100 placeholder-brand-300"/>
+                                            <x-input-error :messages="$errors->get('image')" class="mt-1 text-brand-400"/>
                                         </div>
                                     </div>
-                                </div>
-                                <x-modal.footer>
-                                    <x-primary-button type="submit">
-                                        Submit
-                                    </x-primary-button>
-                                </x-modal.footer>
-                            </x-modal.wrapper>
-                        </form>
+
+                                    <div class="mt-6 flex justify-end gap-x-2 bg-brand-900 py-3 px-4 rounded-md border-t border-brand-700">
+                                        <button type="button"
+                                                class="px-4 py-2 bg-brand-700 hover:bg-brand-600 text-white rounded-md transition"
+                                                @click.prevent="$dispatch('close-modal', 'inventory-modal')">
+                                            Cancel
+                                        </button>
+
+                                        <x-primary-button type="submit" class="bg-brand-700 hover:bg-brand-600 text-white">
+                                            Submit
+                                        </x-primary-button>
+                                    </div>
+                                </form>
+                            </div>
+                        </x-modal>
+
                     </x-slot>
                 </x-table-header>
 
