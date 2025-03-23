@@ -13,8 +13,11 @@ class InventoryController extends Controller
      */
     public function index()
     {
-        return view('inventory.index')->with('inventory', Inventory::all());
+        $inventory = Inventory::all();
+
+        return view('inventory.index', compact('inventory'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -61,7 +64,8 @@ class InventoryController extends Controller
      */
     public function show(Inventory $inventory)
     {
-        //
+        return view('inventory.show', compact('inventory'));
+
     }
 
     /**

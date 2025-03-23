@@ -188,44 +188,15 @@
                                                     </span>
 
                                                     {{-- Example Edit link --}}
-                                                    <a href="{{ route('visitors.edit', $inventory->id) }}" class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-neutral-200 hover:bg-neutral-700 focus:outline-none focus:bg-neutral-700">
-                                                        Edit
+                                                    <a href="{{ route('inventory.show', $inventory->id) }}" class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-neutral-200 hover:bg-neutral-700 focus:outline-none focus:bg-neutral-700">
+                                                        View Item
                                                     </a>
 
                                                     {{-- Timeline link --}}
                                                     <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-neutral-200 hover:bg-neutral-700 focus:outline-none focus:bg-neutral-700"
-                                                       href="{{ route('visitors.timeline', $inventory->id) }}">
+                                                       href="">
                                                         View Timeline
                                                     </a>
-
-                                                    @if($inventory->status == 'pending')
-                                                        <form action="{{ route('visitors.update', $inventory->id) }}" method="POST" style="display: inline;">
-                                                            @csrf
-                                                            @method('PATCH')
-                                                            <input type="hidden" name="status" value="approved">
-                                                            <button type="submit" class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-neutral-200 hover:bg-neutral-700 focus:outline-none focus:bg-neutral-700">
-                                                                Approve
-                                                            </button>
-                                                        </form>
-                                                    @elseif($inventory->status == 'approved')
-                                                        <form action="{{ route('visitors.update', $inventory->id) }}" method="POST" style="display: inline;">
-                                                            @csrf
-                                                            @method('PATCH')
-                                                            <input type="hidden" name="status" value="checked_in">
-                                                            <button type="submit" class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-neutral-200 hover:bg-neutral-700 focus:outline-none focus:bg-neutral-700">
-                                                                Check In
-                                                            </button>
-                                                        </form>
-                                                    @elseif($inventory->status == 'checked_in')
-                                                        <form action="{{ route('visitors.update', $inventory->id) }}" method="POST" style="display: inline;">
-                                                            @csrf
-                                                            @method('PATCH')
-                                                            <input type="hidden" name="status" value="checked_out">
-                                                            <button type="submit" class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-neutral-200 hover:bg-neutral-700 focus:outline-none focus:bg-neutral-700">
-                                                                Check Out
-                                                            </button>
-                                                        </form>
-                                                    @endif
                                                 </div>
 
                                                 <!-- Delete Section -->
