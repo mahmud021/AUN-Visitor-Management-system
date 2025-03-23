@@ -70,5 +70,10 @@ class User extends Authenticatable
         return $this->hasMany(TimelineEvent::class);
     }
 
+    public function inventory(): HasMany
+    {
+        return $this->hasMany(Inventory::class);
+    }
+
 
 }
