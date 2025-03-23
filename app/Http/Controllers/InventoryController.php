@@ -39,7 +39,7 @@ class InventoryController extends Controller
         // Handle image upload
         $imagePath = null;
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('appliance_images', 'public');
+            $imagePath = $request->file('image')->store('appliance_images');
         }
 
         // Create inventory record
