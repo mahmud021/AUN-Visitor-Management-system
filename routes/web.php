@@ -51,6 +51,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory.index');
+    Route::get('/', [InventoryController::class, 'store'])->name('inventory.store');
 
 //    Route::get('/analytics', [AnalyticsController::class, 'index'])->name('analytics.index');
 

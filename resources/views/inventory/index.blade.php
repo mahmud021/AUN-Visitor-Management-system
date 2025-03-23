@@ -12,61 +12,45 @@
                 <x-table-header title="Inventory" description="View and Manage All Appliances.">
                     <x-slot name="actions">
                         <x-primary-button type="button"
-                                          aria-haspopup="dialog" aria-expanded="false"
-                                          aria-controls="hs-scale-animation-modal"
-                                          data-hs-overlay="#hs-scale-animation-modal">
-                            Create Visitor
+                                          aria-haspopup="dialog"
+                                          aria-expanded="false"
+                                          aria-controls="inventory-modal"
+                                          data-hs-overlay="#inventory-modal">
+                            Create Appliance
                         </x-primary-button>
-{{--                        <form method="POST" action="/visitor">--}}
-{{--                            @csrf--}}
-{{--                            <x-modal.wrapper id="hs-scale-animation-modal">--}}
-{{--                                <x-modal.header title="Create Visitor" modalId="hs-scale-animation-modal"/>--}}
-{{--                                <div class="p-4 overflow-y-auto">--}}
-{{--                                    <div class="grid grid-cols-1 gap-4 lg:gap-4">--}}
-{{--                                        <!-- First Name -->--}}
-{{--                                        <div class="space-y-2">--}}
-{{--                                            <x-form.input name="first_name" label="First Name" type="text"--}}
-{{--                                                          value="{{ old('first_name') }}"/>--}}
-{{--                                            <x-input-error :messages="$errors->get('first_name')" class="mt-1"/>--}}
-{{--                                        </div>--}}
-{{--                                        <!-- Last Name -->--}}
-{{--                                        <div class="space-y-2">--}}
-{{--                                            <x-form.input name="last_name" label="Last Name" type="text"--}}
-{{--                                                          value="{{ old('last_name') }}"/>--}}
-{{--                                            <x-input-error :messages="$errors->get('last_name')" class="mt-1"/>--}}
-{{--                                        </div>--}}
-{{--                                        <!-- Telephone -->--}}
-{{--                                        <div class="space-y-2">--}}
-{{--                                            <x-form.input name="telephone" label="Telephone Number" type="text"--}}
-{{--                                                          value="{{ old('telephone') }}"/>--}}
-{{--                                            <x-input-error :messages="$errors->get('telephone')" class="mt-1"/>--}}
-{{--                                        </div>--}}
-{{--                                        <!-- Expected Arrival -->--}}
-{{--                                        <div class="space-y-2">--}}
-{{--                                            <x-form.input name="expected_arrival" label="Expected Arrival" type="date"--}}
-{{--                                                          value="{{ old('expected_arrival') }}"/>--}}
-{{--                                            <x-input-error :messages="$errors->get('expected_arrival')" class="mt-1"/>--}}
-{{--                                        </div>--}}
-{{--                                        <!-- Optional: Status (if you wish to allow manual setting) -->--}}
-{{--                                        <!----}}
-{{--                                        <div class="space-y-2">--}}
-{{--                                            <x-form.select name="status" label="Status">--}}
-{{--                                                <option value="pending" {{ old('status') == 'pending' ? 'selected' : '' }}>Pending</option>--}}
-{{--                                                <option value="approved" {{ old('status') == 'approved' ? 'selected' : '' }}>Approved</option>--}}
-{{--                                                <option value="denied" {{ old('status') == 'denied' ? 'selected' : '' }}>Denied</option>--}}
-{{--                                            </x-form.select>--}}
-{{--                                            <x-input-error :messages="$errors->get('status')" class="mt-1"/>--}}
-{{--                                        </div>--}}
-{{--                                        -->--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                                <x-modal.footer>--}}
-{{--                                    <x-primary-button type="submit">--}}
-{{--                                        Submit--}}
-{{--                                    </x-primary-button>--}}
-{{--                                </x-modal.footer>--}}
-{{--                            </x-modal.wrapper>--}}
-{{--                        </form>--}}
+
+                        <form method="POST" action="{{ route('inventory.store') }}" enctype="multipart/form-data">
+                            @csrf
+                            <x-modal.wrapper id="inventory-modal">
+                                <x-modal.header title="Add Appliance" modalId="inventory-modal"/>
+                                <div class="p-4 overflow-y-auto">
+                                    <div class="grid grid-cols-1 gap-4 lg:gap-4">
+                                        <!-- Appliance Name -->
+                                        <div class="space-y-2">
+                                            <x-form.input name="appliance_name" label="Appliance Name" type="text" value="{{ old('appliance_name') }}" required/>
+                                            <x-input-error :messages="$errors->get('appliance_name')" class="mt-1"/>
+                                        </div>
+
+                                        <!-- Location -->
+                                        <div class="space-y-2">
+                                            <x-form.input name="location" label="Location" type="text" value="{{ old('location') }}"/>
+                                            <x-input-error :messages="$errors->get('location')" class="mt-1"/>
+                                        </div>
+
+                                        <!-- Image Upload -->
+                                        <div class="space-y-2">
+                                            <x-form.input name="image" label="Appliance Image" type="file" accept="image/*"/>
+                                            <x-input-error :messages="$errors->get('image')" class="mt-1"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <x-modal.footer>
+                                    <x-primary-button type="submit">
+                                        Submit
+                                    </x-primary-button>
+                                </x-modal.footer>
+                            </x-modal.wrapper>
+                        </form>
                     </x-slot>
                 </x-table-header>
 
