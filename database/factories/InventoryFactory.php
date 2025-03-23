@@ -28,6 +28,9 @@ class InventoryFactory extends Factory
             'location' => $this->faker->randomElement([
                 'Dorm A', 'Dorm B', 'Admin Building', 'Library', 'IT Building'
             ]),
+            'status' => $this->faker->randomElement([
+                'pending', 'missing', 'checked_in', 'checked_out',
+            ]),
             'image_path' => 'appliance_images/' . $this->faker->image('public/appliance_images', 640, 480, null, false),
             'checked_in_at' => $checkedInAt,
             'checked_out_at' => $checkedOutAt,
