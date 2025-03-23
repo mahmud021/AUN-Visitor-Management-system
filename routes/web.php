@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AnalyticsController;
+use App\Http\Controllers\InventoryController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
@@ -49,6 +50,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             ->middleware('can:update-visitor,visitor');
     });
 
+    Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory.index');
 
 //    Route::get('/analytics', [AnalyticsController::class, 'index'])->name('analytics.index');
 
