@@ -24,8 +24,6 @@ class DatabaseSeeder extends Seeder
         );
 
 
-        $this->call(InventorySeeder::class);
-
         UserDetails::firstOrCreate(
             ['user_id' => $user->id], // Prevents duplicate entries
             [
