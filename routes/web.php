@@ -7,7 +7,6 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VisitorController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\AppointmentController;
 
 // Authentication Routes
 require __DIR__ . '/auth.php';
@@ -62,9 +61,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 
 
-
-    // Appointment
-    Route::get('/appointment', [AppointmentController::class, 'index'])->name('appointment');
 
     // Profile Management
     Route::prefix('profile')->name('profile.')->group(function () {
