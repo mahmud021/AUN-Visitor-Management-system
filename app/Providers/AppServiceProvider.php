@@ -53,23 +53,28 @@ class AppServiceProvider extends ServiceProvider
                 $user->load('user_details');
             }
 
+            // Super admin or HR Admin bypass all restrictions.
+            if (in_array($user->user_details->role, ['super admin', 'HR Admin'])) {
+                return true;
+            }
+
             // Deny if the user's role is 'Security'
             if ($user->user_details->role === 'Security') {
                 return false;
             }
 
-            // Deny if the user is blacklisted
+            // Deny if the user is blacklisted.
             if ($user->user_details->blacklist) {
                 return false;
             }
 
-            // Check the time window
+            // Check the time window.
             $settings = \App\Models\AppSetting::first();
             if ($settings) {
                 $start = \Carbon\Carbon::parse($settings->visitor_start_time);
                 $end   = \Carbon\Carbon::parse($settings->visitor_end_time);
                 $now   = \Carbon\Carbon::now();
-                // Deny if the current time is not within the allowed range
+                // Deny if the current time is not within the allowed range.
                 if (!$now->between($start, $end)) {
                     return false;
                 }
@@ -77,6 +82,7 @@ class AppServiceProvider extends ServiceProvider
 
             return true;
         });
+
 
 
 
