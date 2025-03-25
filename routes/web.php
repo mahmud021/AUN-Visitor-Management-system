@@ -19,8 +19,12 @@ Route::redirect('/', '/login');
 Route::middleware(['auth', 'verified'])->group(function () {
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    // routes/web.php
+    Route::get('settings', [App\Http\Controllers\SettingController::class, 'edit'])->name('settings.edit');
+    Route::post('settings', [App\Http\Controllers\SettingController::class, 'update'])->name('settings.update');
 
-    // User Management
+
+
     // User Management (only accessible to super admin and HR Admin)
     Route::prefix('user')->name('user.')->middleware('can:view-users')->group(function () {
         Route::get('/', [UserController::class, 'index'])->name('index');
