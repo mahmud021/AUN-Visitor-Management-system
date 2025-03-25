@@ -10,21 +10,41 @@
 
     <!-- Dashboard Cards -->
     <div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto bg-primary">
-        @if(session('status'))
-            <p style="color:green;">{{ session('status') }}</p>
-        @endif
+        <h3 class="font-semibold text-lg text-white">
+            Time Window
+        </h3>
 
-        <form action="{{ route('settings.update') }}" method="POST">
+        <form action="{{ route('settings.update') }}" method="POST" class="space-y-6">
             @csrf
-            <label>Visitor Start Time (HH:MM):</label>
-            <input type="time" name="visitor_start_time" value="{{ $settings->visitor_start_time }}">
-            <br><br>
 
-            <label>Visitor End Time (HH:MM):</label>
-            <input type="time" name="visitor_end_time" value="{{ $settings->visitor_end_time }}">
-            <br><br>
+            <div class="flex space-x-4">
+                <!-- Start Time -->
+                <div class="space-y-2 max-w-32">
+                    <x-form.input
+                        name="visitor_start_time"
+                        label="Start Time"
+                        type="time"
+                        :value="old('visitor_start_time', $settings->visitor_start_time ?? \Carbon\Carbon::now()->format('H:i'))"
+                        class="bg-brand-800 border-brand-700 text-brand-100 placeholder-brand-300"
+                    />
+                    <x-input-error :messages="$errors->get('visitor_start_time')" class="mt-1 text-brand-400"/>
+                </div>
 
-            <button type="submit">Save</button>
-        </form>
-    </div>
+                <!-- End Time -->
+                <div class="space-y-2 max-w-32">
+                    <x-form.input
+                        name="visitor_end_time"
+                        label="End Time"
+                        type="time"
+                        :value="old('visitor_end_time', $settings->visitor_end_time ?? \Carbon\Carbon::now()->addHour()->format('H:i'))"
+                        class="bg-brand-800 border-brand-700 text-brand-100 placeholder-brand-300"
+                    />
+                    <x-input-error :messages="$errors->get('visitor_end_time')" class="mt-1 text-brand-400"/>
+                </div>
+            </div>
+
+            <x-primary-button type="submit" class="bg-brand-700 hover:bg-brand-600 text-white">
+                Save
+            </x-primary-button>
+        </form>    </div>
 </x-app-layout>
