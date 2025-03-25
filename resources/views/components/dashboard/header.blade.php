@@ -5,6 +5,7 @@
     <p class="text-sm text-gray-300">
         {{ $user->user_details->role }} Dashboard
     </p>
+
     <div class="flex items-center gap-4">
         <!-- Create Visitor Button -->
         <x-primary-button
@@ -29,5 +30,8 @@
                 {{ __('Log Out') }}
             </button>
         </form>
+
     </div>
+
 </div>
+

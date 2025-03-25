@@ -3,6 +3,25 @@
         <!-- Header with Create Visitor and Logout buttons -->
         <x-dashboard.header :user="$user" />
     </x-slot>
+    @if(auth()->user()->user_details->blacklist)
+        <!-- Blacklisted Warning Banner -->
+        <div class="max-w-[85rem] px-4 py-4 sm:px-6 lg:px-8 mx-auto text-center">
+            <div class="inline-flex items-center bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded-full shadow-md">
+            <span class="inline-flex items-center justify-center rounded-full bg-red-200 p-1 mr-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="#DC2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" class="lucide lucide-triangle-alert-icon">
+                    <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/>
+                    <path d="M12 9v4"/>
+                    <path d="M12 17h.01"/>
+                </svg>
+            </span>
+                <p class="text-sm font-semibold">
+                    You have been blacklisted. Please contact HR for more information.
+                </p>
+            </div>
+        </div>
+    @else
+    @endif
+
 
     <!-- Dashboard Cards -->
     <div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto bg-primary">
