@@ -1,12 +1,26 @@
-import './bootstrap';
+import ClipboardJS from 'clipboard';
 import 'preline';
-// resources/js/app.js
-import Toastify from 'toastify-js';
-window.Toastify = Toastify;
+import 'preline/dist/helper-clipboard.js';
 
+// Initialize Clipboard for buttons with class ".js-clipboard-example"
+const clipboard = new ClipboardJS('.js-clipboard-example');
 
-import Alpine from 'alpinejs';
+clipboard.on('success', function(e) {
+    const btn = e.trigger;
+    const defaultIcon = btn.querySelector('.js-clipboard-default');
+    const successIcon = btn.querySelector('.js-clipboard-success');
 
-window.Alpine = Alpine;
+    if (defaultIcon && successIcon) {
+        defaultIcon.classList.add('hidden');
+        successIcon.classList.remove('hidden');
 
-Alpine.start();
+        setTimeout(() => {
+            successIcon.classList.add('hidden');
+            defaultIcon.classList.remove('hidden');
+        }, 1500);
+    }
+
+    console.log('Copied!');
+    e.clearSelection();
+});
+

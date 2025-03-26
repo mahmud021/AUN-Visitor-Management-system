@@ -31,7 +31,22 @@
                         {{ $myVisitor->visitor_code ?? 'Null' }}
                     </span>
                         </p>
+                        <div class="inline-flex items-center gap-x-3">
+                            <div id="hs-clipboard-basic" class="text-sm font-medium text-gray-800 dark:text-white">
+                                test 2
+                            </div>
 
+                            <button type="button" class="js-clipboard-example p-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-2xs hover:bg-gray-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700" data-clipboard-target="#hs-clipboard-basic" data-clipboard-action="copy" data-clipboard-success-text="Copied">
+                                <svg class="js-clipboard-default size-4 group-hover:rotate-6 transition" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect width="8" height="4" x="8" y="2" rx="1" ry="1"></rect>
+                                    <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+                                </svg>
+
+                                <svg class="js-clipboard-success hidden size-4 text-blue-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </button>
+                        </div>
                         <!-- Visit Date with icon -->
                         <p class="flex items-center text-sm text-gray-400 mt-2">
                             <svg class="mr-1 h-4 w-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -116,6 +131,22 @@
             </x-card>
         @endforeach
 
+    </div>
+    <div class="inline-flex items-center gap-x-3">
+        <div id="hs-clipboard-basic" class="text-sm font-medium text-gray-800 dark:text-white">
+            test 2
+        </div>
+
+        <button type="button" class="js-clipboard-example p-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-2xs hover:bg-gray-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700" data-clipboard-target="#hs-clipboard-basic" data-clipboard-action="copy" data-clipboard-success-text="Copied">
+            <svg class="js-clipboard-default size-4 group-hover:rotate-6 transition" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect width="8" height="4" x="8" y="2" rx="1" ry="1"></rect>
+                <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+            </svg>
+
+            <svg class="js-clipboard-success hidden size-4 text-blue-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+        </button>
     </div>
     <div class="mt-6 flex justify-center">
         {{ $myVisitors->links() }}

@@ -48,6 +48,9 @@
 @include('components.flash-toast')
 <script src="https://cdn.jsdelivr.net/npm/preline@2.7.0/dist/preline.min.js"></script>
 <script src="/public/js/preline.min.js"></script>
+<!-- Add the Clipboard JavaScript -->
+
+
 
 </body>
 </html>
