@@ -30,13 +30,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/', [UserController::class, 'store'])->name('store');
         Route::get('/{user}/edit', [UserController::class, 'edit'])->name('edit');
         Route::get('/{user}/visitorLogs', [UserController::class, 'visitorLogs'])->name('visitorLogs');
-        Route::get('/{user}', [UserController::class, 'show'])->name('show')->middleware('can:view-profile,user');
-
         Route::patch('/{user}', [UserController::class, 'update'])->name('update');
         Route::put('/{user}/password', [UserController::class, 'updatePassword'])->name('password.update');
         Route::delete('/{user}', [UserController::class, 'destroy'])->name('destroy');
     });
 
+// Let any user view their own profile (or an admin see others)
+// via the dedicated `view-profile` gate
+    Route::get('/user/{user}', [UserController::class, 'show'])
+        ->name('user.show')
+        ->middleware('can:view-profile,user');
 
 
 
