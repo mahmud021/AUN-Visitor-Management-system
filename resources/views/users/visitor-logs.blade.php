@@ -81,35 +81,65 @@
                         <x-table>
                             <x-slot name="header">
                                 <tr>
+                                    <!-- Spacer Column -->
                                     <th scope="col" class="ps-6 py-3 text-start"></th>
+                                    <!-- Visitor Name -->
                                     <th scope="col" class="ps-6 lg:ps-3 xl:ps-0 pe-6 py-3 text-start">
                                         <div class="flex items-center gap-x-2">
-                                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-neutral-200">
-                                        Visitor Name
-                                    </span>
+                        <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-neutral-200">
+                            Visitor Name
+                        </span>
                                         </div>
                                     </th>
+                                    <!-- Telephone -->
                                     <th scope="col" class="px-6 py-3 text-start">
                                         <div class="flex items-center gap-x-2">
-                                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-neutral-200">
-                                        Telephone
-                                    </span>
+                        <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-neutral-200">
+                            Telephone
+                        </span>
                                         </div>
                                     </th>
+                                    <!-- Visit Date -->
                                     <th scope="col" class="px-6 py-3 text-start">
                                         <div class="flex items-center gap-x-2">
-                                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-neutral-200">
-                                        Expected Arrival
-                                    </span>
+                        <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-neutral-200">
+                            Visit Date
+                        </span>
                                         </div>
                                     </th>
+                                    <!-- Start Time -->
                                     <th scope="col" class="px-6 py-3 text-start">
                                         <div class="flex items-center gap-x-2">
-                                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-neutral-200">
-                                        Created
-                                    </span>
+                        <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-neutral-200">
+                            Start Time
+                        </span>
                                         </div>
                                     </th>
+                                    <!-- End Time -->
+                                    <th scope="col" class="px-6 py-3 text-start">
+                                        <div class="flex items-center gap-x-2">
+                        <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-neutral-200">
+                            End Time
+                        </span>
+                                        </div>
+                                    </th>
+                                    <!-- Status -->
+                                    <th scope="col" class="px-6 py-3 text-start">
+                                        <div class="flex items-center gap-x-2">
+                        <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-neutral-200">
+                            Status
+                        </span>
+                                        </div>
+                                    </th>
+                                    <!-- Created At -->
+                                    <th scope="col" class="px-6 py-3 text-start">
+                                        <div class="flex items-center gap-x-2">
+                        <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-neutral-200">
+                            Created
+                        </span>
+                                        </div>
+                                    </th>
+                                    <!-- Actions Column -->
                                     <th scope="col" class="px-6 py-3 text-end"></th>
                                 </tr>
                             </x-slot>
@@ -117,39 +147,100 @@
                             <x-slot name="rows">
                                 @foreach ($visitors as $visitor)
                                     <x-table-row>
+                                        <!-- Spacer Column -->
                                         <td class="size-px whitespace-nowrap"></td>
+
+                                        <!-- Visitor Name -->
                                         <td class="size-px whitespace-nowrap">
                                             <div class="ps-6 lg:ps-3 xl:ps-0 pe-6 py-3">
-                                                <div class="flex items-center gap-x-3">
-                                                    <div class="grow">
-                                                <span class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">
-                                                    {{ $visitor->first_name }} {{ $visitor->last_name }}
-                                                </span>
-                                                    </div>
+                                                <div class="flex flex-col gap-y-1">
+                                <span class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">
+                                    {{ $visitor->first_name }} {{ $visitor->last_name }}
+                                </span>
                                                 </div>
                                             </div>
                                         </td>
-                                        <td class="h-px w-72 whitespace-nowrap">
-                                            <div class="px-6 py-3">
-                                        <span class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">
-                                            {{ $visitor->telephone }}
-                                        </span>
-                                            </div>
-                                        </td>
+
+                                        <!-- Telephone -->
                                         <td class="size-px whitespace-nowrap">
                                             <div class="px-6 py-3">
-                                        <span class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">
-                                            {{ $visitor->expected_arrival }}
-                                        </span>
+                                                <div class="flex flex-col gap-y-1">
+                                <span class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">
+                                    {{ $visitor->telephone }}
+                                </span>
+                                                </div>
                                             </div>
                                         </td>
+
+                                        <!-- Visit Date -->
                                         <td class="size-px whitespace-nowrap">
                                             <div class="px-6 py-3">
-                                        <span class="text-sm text-gray-500 dark:text-neutral-500">
-                                            {{ \Carbon\Carbon::parse($visitor->created_at)->format('d M, Y') }}
-                                        </span>
+                                                <div class="flex flex-col gap-y-1">
+                                                    @if($visitor->visit_date)
+                                                        <span class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">
+                                        {{ \Carbon\Carbon::parse($visitor->visit_date)->format('d M, Y') }}
+                                    </span>
+                                                    @else
+                                                        <span class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">N/A</span>
+                                                    @endif
+                                                </div>
                                             </div>
                                         </td>
+
+                                        <!-- Start Time -->
+                                        <td class="size-px whitespace-nowrap">
+                                            <div class="px-6 py-3">
+                                                <div class="flex flex-col gap-y-1">
+                                                    @if($visitor->start_time)
+                                                        <span class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">
+                    {{ \Carbon\Carbon::parse($visitor->start_time)->format('g:i a') }}
+                </span>
+                                                    @else
+                                                        <span class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">N/A</span>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <!-- End Time -->
+                                        <td class="size-px whitespace-nowrap">
+                                            <div class="px-6 py-3">
+                                                <div class="flex flex-col gap-y-1">
+                                                    @if($visitor->end_time)
+                                                        <span class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">
+                    {{ \Carbon\Carbon::parse($visitor->end_time)->format('g:i a') }}
+                </span>
+                                                    @else
+                                                        <span class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">N/A</span>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </td>
+
+
+                                        <!-- Status -->
+                                        <td class="size-px whitespace-nowrap">
+                                            <div class="px-6 py-3">
+                                                <div class="flex flex-col gap-y-1">
+                                <span class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">
+                                    {{ ucfirst($visitor->status) }}
+                                </span>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <!-- Created At -->
+                                        <td class="size-px whitespace-nowrap">
+                                            <div class="px-6 py-3">
+                                                <div class="flex flex-col gap-y-1">
+                                <span class="block text-sm text-gray-500 dark:text-neutral-500">
+                                    {{ \Carbon\Carbon::parse($visitor->created_at)->format('d M, Y') }}
+                                </span>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <!-- Actions Column -->
                                         <td class="size-px whitespace-nowrap">
                                             <!-- Optional: Actions for each visitor -->
                                         </td>
