@@ -47,6 +47,23 @@ class AppServiceProvider extends ServiceProvider
         });
 
 
+        Gate::define('view-timeline', function ($user, $visitor) {
+            // HR Admin, Super Admin, and Security can view any timeline.
+            if (in_array($user->user_details->role, ['HR Admin', 'super admin', 'Security'])) {
+                return true;
+            }
+            // Regular users (student/staff) can only view the timeline if the visitor belongs to them.
+            return $visitor->user_id === $user->id;
+        });
+
+        Gate::define('view-profile', function ($currentUser, $profileUser) {
+            // Allow if they’re looking at their own profile...
+            if ($currentUser->id === $profileUser->id) {
+                return true;
+            }
+            // ...or if the user is HR Admin, Super Admin, or Security.
+            return in_array($currentUser->user_details->role, ['HR Admin', 'super admin', 'Security']);
+        });
 
         Gate::define('create-visitor', function ($user) {
             if (!$user->relationLoaded('user_details')) {

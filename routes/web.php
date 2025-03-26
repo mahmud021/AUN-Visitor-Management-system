@@ -30,7 +30,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/', [UserController::class, 'store'])->name('store');
         Route::get('/{user}/edit', [UserController::class, 'edit'])->name('edit');
         Route::get('/{user}/visitorLogs', [UserController::class, 'visitorLogs'])->name('visitorLogs');
-        Route::get('/{user}', [UserController::class, 'show'])->name('show')->middleware('can:view-profile');
+        Route::get('/{user}', [UserController::class, 'show'])->name('show')->middleware('can:view-profile,user');
 
         Route::patch('/{user}', [UserController::class, 'update'])->name('update');
         Route::put('/{user}/password', [UserController::class, 'updatePassword'])->name('password.update');
@@ -53,7 +53,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
             ->middleware('can:update-visitor,visitor');
         Route::get('/{visitor}/timeline', [VisitorController::class, 'timeline'])
             ->name('timeline')
-            ->middleware('can:update-visitor,visitor');
+            ->middleware('can:view-timeline,visitor');
+
     });
 
     Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory.index');
