@@ -52,8 +52,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             ->middleware('can:update-visitor,visitor');
         Route::get('/{visitor}/timeline', [VisitorController::class, 'timeline'])
             ->name('timeline')
-            ->middleware('can:view-timeline,visitor');
-
+            ->middleware('can:update-visitor,visitor');
     });
 
     Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory.index');
