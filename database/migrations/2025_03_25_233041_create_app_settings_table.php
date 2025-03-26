@@ -17,6 +17,12 @@ return new class extends Migration
             $table->time('visitor_end_time')->nullable();
             $table->timestamps();
         });
+        DB::table('app_settings')->insert([
+            'visitor_start_time' => '08:00:00',
+            'visitor_end_time'   => '17:00:00',
+            'created_at'         => now(),
+            'updated_at'         => now(),
+        ]);
     }
 
     /**
