@@ -226,19 +226,11 @@
                                                         Actions
                                                     </span>
                                                     <a href="/user/{{ $user['id'] }}" class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-neutral-200 hover:bg-neutral-700 focus:outline-none focus:bg-neutral-700">
-                                                        Edit
+                                                        View Info and Logs
                                                     </a>
                                                     <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-neutral-200 hover:bg-neutral-700 focus:outline-none focus:bg-neutral-700"
-                                                       href="{{ route('user.visitorLogs', $user->id) }}">
-                                                        View Visitor Logs
-                                                    </a>
-                                                    <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-neutral-200 hover:bg-neutral-700 focus:outline-none focus:bg-neutral-700"
-                                                       href="#">
-                                                        View Activity Logs
-                                                    </a>
-                                                    <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-neutral-200 hover:bg-neutral-700 focus:outline-none focus:bg-neutral-700"
-                                                       href="#">
-                                                        Export User Data
+                                                       href="{{ route('user.edit', $user->id) }}">
+                                                       Edit User Details
                                                     </a>
                                                 </div>
                                                 <div class="py-2 first:pt-0 last:pb-0">

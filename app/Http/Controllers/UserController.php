@@ -24,14 +24,7 @@ class UserController extends Controller
 
     public function visitorLogs(User $user)
     {
-        // Retrieve visitors for this user (paginated)
-        $visitors = $user->visitors()->paginate(10);
 
-        // Retrieve inventory items (paginated)
-        $inventoryItems = Inventory::paginate(10);
-
-        // Pass both the user, visitors, and inventory items to the view
-        return view('users.visitor-logs', compact('user', 'visitors', 'inventoryItems'));
     }
 
 
@@ -40,9 +33,13 @@ class UserController extends Controller
      */
     public function create()
     {
-        // Your create logic (if needed)
-    }
 
+    }
+    public function edit(User $user)
+    {
+        $user->load('user_details');
+        return view('users.edit', compact('user'));
+    }
     /**
      * Store a newly created resource in storage.
      */
@@ -102,8 +99,14 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        $user->load('user_details');
-        return view('users.edit', compact('user'));
+        // Retrieve visitors for this user (paginated)
+        $visitors = $user->visitors()->paginate(10);
+
+        // Retrieve inventory items (paginated)
+        $inventoryItems = Inventory::paginate(10);
+
+        // Pass both the user, visitors, and inventory items to the view
+        return view('users.visitor-logs', compact('user', 'visitors', 'inventoryItems'));
     }
 
     /**
