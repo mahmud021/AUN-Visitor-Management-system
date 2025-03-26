@@ -7,67 +7,82 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div>
-                <div class="px-4 sm:px-0">
-                    <h3 class="text-base/7 font-semibold text-brand-50"></h3>
-                    <p class="mt-1 max-w-2xl text-sm/6 text-brand-300">Personal details and application.</p>
-                </div>
-                <div class="mt-6 border-t border-brand-800 ">
-                    <dl class="divide-y divide-brand-800">
-                        <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                            <dt class="text-sm/6 font-medium text-brand-50">Full name</dt>
-                            <dd class="mt-1 text-sm/6 text-brand-200 sm:col-span-2 sm:mt-0">{{$user->first_name}} {{$user->last_name}}</dd>
-                        </div>
-                        <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                            <dt class="text-sm/6 font-medium text-brand-50">Email address</dt>
-                            <dd class="mt-1 text-sm/6 text-brand-200 sm:col-span-2 sm:mt-0">{{$user->email}}</dd>
-                        </div>
-                        <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                            <dt class="text-sm/6 font-medium text-brand-50">School ID</dt>
-                            <dd class="mt-1 text-sm/6 text-brand-200 sm:col-span-2 sm:mt-0">{{$user->user_details->school_id}}</dd>
-                        </div>
 
-                        <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                            <dt class="text-sm/6 font-medium text-brand-50">Role</dt>
-                            <dd class="mt-1 text-sm/6 text-brand-200 sm:col-span-2 sm:mt-0">{{$user->user_details->role}}</dd>
-                        </div>
-                        <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                            <dt class="text-sm/6 font-medium text-brand-50">Telephone</dt>
-                            <dd class="mt-1 text-sm/6 text-brand-200 sm:col-span-2 sm:mt-0">{{$user->user_details->telephone}}</dd>
-                        </div>
-                        <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                            <dt class="text-sm/6 font-medium text-brand-50">Blacklist status</dt>
-                            <dd class="mt-1 text-sm/6 text-brand-200 sm:col-span-2 sm:mt-0">True</dd>
-                            <dt class="text-sm/6 font-medium text-brand-50">Bypass HR Approval</dt>
-                            <dd class="mt-1 text-sm/6 text-brand-200 sm:col-span-2 sm:mt-0">True</dd>
-
-                        </div>
-                        <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-
-
-                        </div>
-
-                    </dl>
-                </div>
-            </div>
             <div class="flex justify-center">
-                <div class="flex bg-gray-100 hover:bg-gray-200 rounded-lg transition p-1 dark:bg-neutral-700 dark:hover:bg-neutral-600">
-                    <nav class="flex justify-center gap-x-1" aria-label="Tabs" role="tablist" aria-orientation="horizontal">
-                        <button type="button" class="hs-tab-active:bg-white hs-tab-active:text-gray-700 hs-tab-active:dark:bg-neutral-800 hs-tab-active:dark:text-neutral-400 dark:hs-tab-active:bg-gray-800 py-3 px-4 inline-flex items-center gap-x-2 bg-transparent text-sm text-gray-500 hover:text-gray-700 focus:outline-hidden focus:text-gray-700 font-medium rounded-lg hover:text-blue-600 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-400 dark:hover:text-white dark:focus:text-white active" id="segment-item-1" aria-selected="true" data-hs-tab="#segment-1" aria-controls="segment-1" role="tab">
-                           Visitor Logs
+                <div
+                    class="flex bg-gray-100 hover:bg-gray-200 rounded-lg transition p-1 dark:bg-neutral-700 dark:hover:bg-neutral-600">
+                    <nav class="flex justify-center gap-x-1" aria-label="Tabs" role="tablist"
+                         aria-orientation="horizontal">
+                        <button type="button"
+                                class="hs-tab-active:bg-white hs-tab-active:text-gray-700 hs-tab-active:dark:bg-neutral-800 hs-tab-active:dark:text-neutral-400 dark:hs-tab-active:bg-gray-800 py-3 px-4 inline-flex items-center gap-x-2 bg-transparent text-sm text-gray-500 hover:text-gray-700 focus:outline-hidden focus:text-gray-700 font-medium rounded-lg hover:text-blue-600 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-400 dark:hover:text-white dark:focus:text-white active"
+                                id="segment-item-1" aria-selected="true" data-hs-tab="#segment-1"
+                                aria-controls="segment-1" role="tab">
+                            Personal Information
                         </button>
-                        <button type="button" class="hs-tab-active:bg-white hs-tab-active:text-gray-700 hs-tab-active:dark:bg-neutral-800 hs-tab-active:dark:text-neutral-400 dark:hs-tab-active:bg-gray-800 py-3 px-4 inline-flex items-center gap-x-2 bg-transparent text-sm text-gray-500 hover:text-gray-700 focus:outline-hidden focus:text-gray-700 font-medium rounded-lg hover:text-blue-600 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-400 dark:hover:text-white dark:focus:text-white" id="segment-item-2" aria-selected="false" data-hs-tab="#segment-2" aria-controls="segment-2" role="tab">
+                        <button type="button"
+                                class="hs-tab-active:bg-white hs-tab-active:text-gray-700 hs-tab-active:dark:bg-neutral-800 hs-tab-active:dark:text-neutral-400 dark:hs-tab-active:bg-gray-800 py-3 px-4 inline-flex items-center gap-x-2 bg-transparent text-sm text-gray-500 hover:text-gray-700 focus:outline-hidden focus:text-gray-700 font-medium rounded-lg hover:text-blue-600 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-400 dark:hover:text-white dark:focus:text-white"
+                                id="segment-item-2" aria-selected="false" data-hs-tab="#segment-2"
+                                aria-controls="segment-2" role="tab">
+                            Visitor Logs
+                        </button>
+                        <button type="button"
+                                class="hs-tab-active:bg-white hs-tab-active:text-gray-700 hs-tab-active:dark:bg-neutral-800 hs-tab-active:dark:text-neutral-400 dark:hs-tab-active:bg-gray-800 py-3 px-4 inline-flex items-center gap-x-2 bg-transparent text-sm text-gray-500 hover:text-gray-700 focus:outline-hidden focus:text-gray-700 font-medium rounded-lg hover:text-blue-600 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-400 dark:hover:text-white dark:focus:text-white"
+                                id="segment-item-3" aria-selected="false" data-hs-tab="#segment-3"
+                                aria-controls="segment-3" role="tab">
                            Inventory Logs
-                        </button>
-                        <button type="button" class="hs-tab-active:bg-white hs-tab-active:text-gray-700 hs-tab-active:dark:bg-neutral-800 hs-tab-active:dark:text-neutral-400 dark:hs-tab-active:bg-gray-800 py-3 px-4 inline-flex items-center gap-x-2 bg-transparent text-sm text-gray-500 hover:text-gray-700 focus:outline-hidden focus:text-gray-700 font-medium rounded-lg hover:text-blue-600 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-400 dark:hover:text-white dark:focus:text-white" id="segment-item-3" aria-selected="false" data-hs-tab="#segment-3" aria-controls="segment-3" role="tab">
-                            Tab 3
                         </button>
                     </nav>
                 </div>
             </div>
 
-            <div class="mt-3 text-center">
+            <div class="mt-3">
                 <div id="segment-1" role="tabpanel" aria-labelledby="segment-item-1">
+                    <div>
+                        <div class="px-4 sm:px-0">
+                            <h3 class="text-base/7 font-semibold text-brand-50"></h3>
+                            <p class="mt-1 max-w-2xl text-sm/6 text-brand-300">Personal details.</p>
+                        </div>
+                        <div class="mt-6 border-t border-brand-800 ">
+                            <dl class="divide-y divide-brand-800">
+                                <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                    <dt class="text-sm/6 font-medium text-brand-50">Full name</dt>
+                                    <dd class="mt-1 text-sm/6 text-brand-200 sm:col-span-2 sm:mt-0">{{$user->first_name}} {{$user->last_name}}</dd>
+                                </div>
+                                <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                    <dt class="text-sm/6 font-medium text-brand-50">Email address</dt>
+                                    <dd class="mt-1 text-sm/6 text-brand-200 sm:col-span-2 sm:mt-0">{{$user->email}}</dd>
+                                </div>
+                                <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                    <dt class="text-sm/6 font-medium text-brand-50">School ID</dt>
+                                    <dd class="mt-1 text-sm/6 text-brand-200 sm:col-span-2 sm:mt-0">{{$user->user_details->school_id}}</dd>
+                                </div>
+
+                                <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                    <dt class="text-sm/6 font-medium text-brand-50">Role</dt>
+                                    <dd class="mt-1 text-sm/6 text-brand-200 sm:col-span-2 sm:mt-0">{{$user->user_details->role}}</dd>
+                                </div>
+                                <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                    <dt class="text-sm/6 font-medium text-brand-50">Telephone</dt>
+                                    <dd class="mt-1 text-sm/6 text-brand-200 sm:col-span-2 sm:mt-0">{{$user->user_details->telephone}}</dd>
+                                </div>
+                                <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                    <dt class="text-sm/6 font-medium text-brand-50">Blacklist status</dt>
+                                    <dd class="mt-1 text-sm/6 text-brand-200 sm:col-span-2 sm:mt-0">True</dd>
+                                    <dt class="text-sm/6 font-medium text-brand-50">Bypass HR Approval</dt>
+                                    <dd class="mt-1 text-sm/6 text-brand-200 sm:col-span-2 sm:mt-0">True</dd>
+
+                                </div>
+                                <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+
+
+                                </div>
+
+                            </dl>
+                        </div>
+                    </div>
+
+                </div>
+                <div id="segment-2" class="hidden" role="tabpanel" aria-labelledby="segment-item-2">
                     <x-table-wrapper>
                         <x-table-header
                             title=""
@@ -81,10 +96,8 @@
                         <x-table>
                             <x-slot name="header">
                                 <tr>
-                                    <!-- Spacer Column -->
-                                    <th scope="col" class="ps-6 py-3 text-start"></th>
                                     <!-- Visitor Name -->
-                                    <th scope="col" class="ps-6 lg:ps-3 xl:ps-0 pe-6 py-3 text-start">
+                                    <th scope="col" class="px-6 py-3 text-start">
                                         <div class="flex items-center gap-x-2">
                         <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-neutral-200">
                             Visitor Name
@@ -140,109 +153,135 @@
                                         </div>
                                     </th>
                                     <!-- Actions Column -->
-                                    <th scope="col" class="px-6 py-3 text-end"></th>
+                                    <th scope="col" class="px-6 py-3 text-end">
+                                        <!-- Optional: Actions header -->
+                                    </th>
                                 </tr>
                             </x-slot>
 
                             <x-slot name="rows">
                                 @foreach ($visitors as $visitor)
                                     <x-table-row>
-                                        <!-- Spacer Column -->
-                                        <td class="size-px whitespace-nowrap"></td>
-
                                         <!-- Visitor Name -->
-                                        <td class="size-px whitespace-nowrap">
-                                            <div class="ps-6 lg:ps-3 xl:ps-0 pe-6 py-3">
-                                                <div class="flex flex-col gap-y-1">
-                                <span class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">
-                                    {{ $visitor->first_name }} {{ $visitor->last_name }}
-                                </span>
-                                                </div>
+                                        <td class="px-6 py-3 whitespace-nowrap">
+                                            <div class="flex flex-col gap-y-1">
+                            <span class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">
+                                {{ $visitor->first_name }} {{ $visitor->last_name }}
+                            </span>
                                             </div>
                                         </td>
 
                                         <!-- Telephone -->
-                                        <td class="size-px whitespace-nowrap">
-                                            <div class="px-6 py-3">
-                                                <div class="flex flex-col gap-y-1">
-                                <span class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">
-                                    {{ $visitor->telephone }}
-                                </span>
-                                                </div>
+                                        <td class="px-6 py-3 whitespace-nowrap">
+                                            <div class="flex flex-col gap-y-1">
+                            <span class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">
+                                {{ $visitor->telephone }}
+                            </span>
                                             </div>
                                         </td>
 
                                         <!-- Visit Date -->
-                                        <td class="size-px whitespace-nowrap">
-                                            <div class="px-6 py-3">
-                                                <div class="flex flex-col gap-y-1">
-                                                    @if($visitor->visit_date)
-                                                        <span class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">
-                                        {{ \Carbon\Carbon::parse($visitor->visit_date)->format('d M, Y') }}
-                                    </span>
-                                                    @else
-                                                        <span class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">N/A</span>
-                                                    @endif
-                                                </div>
+                                        <td class="px-6 py-3 whitespace-nowrap">
+                                            <div class="flex flex-col gap-y-1">
+                                                @if($visitor->visit_date)
+                                                    <span
+                                                        class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">
+                                    {{ \Carbon\Carbon::parse($visitor->visit_date)->format('d M, Y') }}
+                                </span>
+                                                @else
+                                                    <span
+                                                        class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">
+                                    N/A
+                                </span>
+                                                @endif
                                             </div>
                                         </td>
 
                                         <!-- Start Time -->
-                                        <td class="size-px whitespace-nowrap">
-                                            <div class="px-6 py-3">
-                                                <div class="flex flex-col gap-y-1">
-                                                    @if($visitor->start_time)
-                                                        <span class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">
-                    {{ \Carbon\Carbon::parse($visitor->start_time)->format('g:i a') }}
-                </span>
-                                                    @else
-                                                        <span class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">N/A</span>
-                                                    @endif
-                                                </div>
+                                        <td class="px-6 py-3 whitespace-nowrap">
+                                            <div class="flex flex-col gap-y-1">
+                                                @if($visitor->start_time)
+                                                    <span
+                                                        class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">
+                                    {{ \Carbon\Carbon::parse($visitor->start_time)->format('g:i a') }}
+                                </span>
+                                                @else
+                                                    <span
+                                                        class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">
+                                    N/A
+                                </span>
+                                                @endif
                                             </div>
                                         </td>
 
                                         <!-- End Time -->
-                                        <td class="size-px whitespace-nowrap">
-                                            <div class="px-6 py-3">
-                                                <div class="flex flex-col gap-y-1">
-                                                    @if($visitor->end_time)
-                                                        <span class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">
-                    {{ \Carbon\Carbon::parse($visitor->end_time)->format('g:i a') }}
-                </span>
-                                                    @else
-                                                        <span class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">N/A</span>
-                                                    @endif
-                                                </div>
+                                        <td class="px-6 py-3 whitespace-nowrap">
+                                            <div class="flex flex-col gap-y-1">
+                                                @if($visitor->end_time)
+                                                    <span
+                                                        class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">
+                                    {{ \Carbon\Carbon::parse($visitor->end_time)->format('g:i a') }}
+                                </span>
+                                                @else
+                                                    <span
+                                                        class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">
+                                    N/A
+                                </span>
+                                                @endif
                                             </div>
                                         </td>
 
-
                                         <!-- Status -->
-                                        <td class="size-px whitespace-nowrap">
-                                            <div class="px-6 py-3">
-                                                <div class="flex flex-col gap-y-1">
-                                <span class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">
-                                    {{ ucfirst($visitor->status) }}
-                                </span>
-                                                </div>
+                                        <td class="px-6 py-3 whitespace-nowrap">
+                                            <div class="flex flex-col gap-y-1">
+                        <span class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">
+    <x-status-badge status="{{ ($visitor->status ?? 'Null') }}"/>
+</span>
+
                                             </div>
                                         </td>
 
                                         <!-- Created At -->
-                                        <td class="size-px whitespace-nowrap">
-                                            <div class="px-6 py-3">
-                                                <div class="flex flex-col gap-y-1">
-                                <span class="block text-sm text-gray-500 dark:text-neutral-500">
-                                    {{ \Carbon\Carbon::parse($visitor->created_at)->format('d M, Y') }}
-                                </span>
-                                                </div>
+                                        <td class="px-6 py-3 whitespace-nowrap">
+                                            <div class="flex flex-col gap-y-1">
+                            <span class="block text-sm text-gray-500 dark:text-neutral-500">
+                                {{ \Carbon\Carbon::parse($visitor->created_at)->format('d M, Y') }}
+                            </span>
                                             </div>
                                         </td>
 
                                         <!-- Actions Column -->
                                         <td class="size-px whitespace-nowrap">
-                                            <!-- Optional: Actions for each visitor -->
+                                            <div class="px-6 py-2">
+                                                <div class="hs-dropdown [--placement:bottom-right] relative inline-block">
+                                                    <button id="hs-table-dropdown-{{ $user->id }}" type="button" class="hs-dropdown-toggle py-1.5 px-2 inline-flex justify-center items-center gap-2 rounded-lg text-neutral-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 text-sm" aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
+                                                        <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                            <circle cx="12" cy="12" r="1"/>
+                                                            <circle cx="19" cy="12" r="1"/>
+                                                            <circle cx="5" cy="12" r="1"/>
+                                                        </svg>
+                                                    </button>
+                                                    <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden divide-y divide-neutral-700 min-w-40 z-20 bg-neutral-800 shadow-2xl rounded-lg p-2 mt-2 border border-neutral-700" role="menu" aria-orientation="vertical" aria-labelledby="hs-table-dropdown-1">
+                                                        <div class="py-2 first:pt-0 last:pb-0">
+                                                    <span class="block py-2 px-3 text-xs font-medium uppercase text-neutral-400">
+                                                        Actions
+                                                    </span>
+                                                            <a href="{{ route('visitors.edit', $visitor->id) }}"
+                                                               class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300">
+                                                                Edit
+                                                            </a>
+                                                            <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300"
+                                                               href="{{ route('visitors.timeline', $visitor->id) }}">
+                                                                View Timeline
+                                                            </a>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {{-- <div class="px-6 py-1.5">
+                                                <x-action-button href="/user/{{ $user['id'] }}" label="Edit"/>
+                                            </div> --}}
                                         </td>
                                     </x-table-row>
                                 @endforeach
@@ -257,20 +296,131 @@
                         </x-table-footer>
                     </x-table-wrapper>
                 </div>
-                <div id="segment-2" class="hidden" role="tabpanel" aria-labelledby="segment-item-2">
-                    <p class="text-gray-500 dark:text-neutral-400">
-                        This is the <em class="font-semibold text-gray-800 dark:text-neutral-200">second</em> item's tab body.
-                    </p>
-                </div>
                 <div id="segment-3" class="hidden" role="tabpanel" aria-labelledby="segment-item-3">
-                    <p class="text-gray-500 dark:text-neutral-400">
-                        This is the <em class="font-semibold text-gray-800 dark:text-neutral-200">third</em> item's tab body.
-                    </p>
+                    <x-table-wrapper>
+                        <x-table-header
+                            title=""
+                            description="List of appliances in inventory."
+                        >
+                            <x-slot name="actions">
+                                <!-- Optional: Add an action like "Add new appliance" -->
+                            </x-slot>
+                        </x-table-header>
+
+                        <x-table>
+                            <x-slot name="header">
+                                <tr>
+                                    <!-- Appliance Name -->
+                                    <th scope="col" class="px-6 py-3 text-left">
+                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-neutral-200">
+                        Appliance Name
+                    </span>
+                                    </th>
+                                    <!-- Brand -->
+                                    <th scope="col" class="px-6 py-3 text-left">
+                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-neutral-200">
+                        Brand
+                    </span>
+                                    </th>
+                                    <!-- Location -->
+                                    <th scope="col" class="px-6 py-3 text-left">
+                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-neutral-200">
+                        Location
+                    </span>
+                                    </th>
+                                    <!-- Status -->
+                                    <th scope="col" class="px-6 py-3 text-left">
+                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-neutral-200">
+                        Status
+                    </span>
+                                    </th>
+                                    <!-- Created At -->
+                                    <th scope="col" class="px-6 py-3 text-left">
+                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-neutral-200">
+                        Created At
+                    </span>
+                                    </th>
+                                    <!-- Actions Column -->
+                                    <th scope="col" class="px-6 py-3 text-right">
+                                        <!-- Optional: Actions header -->
+                                    </th>
+                                </tr>
+                            </x-slot>
+
+                            <x-slot name="rows">
+                                @foreach($inventoryItems as $item)
+                                    <x-table-row>
+                                        <!-- Appliance Name -->
+                                        <td class="px-6 py-3 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200">
+                                            {{ $item->appliance_name }}
+                                        </td>
+                                        <!-- Brand -->
+                                        <td class="px-6 py-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
+                                            {{ $item->brand }}
+                                        </td>
+                                        <!-- Location -->
+                                        <td class="px-6 py-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
+                                            {{ $item->location ?? 'N/A' }}
+                                        </td>
+                                        <!-- Status -->
+                                        <td class="px-6 py-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
+                                            <x-status-badge status="{{ ($item->status) }}" />
+                                        </td>
+                                        <!-- Created At -->
+                                        <td class="px-6 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-neutral-500">
+                                            {{ \Carbon\Carbon::parse($item->created_at)->format('d M, Y') }}
+                                        </td>
+                                        <!-- Actions Column -->
+                                        <td class="size-px whitespace-nowrap">
+                                            <div class="px-6 py-2">
+                                                <div class="hs-dropdown [--placement:bottom-right] relative inline-block">
+                                                    <button id="hs-table-dropdown-{{ $user->id }}" type="button" class="hs-dropdown-toggle py-1.5 px-2 inline-flex justify-center items-center gap-2 rounded-lg text-neutral-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 text-sm" aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
+                                                        <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                            <circle cx="12" cy="12" r="1"/>
+                                                            <circle cx="19" cy="12" r="1"/>
+                                                            <circle cx="5" cy="12" r="1"/>
+                                                        </svg>
+                                                    </button>
+                                                    <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden divide-y divide-neutral-700 min-w-40 z-20 bg-neutral-800 shadow-2xl rounded-lg p-2 mt-2 border border-neutral-700" role="menu" aria-orientation="vertical" aria-labelledby="hs-table-dropdown-1">
+                                                        <div class="py-2 first:pt-0 last:pb-0">
+                                                    <span class="block py-2 px-3 text-xs font-medium uppercase text-neutral-400">
+                                                        Actions
+                                                    </span>
+                                                            <a href=""
+                                                               class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300">
+                                                                Edit
+                                                            </a>
+                                                            <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300"
+                                                               href="">
+                                                                View Timeline
+                                                            </a>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {{-- <div class="px-6 py-1.5">
+                                                <x-action-button href="/user/{{ $user['id'] }}" label="Edit"/>
+                                            </div> --}}
+                                        </td>
+                                    </x-table-row>
+                                @endforeach
+                            </x-slot>
+                        </x-table>
+
+                        <x-table-footer totalResults="">
+                            <x-slot name="pagination">
+                                <!-- Add pagination if needed -->
+                                {{ $inventoryItems->links() }}
+                            </x-slot>
+                        </x-table-footer>
+                    </x-table-wrapper>
+
                 </div>
             </div>
 
 
-
         </div>
     </div>
+
 </x-app-layout>

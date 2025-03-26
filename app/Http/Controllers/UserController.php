@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Inventory;
 use App\Models\User;
 use App\Models\UserDetails;
 use App\Models\Visitor;
@@ -23,15 +24,16 @@ class UserController extends Controller
 
     public function visitorLogs(User $user)
     {
-        // Get visitors for this user
+        // Retrieve visitors for this user (paginated)
         $visitors = $user->visitors()->paginate(10);
 
-        // Pass both the user and the visitors to the view
-        return view('users.visitor-logs', [
-            'user'     => $user,      // single user model
-            'visitors' => $visitors,  // collection of visitors
-        ]);
+        // Retrieve inventory items (paginated)
+        $inventoryItems = Inventory::paginate(10);
+
+        // Pass both the user, visitors, and inventory items to the view
+        return view('users.visitor-logs', compact('user', 'visitors', 'inventoryItems'));
     }
+
 
     /**
      * Show the form for creating a new resource.
