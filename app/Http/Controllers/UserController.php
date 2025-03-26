@@ -106,7 +106,7 @@ class UserController extends Controller
         $inventoryItems = Inventory::paginate(10);
 
         // Pass both the user, visitors, and inventory items to the view
-        return view('users.visitor-logs', compact('user', 'visitors', 'inventoryItems'));
+        return view('users.show', compact('user', 'visitors', 'inventoryItems'));
     }
 
     /**

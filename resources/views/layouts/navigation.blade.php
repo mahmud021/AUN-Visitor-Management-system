@@ -74,9 +74,10 @@
                     role="menu" aria-orientation="vertical" aria-labelledby="hs-sidebar-header-example-with-dropdown">
                     <div class="p-1">
                         <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-neutral-200 hover:bg-brand-900 focus:outline-none focus:bg-brand-900"
-                           href="{{ route('profile.edit') }}">
+                           href="/user/{{ auth()->user()->id }}">
                             {{ __('Profile') }}
                         </a>
+
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
                             <x-dropdown-link :href="route('logout')"
