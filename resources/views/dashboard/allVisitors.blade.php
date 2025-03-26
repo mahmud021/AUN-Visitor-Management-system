@@ -1,7 +1,7 @@
-<h3 class="font-semibold text-lg">
+<div
+    class="py-3 flex items-center text-sm text-gray-800 before:flex-1 before:border-t before:border-gray-200 before:me-6 after:flex-1 after:border-t after:border-gray-200 after:ms-6 dark:text-white dark:before:border-neutral-600 dark:after:border-neutral-600">
     All Visitors
-</h3>
-
+</div>
 
 <div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
     <div class="grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
@@ -26,7 +26,8 @@
                                 stroke-linejoin="round"
                                 viewBox="0 0 24 24"
                             >
-                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                                <path
+                                    d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
                             </svg>
                             <span>: {{ $allVisitor->telephone ?? 'Null' }}</span>
                         </p>
@@ -107,13 +108,18 @@
                                         @method('PATCH')
                                         <input type="hidden" name="status" value="approved">
                                         <input type="hidden" name="redirect_to" value="{{ route('dashboard') }}">
-                                        <button type="submit" title="Approve" class="bg-white hover:bg-gray-100 p-2 rounded border border-gray-300">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                 stroke-linejoin="round" class="lucide lucide-check-icon lucide-check text-black">
-                                                <path d="M20 6 9 17l-5-5"/>
-                                            </svg>
-                                        </button>
+                                        <div class="hs-tooltip inline-block">
+                                            <button type="submit" title="Approve" class="hs-tooltip-toggle bg-white hover:bg-gray-100 p-2 rounded border border-gray-300">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                     stroke-linejoin="round" class="lucide lucide-check-icon lucide-check text-black">
+                                                    <path d="M20 6 9 17l-5-5"/>
+                                                </svg>
+                                                <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-2xs dark:bg-neutral-700" role="tooltip">
+                            Approve
+                        </span>
+                                            </button>
+                                        </div>
                                     </form>
 
                                     <!-- Deny Form -->
@@ -122,14 +128,19 @@
                                         @method('PATCH')
                                         <input type="hidden" name="status" value="denied">
                                         <input type="hidden" name="redirect_to" value="{{ route('dashboard') }}">
-                                        <button type="submit" title="Deny" class="bg-white hover:bg-gray-100 p-2 rounded border border-gray-300">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                 stroke-linejoin="round" class="lucide lucide-x-icon lucide-x text-black">
-                                                <path d="M18 6 6 18"/>
-                                                <path d="m6 6 12 12"/>
-                                            </svg>
-                                        </button>
+                                        <div class="hs-tooltip inline-block">
+                                            <button type="submit" title="Deny" class="hs-tooltip-toggle bg-white hover:bg-gray-100 p-2 rounded border border-gray-300">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                     stroke-linejoin="round" class="lucide lucide-x-icon lucide-x text-black">
+                                                    <path d="M18 6 6 18"/>
+                                                    <path d="m6 6 12 12"/>
+                                                </svg>
+                                                <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-2xs dark:bg-neutral-700" role="tooltip">
+                            Deny
+                        </span>
+                                            </button>
+                                        </div>
                                     </form>
                                 @endif
                             @elseif($allVisitor->status == 'approved')
@@ -149,6 +160,7 @@
                                 <span class="text-red-400">Visitor denied</span>
                             @endif
                         </div>
+
 
 
                     </div>
@@ -174,9 +186,9 @@
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
                             >
-                                <circle cx="12" cy="12" r="1" />
-                                <circle cx="19" cy="12" r="1" />
-                                <circle cx="5" cy="12" r="1" />
+                                <circle cx="12" cy="12" r="1"/>
+                                <circle cx="19" cy="12" r="1"/>
+                                <circle cx="5" cy="12" r="1"/>
                             </svg>
                         </button>
 
