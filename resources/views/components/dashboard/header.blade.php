@@ -1,9 +1,12 @@
 <div class="flex items-center justify-between ">
     <h1 class="text-xl font-bold text-white">
         Welcome, {{ $user->user_details->user->first_name }}!
+        <p class="text-sm text-gray-300">
+            {{$user->user_details->role}} Dashboard
+        </p>
     </h1>
     <p class="text-sm text-gray-300">
-        {{ $user->user_details->role }} Dashboard
+        {{ \Illuminate\Support\Carbon::now()->format('l jS,  g:i A') }}
     </p>
 
     <div class="flex items-center gap-4">
