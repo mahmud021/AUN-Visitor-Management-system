@@ -10,22 +10,57 @@
                         <h3 class="font-semibold text-lg mt-2">
                             {{ $myVisitor->first_name ?? 'Null' }} {{ $myVisitor->last_name ?? 'Null' }}
                         </h3>
-                        <p class="text-sm text-gray-400 mt-2">
-                            Telephone: {{ $myVisitor->telephone ?? 'Null' }}
+
+                        <!-- Telephone with icon -->
+                        <p class="flex items-center text-sm text-gray-400 mt-2">
+                            <svg class="mr-1 h-4 w-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                 stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07
+                        19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1
+                        2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6
+                        6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                            </svg>
+                            <span>: {{ $myVisitor->telephone ?? 'Null' }}</span>
                         </p>
+
+                        <!-- Access Code -->
                         <p class="mt-2 text-base font-semibold text-blue-400">
                             Access Code:
                             <span class="inline-block bg-gray-800 text-gray-100 rounded px-2 py-1 ml-1">
-                                {{ $myVisitor->visitor_code ?? 'Null' }}
-                            </span>
+                        {{ $myVisitor->visitor_code ?? 'Null' }}
+                    </span>
                         </p>
-                        <p class="text-sm text-gray-400 mt-2">
-                            Visit Date: {{ \Carbon\Carbon::parse($myVisitor->visit_date)->format('M d') }}
+
+                        <!-- Visit Date with icon -->
+                        <p class="flex items-center text-sm text-gray-400 mt-2">
+                            <svg class="mr-1 h-4 w-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                 stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M11 14h1v4"/>
+                                <path d="M16 2v4"/>
+                                <path d="M3 10h18"/>
+                                <path d="M8 2v4"/>
+                                <rect x="3" y="4" width="18" height="18" rx="2"/>
+                            </svg>
+                            <span>: {{ \Carbon\Carbon::parse($myVisitor->visit_date)->format('M d') }}</span>
                         </p>
-                        <p class="text-sm text-gray-400 mt-2">
-                            Time: {{ \Carbon\Carbon::parse($myVisitor->start_time)->format('h:i A') }}
-                            - {{ \Carbon\Carbon::parse($myVisitor->end_time)->format('h:i A') }}
+
+                        <!-- Time with icon -->
+                        <p class="flex items-center text-sm text-gray-400 mt-2">
+                            <svg class="mr-1 h-4 w-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                 stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"/>
+                                <polyline points="12 6 12 12 16 14"/>
+                            </svg>
+                            <span>
+                        : {{ \Carbon\Carbon::parse($myVisitor->start_time)->format('h:i A') }}
+                        - {{ \Carbon\Carbon::parse($myVisitor->end_time)->format('h:i A') }}
+                    </span>
                         </p>
+
+                        <!-- Status Badge -->
                         <p class="mt-2">
                             <x-status-badge status="{{ $myVisitor->status ?? 'Null' }}"/>
                         </p>
@@ -33,7 +68,6 @@
 
                     <!-- Right Side: Icons Container -->
                     <div class="flex items-center gap-x-2">
-
                         <div class="hs-dropdown [--placement:bottom-right] relative inline-block">
                             <button
                                 id="hs-table-dropdown-{{ $myVisitor->id }}"
@@ -59,13 +93,13 @@
                             >
                                 <!-- Actions Section -->
                                 <div class="py-2">
-                                    <span
-                                        class="block py-2 px-3 text-xs font-medium uppercase text-gray-400 dark:text-neutral-600">
-                                        Actions
-                                    </span>
+                            <span class="block py-2 px-3 text-xs font-medium uppercase text-gray-400 dark:text-neutral-600">
+                                Actions
+                            </span>
 
                                     {{-- Example Edit link --}}
-                                    <a href="{{ route('visitors.edit', $myVisitor->id) }}" class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700 dark:focus:text-neutral-300">
+                                    <a href="{{ route('visitors.edit', $myVisitor->id) }}"
+                                       class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700 dark:focus:text-neutral-300">
                                         Edit
                                     </a>
 
@@ -74,23 +108,14 @@
                                        href="{{ route('visitors.timeline', $myVisitor->id) }}">
                                         View Timeline
                                     </a>
-
                                 </div>
-
-                                <!-- Delete Section -->
-{{--                                <div class="py-2">--}}
-{{--                                    <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-red-600 hover:bg-gray-100 dark:text-red-500 dark:hover:text-neutral-300"--}}
-{{--                                       href="/visitor/{{ $myVisitor->id }}/delete">--}}
-{{--                                        Delete--}}
-{{--                                    </a>--}}
-{{--                                </div>--}}
-                                <!-- End Delete Section -->
                             </div>
                         </div>
                     </div>
                 </div>
             </x-card>
         @endforeach
+
     </div>
     <div class="mt-6 flex justify-center">
         {{ $myVisitors->links() }}
