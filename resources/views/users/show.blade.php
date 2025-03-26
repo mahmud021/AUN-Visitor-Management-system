@@ -10,29 +10,90 @@
 
             <div class="flex justify-center">
                 <div
-                    class="flex bg-gray-100 hover:bg-gray-200 rounded-lg transition p-1 dark:bg-neutral-700 dark:hover:bg-neutral-600">
-                    <nav class="flex justify-center gap-x-1" aria-label="Tabs" role="tablist"
-                         aria-orientation="horizontal">
-                        <button type="button"
-                                class="hs-tab-active:bg-white hs-tab-active:text-gray-700 hs-tab-active:dark:bg-neutral-800 hs-tab-active:dark:text-neutral-400 dark:hs-tab-active:bg-gray-800 py-3 px-4 inline-flex items-center gap-x-2 bg-transparent text-sm text-gray-500 hover:text-gray-700 focus:outline-hidden focus:text-gray-700 font-medium rounded-lg hover:text-blue-600 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-400 dark:hover:text-white dark:focus:text-white active"
-                                id="segment-item-1" aria-selected="true" data-hs-tab="#segment-1"
-                                aria-controls="segment-1" role="tab">
+                    class="flex rounded-lg transition p-1 bg-neutral-800"
+                >
+                    <nav class="flex justify-center gap-x-1" aria-label="Tabs" role="tablist" aria-orientation="horizontal">
+                        <button
+                            type="button"
+                            class="
+        hs-tab-active:bg-neutral-700
+        hs-tab-active:text-neutral-100
+        py-3 px-4
+        inline-flex items-center gap-x-2
+        bg-transparent
+        text-sm
+        text-neutral-400
+        hover:text-neutral-200
+        focus:outline-none
+        font-medium
+        rounded-lg
+        disabled:opacity-50
+        disabled:pointer-events-none
+        active
+      "
+                            id="segment-item-1"
+                            aria-selected="true"
+                            data-hs-tab="#segment-1"
+                            aria-controls="segment-1"
+                            role="tab"
+                        >
                             Personal Information
                         </button>
-                        <button type="button"
-                                class="hs-tab-active:bg-white hs-tab-active:text-gray-700 hs-tab-active:dark:bg-neutral-800 hs-tab-active:dark:text-neutral-400 dark:hs-tab-active:bg-gray-800 py-3 px-4 inline-flex items-center gap-x-2 bg-transparent text-sm text-gray-500 hover:text-gray-700 focus:outline-hidden focus:text-gray-700 font-medium rounded-lg hover:text-blue-600 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-400 dark:hover:text-white dark:focus:text-white"
-                                id="segment-item-2" aria-selected="false" data-hs-tab="#segment-2"
-                                aria-controls="segment-2" role="tab">
+
+                        <button
+                            type="button"
+                            class="
+        hs-tab-active:bg-neutral-700
+        hs-tab-active:text-neutral-100
+        py-3 px-4
+        inline-flex items-center gap-x-2
+        bg-transparent
+        text-sm
+        text-neutral-400
+        hover:text-neutral-200
+        focus:outline-none
+        font-medium
+        rounded-lg
+        disabled:opacity-50
+        disabled:pointer-events-none
+      "
+                            id="segment-item-2"
+                            aria-selected="false"
+                            data-hs-tab="#segment-2"
+                            aria-controls="segment-2"
+                            role="tab"
+                        >
                             Visitor Logs
                         </button>
-                        <button type="button"
-                                class="hs-tab-active:bg-white hs-tab-active:text-gray-700 hs-tab-active:dark:bg-neutral-800 hs-tab-active:dark:text-neutral-400 dark:hs-tab-active:bg-gray-800 py-3 px-4 inline-flex items-center gap-x-2 bg-transparent text-sm text-gray-500 hover:text-gray-700 focus:outline-hidden focus:text-gray-700 font-medium rounded-lg hover:text-blue-600 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-400 dark:hover:text-white dark:focus:text-white"
-                                id="segment-item-3" aria-selected="false" data-hs-tab="#segment-3"
-                                aria-controls="segment-3" role="tab">
+
+                        <button
+                            type="button"
+                            class="
+        hs-tab-active:bg-neutral-700
+        hs-tab-active:text-neutral-100
+        py-3 px-4
+        inline-flex items-center gap-x-2
+        bg-transparent
+        text-sm
+        text-neutral-400
+        hover:text-neutral-200
+        focus:outline-none
+        font-medium
+        rounded-lg
+        disabled:opacity-50
+        disabled:pointer-events-none
+      "
+                            id="segment-item-3"
+                            aria-selected="false"
+                            data-hs-tab="#segment-3"
+                            aria-controls="segment-3"
+                            role="tab"
+                        >
                             Inventory Logs
                         </button>
                     </nav>
                 </div>
+
             </div>
 
             <div class="mt-3">
@@ -244,7 +305,7 @@
                                                 @if($visitor->start_time)
                                                     <span
                                                         class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">
-                                    {{ \Carbon\Carbon::parse($visitor->start_time)->format('g:i a') }}
+                                    {{ \Carbon\Carbon::parse($visitor->start_time)->format('g:i A') }}
                                 </span>
                                                 @else
                                                     <span
@@ -261,7 +322,7 @@
                                                 @if($visitor->end_time)
                                                     <span
                                                         class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">
-                                    {{ \Carbon\Carbon::parse($visitor->end_time)->format('g:i a') }}
+                                    {{ \Carbon\Carbon::parse($visitor->end_time)->format('g:i A') }}
                                 </span>
                                                 @else
                                                     <span
