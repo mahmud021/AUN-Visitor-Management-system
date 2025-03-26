@@ -7,7 +7,6 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VisitorController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\AppointmentController;
 
 // Authentication Routes
 require __DIR__ . '/auth.php';
@@ -19,8 +18,12 @@ Route::redirect('/', '/login');
 Route::middleware(['auth', 'verified'])->group(function () {
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    // routes/web.php
+    Route::get('settings', [App\Http\Controllers\SettingController::class, 'edit'])->name('settings.edit');
+    Route::post('settings', [App\Http\Controllers\SettingController::class, 'update'])->name('settings.update');
 
-    // User Management
+
+
     // User Management (only accessible to super admin and HR Admin)
     Route::prefix('user')->name('user.')->middleware('can:view-users')->group(function () {
         Route::get('/', [UserController::class, 'index'])->name('index');
@@ -58,9 +61,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 
 
-
-    // Appointment
-    Route::get('/appointment', [AppointmentController::class, 'index'])->name('appointment');
 
     // Profile Management
     Route::prefix('profile')->name('profile.')->group(function () {

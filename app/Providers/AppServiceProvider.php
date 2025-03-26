@@ -42,6 +42,9 @@ class AppServiceProvider extends ServiceProvider
             return $visitor->user_id === $user->id;
         });
 
+        Gate::define('override-visitor-creation', function ($user) {
+            return in_array($user->user_details->role, ['HR Admin', 'super admin']);
+        });
 
 
 
@@ -49,12 +52,65 @@ class AppServiceProvider extends ServiceProvider
             if (!$user->relationLoaded('user_details')) {
                 $user->load('user_details');
             }
-            // Deny access if the user's role is 'security'
+
+            // Super admin or HR Admin bypass all restrictions.
+            if (in_array($user->user_details->role, ['super admin', 'HR Admin'])) {
+                return true;
+            }
+
+            // Deny if the user's role is 'Security'
             if ($user->user_details->role === 'Security') {
                 return false;
             }
-            return $user->user_details && !$user->user_details->blacklist;
+
+            // Deny if the user is blacklisted.
+            if ($user->user_details->blacklist) {
+                return false;
+            }
+
+            // Check the time window.
+            $settings = \App\Models\AppSetting::first();
+            if ($settings) {
+                $start = \Carbon\Carbon::parse($settings->visitor_start_time);
+                $end   = \Carbon\Carbon::parse($settings->visitor_end_time);
+                $now   = \Carbon\Carbon::now();
+                // Deny if the current time is not within the allowed range.
+                if (!$now->between($start, $end)) {
+                    return false;
+                }
+            }
+
+            return true;
         });
+
+        Gate::define('check-in-visitor', function ($user, $visitor) {
+            // Super admin or HR Admin bypass time restrictions
+            if (in_array($user->user_details->role, ['super admin', 'HR Admin'])) {
+                return true;
+            }
+
+            // Only allow security users to check in visitors
+            if ($user->user_details->role !== 'Security') {
+                return false;
+            }
+
+            // Retrieve the time window from settings
+            $settings = \App\Models\AppSetting::first();
+            if ($settings) {
+                $start = \Carbon\Carbon::parse($settings->visitor_start_time);
+                $end   = \Carbon\Carbon::parse($settings->visitor_end_time);
+                $now   = \Carbon\Carbon::now();
+                // Security users can only check in if current time is within allowed time window
+                if (!$now->between($start, $end)) {
+                    return false;
+                }
+            }
+
+            return true;
+        });
+
+
+
 
 
         // New gate: only allow super admin and HR Admin to access user management routes.

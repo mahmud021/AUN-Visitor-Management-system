@@ -23,6 +23,23 @@ class VisitorController extends Controller
 
     public function store(Request $request)
     {
+        // Retrieve the allowed time window from settings
+        $settings = \App\Models\AppSetting::first();
+        $start = \Carbon\Carbon::parse($settings->visitor_start_time);
+        $end   = \Carbon\Carbon::parse($settings->visitor_end_time);
+        $now   = \Carbon\Carbon::now();
+
+        // Check if current time is within the allowed window.
+        // Optionally, you might allow an override gate here.
+        if (!$now->between($start, $end)) {
+            // If you have an override permission, you can check it like so:
+            if (!\Illuminate\Support\Facades\Gate::allows('override-visitor-creation')) {
+                return redirect()->back()->withErrors([
+                    'time_window' => 'Visitor creation is not allowed outside the designated time window.'
+                ]);
+            }
+        }
+
         // Validate incoming request data
         $validated = $request->validate([
             'first_name'   => 'required|string|max:20',
@@ -34,7 +51,7 @@ class VisitorController extends Controller
         ]);
 
         // Combine visit_date and end_time to ensure proper datetime handling
-        $validated['end_time'] = Carbon::parse($validated['visit_date'] . ' ' . $validated['end_time']);
+        $validated['end_time'] = \Carbon\Carbon::parse($validated['visit_date'] . ' ' . $validated['end_time']);
 
         // Associate the visitor with the logged-in user and set initial status to pending
         $validated['user_id'] = auth()->id();
@@ -47,7 +64,7 @@ class VisitorController extends Controller
         $visitor = Visitor::create($validated);
 
         // Log timeline event for visitor creation
-        TimelineEvent::create([
+        \App\Models\TimelineEvent::create([
             'visitor_id'  => $visitor->id,
             'user_id'     => auth()->id(),
             'event_type'  => 'created',
@@ -58,7 +75,7 @@ class VisitorController extends Controller
         // Check if the user's details have bypass_hr_approval enabled
         if (auth()->user()->user_details->bypass_hr_approval) {
             $visitor->update(['status' => 'approved']);
-            TimelineEvent::create([
+            \App\Models\TimelineEvent::create([
                 'visitor_id'  => $visitor->id,
                 'user_id'     => auth()->id(),
                 'event_type'  => 'approved',
