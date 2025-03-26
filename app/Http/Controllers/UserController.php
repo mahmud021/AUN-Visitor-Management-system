@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\UserDetails;
 use App\Models\Visitor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
@@ -99,15 +100,16 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        // Retrieve visitors for this user (paginated)
+        // Check if the current user is allowed to view this profile.
+        if (Gate::denies('view-profile', $user)) {
+            abort(403);
+        }
+
         $visitors = $user->visitors()->paginate(10);
-
-        // Retrieve inventory items (paginated)
         $inventoryItems = Inventory::paginate(10);
-
-        // Pass both the user, visitors, and inventory items to the view
         return view('users.show', compact('user', 'visitors', 'inventoryItems'));
     }
+
 
     /**
      * Update the specified resource in storage.
