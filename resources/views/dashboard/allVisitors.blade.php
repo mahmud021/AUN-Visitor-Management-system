@@ -107,9 +107,13 @@
                                         @method('PATCH')
                                         <input type="hidden" name="status" value="approved">
                                         <input type="hidden" name="redirect_to" value="{{ route('dashboard') }}">
-                                        <x-primary-button class="bg-green-600 hover:bg-green-700 text-white">
-                                            Approve
-                                        </x-primary-button>
+                                        <button type="submit" title="Approve" class="bg-white hover:bg-gray-100 p-2 rounded border border-gray-300">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                 stroke-linejoin="round" class="lucide lucide-check-icon lucide-check text-black">
+                                                <path d="M20 6 9 17l-5-5"/>
+                                            </svg>
+                                        </button>
                                     </form>
 
                                     <!-- Deny Form -->
@@ -118,9 +122,14 @@
                                         @method('PATCH')
                                         <input type="hidden" name="status" value="denied">
                                         <input type="hidden" name="redirect_to" value="{{ route('dashboard') }}">
-                                        <x-primary-button class="bg-red-600 hover:bg-red-700 text-white">
-                                            Deny
-                                        </x-primary-button>
+                                        <button type="submit" title="Deny" class="bg-white hover:bg-gray-100 p-2 rounded border border-gray-300">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                 stroke-linejoin="round" class="lucide lucide-x-icon lucide-x text-black">
+                                                <path d="M18 6 6 18"/>
+                                                <path d="m6 6 12 12"/>
+                                            </svg>
+                                        </button>
                                     </form>
                                 @endif
                             @elseif($allVisitor->status == 'approved')
@@ -140,6 +149,8 @@
                                 <span class="text-red-400">Visitor denied</span>
                             @endif
                         </div>
+
+
                     </div>
 
                     <!-- Dropdown Menu -->
