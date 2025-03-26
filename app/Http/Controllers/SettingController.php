@@ -51,8 +51,8 @@ class SettingController extends Controller
     public function update(Request $request)
     {
         $data = $request->validate([
-            'visitor_start_time' => 'required|date_format:H:i',
-            'visitor_end_time'   => 'required|date_format:H:i',
+            'visitor_start_time' => 'required',
+            'visitor_end_time'   => 'required',
         ]);
 
         $settings = AppSetting::first();
