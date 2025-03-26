@@ -1,6 +1,17 @@
 import ClipboardJS from 'clipboard';
 import 'preline';
 import 'preline/dist/helper-clipboard.js';
+import './bootstrap';
+import 'preline';
+import Toastify from 'toastify-js';
+window.Toastify = Toastify;
+
+
+import Alpine from 'alpinejs';
+
+window.Alpine = Alpine;
+
+Alpine.start();
 
 // Initialize Clipboard for buttons with class ".js-clipboard-example"
 const clipboard = new ClipboardJS('.js-clipboard-example');
