@@ -13,23 +13,91 @@
                         <h3 class="font-semibold text-lg">
                             {{ $allVisitor->first_name ?? 'Null' }} {{ $allVisitor->last_name ?? 'Null' }}
                         </h3>
-                        <p class="text-sm text-gray-400 mt-2">
-                            Telephone: {{ $allVisitor->telephone ?? 'Null' }}
+
+                        <!-- Phone -->
+                        <p class="flex items-center text-sm text-gray-400 mt-2">
+                            <svg
+                                class="mr-1 h-4 w-4 text-gray-400"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                viewBox="0 0 24 24"
+                            >
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                            </svg>
+                            <span>: {{ $allVisitor->telephone ?? 'Null' }}</span>
                         </p>
-                        <p class="text-sm text-gray-400 mt-2">
-                            Hosted By: {{ $allVisitor->user->user_details->school_id ?? 'Null' }}
+
+                        <!-- School ID -->
+                        <p class="flex items-center text-sm text-gray-400 mt-2">
+                            <svg
+                                class="mr-1 h-4 w-4 text-gray-400"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                viewBox="0 0 24 24"
+                            >
+                                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
+                                <circle cx="12" cy="7" r="4"/>
+                            </svg>
+                            <span>: {{ $allVisitor->user->user_details->school_id ?? 'Null' }}</span>
                         </p>
-                        <p class="text-sm text-gray-400 mt-2">
-                            Visit Date: {{ \Carbon\Carbon::parse($allVisitor->visit_date)->format('M d') }}
+
+                        <!-- Visit Date -->
+                        <p class="flex items-center text-sm text-gray-400 mt-2">
+                            <svg
+                                class="mr-1 h-4 w-4 text-gray-400"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                viewBox="0 0 24 24"
+                            >
+                                <path d="M11 14h1v4"/>
+                                <path d="M16 2v4"/>
+                                <path d="M3 10h18"/>
+                                <path d="M8 2v4"/>
+                                <rect x="3" y="4" width="18" height="18" rx="2"/>
+                            </svg>
+                            <span>: {{ \Carbon\Carbon::parse($allVisitor->visit_date)->format('M d') }}</span>
                         </p>
-                        <p class="text-sm text-gray-400 mt-2">
-                            Time: {{ \Carbon\Carbon::parse($allVisitor->start_time)->format('h:i A') }} - {{ \Carbon\Carbon::parse($allVisitor->end_time)->format('h:i A') }}
+
+                        <!-- Time Range -->
+                        <p class="flex items-center text-sm text-gray-400 mt-2">
+                            <svg
+                                class="mr-1 h-4 w-4 text-gray-400"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                viewBox="0 0 24 24"
+                            >
+                                <circle cx="12" cy="12" r="10"/>
+                                <polyline points="12 6 12 12 16 14"/>
+                            </svg>
+                            <span> :
+                        {{ \Carbon\Carbon::parse($allVisitor->start_time)->format('h:i A') }}
+                        -
+                        {{ \Carbon\Carbon::parse($allVisitor->end_time)->format('h:i A') }}
+                    </span>
                         </p>
+
+                        <!-- Status Badge -->
                         <p class="mt-2">
                             <x-status-badge status="{{ $allVisitor->status }}"/>
                         </p>
 
-                        <!-- Status actions -->
+                        <!-- Status Actions -->
                         <div class="mt-3">
                             @if($allVisitor->status == 'pending')
                                 @if(auth()->user()?->user_details?->role === 'HR Admin' || auth()->user()?->user_details?->role === 'super admin')
@@ -84,12 +152,20 @@
                             aria-expanded="false"
                             aria-label="Dropdown"
                         >
-                            <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg"
-                                 width="24" height="24" fill="none" stroke="currentColor"
-                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="12" cy="12" r="1"/>
-                                <circle cx="19" cy="12" r="1"/>
-                                <circle cx="5" cy="12" r="1"/>
+                            <svg
+                                class="shrink-0 size-4"
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="24"
+                                height="24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <circle cx="12" cy="12" r="1" />
+                                <circle cx="19" cy="12" r="1" />
+                                <circle cx="5" cy="12" r="1" />
                             </svg>
                         </button>
 
@@ -100,26 +176,34 @@
                             aria-labelledby="hs-table-dropdown-{{ $allVisitor->id }}"
                         >
                             <div class="py-2">
-                    <span class="block py-2 px-3 text-xs font-medium uppercase text-gray-400 dark:text-neutral-600">
-                        Actions
-                    </span>
-                                <a href="{{ route('visitors.edit', $allVisitor->id) }}"
-                                   class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300">
+                        <span class="block py-2 px-3 text-xs font-medium uppercase text-gray-400 dark:text-neutral-600">
+                            Actions
+                        </span>
+                                <a
+                                    href="{{ route('visitors.edit', $allVisitor->id) }}"
+                                    class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300"
+                                >
                                     Edit
                                 </a>
-                                <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300"
-                                   href="{{ route('visitors.timeline', $allVisitor->id) }}">
+                                <a
+                                    class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300"
+                                    href="{{ route('visitors.timeline', $allVisitor->id) }}"
+                                >
                                     View Timeline
                                 </a>
-                                <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300"
-                                   href="{{ route('visitors.timeline', $allVisitor->id) }}">
+                                <a
+                                    class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300"
+                                    href="{{ route('visitors.timeline', $allVisitor->id) }}"
+                                >
                                     Allow Overstay
                                 </a>
                             </div>
                         </div>
                     </div>
                 </div>
-            </x-card>        @endforeach
+            </x-card>
+        @endforeach
+
     </div>
     <div class="mt-6 flex justify-center">
         {{ $allVisitors->links() }}
