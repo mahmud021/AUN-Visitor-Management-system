@@ -29,7 +29,7 @@
                                 class="hs-tab-active:bg-white hs-tab-active:text-gray-700 hs-tab-active:dark:bg-neutral-800 hs-tab-active:dark:text-neutral-400 dark:hs-tab-active:bg-gray-800 py-3 px-4 inline-flex items-center gap-x-2 bg-transparent text-sm text-gray-500 hover:text-gray-700 focus:outline-hidden focus:text-gray-700 font-medium rounded-lg hover:text-blue-600 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-400 dark:hover:text-white dark:focus:text-white"
                                 id="segment-item-3" aria-selected="false" data-hs-tab="#segment-3"
                                 aria-controls="segment-3" role="tab">
-                           Inventory Logs
+                            Inventory Logs
                         </button>
                     </nav>
                 </div>
@@ -66,12 +66,53 @@
                                     <dd class="mt-1 text-sm/6 text-brand-200 sm:col-span-2 sm:mt-0">{{$user->user_details->telephone}}</dd>
                                 </div>
                                 <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                    <!-- Blacklist status -->
                                     <dt class="text-sm/6 font-medium text-brand-50">Blacklist status</dt>
-                                    <dd class="mt-1 text-sm/6 text-brand-200 sm:col-span-2 sm:mt-0">True</dd>
-                                    <dt class="text-sm/6 font-medium text-brand-50">Bypass HR Approval</dt>
-                                    <dd class="mt-1 text-sm/6 text-brand-200 sm:col-span-2 sm:mt-0">True</dd>
+                                    <dd class="mt-1 text-sm/6 text-brand-200 sm:col-span-2 sm:mt-0">
+                                        @if($user->user_details && $user->user_details->blacklist)
+                                            <!-- If the user is blacklisted, show an "x" icon -->
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                 stroke-linecap="round" stroke-linejoin="round"
+                                                 class="lucide lucide-x-icon">
+                                                <line x1="18" y1="6" x2="6" y2="18"/>
+                                                <line x1="6" y1="6" x2="18" y2="18"/>
+                                            </svg>
+                                        @else
+                                            <!-- Otherwise, show a tick icon -->
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                 stroke-linecap="round" stroke-linejoin="round"
+                                                 class="lucide lucide-check-icon">
+                                                <path d="M20 6 9 17l-5-5"/>
+                                            </svg>
+                                        @endif
+                                    </dd>
 
+                                    <!-- Bypass HR Approval -->
+                                    <dt class="text-sm/6 font-medium text-brand-50">Bypass HR Approval</dt>
+                                    <dd class="mt-1 text-sm/6 text-brand-200 sm:col-span-2 sm:mt-0">
+                                        @if($user->user_details && $user->user_details->bypass_hr_approval)
+                                            <!-- If the user has bypass HR approval enabled, show a tick icon -->
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                 stroke-linecap="round" stroke-linejoin="round"
+                                                 class="lucide lucide-check-icon">
+                                                <path d="M20 6 9 17l-5-5"/>
+                                            </svg>
+                                        @else
+                                            <!-- Otherwise, show an "x" icon -->
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                 stroke-linecap="round" stroke-linejoin="round"
+                                                 class="lucide lucide-x-icon">
+                                                <line x1="18" y1="6" x2="6" y2="18"/>
+                                                <line x1="6" y1="6" x2="18" y2="18"/>
+                                            </svg>
+                                        @endif
+                                    </dd>
                                 </div>
+
                                 <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
 
 
@@ -253,17 +294,28 @@
                                         <!-- Actions Column -->
                                         <td class="size-px whitespace-nowrap">
                                             <div class="px-6 py-2">
-                                                <div class="hs-dropdown [--placement:bottom-right] relative inline-block">
-                                                    <button id="hs-table-dropdown-{{ $user->id }}" type="button" class="hs-dropdown-toggle py-1.5 px-2 inline-flex justify-center items-center gap-2 rounded-lg text-neutral-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 text-sm" aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
-                                                        <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <div
+                                                    class="hs-dropdown [--placement:bottom-right] relative inline-block">
+                                                    <button id="hs-table-dropdown-{{ $user->id }}" type="button"
+                                                            class="hs-dropdown-toggle py-1.5 px-2 inline-flex justify-center items-center gap-2 rounded-lg text-neutral-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 text-sm"
+                                                            aria-haspopup="menu" aria-expanded="false"
+                                                            aria-label="Dropdown">
+                                                        <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg"
+                                                             width="24" height="24" fill="none" stroke="currentColor"
+                                                             stroke-width="2" stroke-linecap="round"
+                                                             stroke-linejoin="round">
                                                             <circle cx="12" cy="12" r="1"/>
                                                             <circle cx="19" cy="12" r="1"/>
                                                             <circle cx="5" cy="12" r="1"/>
                                                         </svg>
                                                     </button>
-                                                    <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden divide-y divide-neutral-700 min-w-40 z-20 bg-neutral-800 shadow-2xl rounded-lg p-2 mt-2 border border-neutral-700" role="menu" aria-orientation="vertical" aria-labelledby="hs-table-dropdown-1">
+                                                    <div
+                                                        class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden divide-y divide-neutral-700 min-w-40 z-20 bg-neutral-800 shadow-2xl rounded-lg p-2 mt-2 border border-neutral-700"
+                                                        role="menu" aria-orientation="vertical"
+                                                        aria-labelledby="hs-table-dropdown-1">
                                                         <div class="py-2 first:pt-0 last:pb-0">
-                                                    <span class="block py-2 px-3 text-xs font-medium uppercase text-neutral-400">
+                                                    <span
+                                                        class="block py-2 px-3 text-xs font-medium uppercase text-neutral-400">
                                                         Actions
                                                     </span>
                                                             <a href="{{ route('visitors.edit', $visitor->id) }}"
@@ -364,7 +416,7 @@
                                         </td>
                                         <!-- Status -->
                                         <td class="px-6 py-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
-                                            <x-status-badge status="{{ ($item->status) }}" />
+                                            <x-status-badge status="{{ ($item->status) }}"/>
                                         </td>
                                         <!-- Created At -->
                                         <td class="px-6 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-neutral-500">
@@ -373,17 +425,28 @@
                                         <!-- Actions Column -->
                                         <td class="size-px whitespace-nowrap">
                                             <div class="px-6 py-2">
-                                                <div class="hs-dropdown [--placement:bottom-right] relative inline-block">
-                                                    <button id="hs-table-dropdown-{{ $user->id }}" type="button" class="hs-dropdown-toggle py-1.5 px-2 inline-flex justify-center items-center gap-2 rounded-lg text-neutral-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 text-sm" aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
-                                                        <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <div
+                                                    class="hs-dropdown [--placement:bottom-right] relative inline-block">
+                                                    <button id="hs-table-dropdown-{{ $user->id }}" type="button"
+                                                            class="hs-dropdown-toggle py-1.5 px-2 inline-flex justify-center items-center gap-2 rounded-lg text-neutral-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 text-sm"
+                                                            aria-haspopup="menu" aria-expanded="false"
+                                                            aria-label="Dropdown">
+                                                        <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg"
+                                                             width="24" height="24" fill="none" stroke="currentColor"
+                                                             stroke-width="2" stroke-linecap="round"
+                                                             stroke-linejoin="round">
                                                             <circle cx="12" cy="12" r="1"/>
                                                             <circle cx="19" cy="12" r="1"/>
                                                             <circle cx="5" cy="12" r="1"/>
                                                         </svg>
                                                     </button>
-                                                    <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden divide-y divide-neutral-700 min-w-40 z-20 bg-neutral-800 shadow-2xl rounded-lg p-2 mt-2 border border-neutral-700" role="menu" aria-orientation="vertical" aria-labelledby="hs-table-dropdown-1">
+                                                    <div
+                                                        class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden divide-y divide-neutral-700 min-w-40 z-20 bg-neutral-800 shadow-2xl rounded-lg p-2 mt-2 border border-neutral-700"
+                                                        role="menu" aria-orientation="vertical"
+                                                        aria-labelledby="hs-table-dropdown-1">
                                                         <div class="py-2 first:pt-0 last:pb-0">
-                                                    <span class="block py-2 px-3 text-xs font-medium uppercase text-neutral-400">
+                                                    <span
+                                                        class="block py-2 px-3 text-xs font-medium uppercase text-neutral-400">
                                                         Actions
                                                     </span>
                                                             <a href=""
