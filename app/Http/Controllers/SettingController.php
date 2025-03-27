@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\AppSetting;
+use App\Models\Location;
 use Illuminate\Http\Request;
 
 class SettingController extends Controller
@@ -45,7 +46,9 @@ class SettingController extends Controller
     public function edit()
     {
         $settings = AppSetting::first();  // There's only one row (assuming)
-        return view('settings.edit', compact('settings'));
+        $locations = \App\Models\Location::all();
+
+        return view('settings.edit', compact('settings', 'locations'));
     }
 
     public function update(Request $request)
@@ -64,6 +67,15 @@ class SettingController extends Controller
     /**
      * Remove the specified resource from storage.
      */
+
+    public function destroyLocation(Location $location)
+    {
+        // Delete the location record
+        $location->delete();
+
+        // Redirect back to the settings edit page with a success message
+        return redirect()->route('settings.edit')->with('status', 'Location deleted successfully.');
+    }
     public function destroy(AppSetting $appSetting)
     {
         //

@@ -22,7 +22,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // routes/web.php
     Route::get('settings', [SettingController::class, 'edit'])->name('settings.edit')->middleware('can:access-settings');
     Route::post('settings', [SettingController::class, 'update'])->name('settings.update')->middleware('can:access-settings');
-
+    Route::delete('/settings/locations/{location}', [SettingController::class, 'destroyLocation'])
+        ->name('settings.locations.destroy')
+        ->middleware('can:access-settings');
 
 
 

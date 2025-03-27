@@ -46,5 +46,37 @@
             <x-primary-button type="submit" class="bg-brand-700 hover:bg-brand-600 text-white">
                 Save
             </x-primary-button>
-        </form>    </div>
+        </form>
+
+        <hr class="border-gray-500 dark:border-neutral-500 mt-5">
+        <h3 class="font-semibold text-lg text-white mt-5">
+            Locations
+        </h3>
+
+        <div class="flex gap-8">
+            @foreach($locations->chunk(6) as $chunk)
+                <ul class="max-w-xs flex flex-col">
+                    @foreach($chunk as $location)
+                        <li class="flex justify-between items-center gap-x-3.5 py-3 px-4 text-sm font-medium bg-white border border-gray-200 text-gray-800 -mt-px first:rounded-t-lg first:mt-0 last:rounded-b-lg dark:bg-neutral-900 dark:border-neutral-700 dark:text-white">
+                            <!-- Left Side: Location Name -->
+                            <span>{{ $location->name }}</span>
+                            <!-- Right Side: Delete Button as an "X" -->
+                            <form action="{{ route('settings.locations.destroy', $location->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to permanently delete this location?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="flex shrink-0 justify-center items-center gap-2 size-9.5 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x">
+                                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                                    </svg>
+                                </button>
+                            </form>
+                        </li>
+                    @endforeach
+                </ul>
+            @endforeach
+        </div>
+
+
+    </div>
 </x-app-layout>
