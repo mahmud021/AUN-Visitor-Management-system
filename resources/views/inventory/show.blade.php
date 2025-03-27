@@ -20,19 +20,19 @@
                             <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                                 <dt class="text-sm/6 font-medium text-brand-50">Appliance Name</dt>
                                 <dd class="mt-1 text-sm/6 text-brand-200 sm:col-span-2 sm:mt-0">
-                                    {{$inventory->appliance_name}}
+                                    {{$inventory->appliance_name ?? 'Null' }}
                                 </dd>
                             </div>
                             <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                                 <dt class="text-sm/6 font-medium text-brand-50">Appliance Brand</dt>
                                 <dd class="mt-1 text-sm/6 text-brand-200 sm:col-span-2 sm:mt-0">
-                                    {{$inventory->brand}}
+                                    {{$inventory->brand ?? 'Null' }}
                                 </dd>
                             </div>
                             <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                                 <dt class="text-sm/6 font-medium text-brand-50">Current Location</dt>
                                 <dd class="mt-1 text-sm/6 text-brand-200 sm:col-span-2 sm:mt-0">
-                                    {{$inventory->location}}
+                                    {{$inventory->location ?? 'Null' }}
                                 </dd>
                             </div>
 
