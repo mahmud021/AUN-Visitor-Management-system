@@ -25,6 +25,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/settings/locations/{location}', [SettingController::class, 'destroyLocation'])
         ->name('settings.locations.destroy')
         ->middleware('can:access-settings');
+    Route::post('/settings/locations', [\App\Http\Controllers\SettingController::class, 'storeLocation'])
+        ->name('settings.locations.store')
+        ->middleware('can:access-settings');
+
 
 
 

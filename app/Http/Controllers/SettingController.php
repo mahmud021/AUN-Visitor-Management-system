@@ -39,6 +39,16 @@ class SettingController extends Controller
     {
         //
     }
+    public function storeLocation(Request $request)
+    {
+        $data = $request->validate([
+            'name' => 'required|string|max:255|unique:locations,name',
+        ]);
+
+        Location::create($data);
+
+        return redirect()->route('settings.edit')->with('status', 'Location added successfully!');
+    }
 
     /**
      * Show the form for editing the specified resource.
