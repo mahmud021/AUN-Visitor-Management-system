@@ -42,6 +42,21 @@ class AppServiceProvider extends ServiceProvider
             return $visitor->user_id === $user->id;
         });
 
+        Gate::define('update-inventory', function ($user, $inventory) {
+            // Super admin, HR Admin, and Security roles can update any inventory record.
+            if (in_array($user->user_details->role, ['HR Admin', 'super admin', 'security'])) {
+                return true;
+            }
+            // For all other users:
+            // If the inventory item is already checked in, disallow updating.
+            if ($inventory->status === 'checked_in') {
+                return false;
+            }
+            // Otherwise, allow update only if the inventory belongs to the user.
+            return $inventory->user_id === $user->id;
+        });
+
+
         Gate::define('override-visitor-creation', function ($user) {
             return in_array($user->user_details->role, ['HR Admin', 'super admin']);
         });

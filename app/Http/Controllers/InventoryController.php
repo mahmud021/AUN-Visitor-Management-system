@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Inventory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class InventoryController extends Controller
 {
@@ -91,6 +92,9 @@ class InventoryController extends Controller
      */
     public function update(Request $request, Inventory $inventory)
     {
+
+        Gate::authorize('update-inventory', $inventory);
+
         // Validate the incoming data
         $validated = $request->validate([
             'appliance_name' => 'required|string|max:255',
