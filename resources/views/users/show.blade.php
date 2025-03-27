@@ -521,6 +521,12 @@
                                                             >
                                                                 View Timeline
                                                             </a>
+                                                            <a
+                                                                class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-white hover:bg-neutral-700 focus:outline-none focus:bg-neutral-700"
+                                                                href="{{ route('inventory.edit', $item->id) }}"
+                                                            >
+                                                                Edit item
+                                                            </a>
                                                         </div>
                                                     </div>
                                                 </div>
