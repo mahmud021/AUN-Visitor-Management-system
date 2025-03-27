@@ -19,21 +19,17 @@ class InventoryController extends Controller
         return view('inventory.index', compact('inventory'));
     }
 
-
-
-
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-
+        //
     }
 
     /**
      * Store a newly created resource in storage.
      */
-
     public function store(Request $request)
     {
         // Validate form data
@@ -61,7 +57,7 @@ class InventoryController extends Controller
             'checked_in_at'  => now(),
         ]);
 
-        // ***** Log timeline event for creating the Inventory item *****
+        // Log timeline event for creating the inventory item
         $inventory->timelineEvents()->create([
             'user_id'     => auth()->id(),
             'event_type'  => 'created',
@@ -74,15 +70,12 @@ class InventoryController extends Controller
             ->with('success', 'Appliance added successfully!');
     }
 
-
-
     /**
      * Display the specified resource.
      */
     public function show(Inventory $inventory)
     {
         return view('inventory.show', compact('inventory'));
-
     }
 
     /**
@@ -90,7 +83,7 @@ class InventoryController extends Controller
      */
     public function edit(Inventory $inventory)
     {
-        //
+        return view('inventory.edit', compact('inventory'));
     }
 
     /**
@@ -98,42 +91,56 @@ class InventoryController extends Controller
      */
     public function update(Request $request, Inventory $inventory)
     {
-        // 1. Validate status (optional if you want to allow other updates)
-        $request->validate([
-            'status' => 'nullable|in:pending,checked_in,checked_out'
+        // Validate the incoming data
+        $validated = $request->validate([
+            'appliance_name' => 'required|string|max:255',
+            'brand'          => 'required|string|max:255',
+            'location'       => 'required|string|max:255',
+            'image_path'     => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
+            // Optionally include status validation if needed
+            'status'         => 'nullable|in:pending,checked_in,missing,checked_out',
         ]);
 
-        // 2. If the request includes a 'status', do check-in/check-out logic
+        // Update basic fields
+        $inventory->appliance_name = $validated['appliance_name'];
+        $inventory->brand          = $validated['brand'];
+        $inventory->location       = $validated['location'];
+
+        // Handle image upload if a new image is provided
+        if ($request->hasFile('image_path')) {
+            $imagePath = $request->file('image_path')->store('appliance_images', 'public');
+            $inventory->image_path = $imagePath;
+        }
+
+        // Optional: Handle status update if provided
         if ($request->filled('status')) {
             if ($request->input('status') === 'checked_in') {
                 $inventory->checked_in_at = now();
-                $inventory->checked_out_at = null; // optional
+                $inventory->checked_out_at = null; // reset check-out time
             } elseif ($request->input('status') === 'checked_out') {
                 $inventory->checked_out_at = now();
             }
-
             $inventory->status = $request->input('status');
         }
 
-        // 3. Save any changes (status, location, brand, etc.)
+        // Save changes to the inventory
         $inventory->save();
 
-        // 4. Log a timeline event if the user changed the status
-        if ($request->filled('status')) {
-            $inventory->timelineEvents()->create([
-                'user_id'     => auth()->id(),
-                'event_type'  => $request->input('status'), // e.g., 'checked_in'
-                'description' => "Item status changed to {$request->input('status')}",
-                'details'     => "Changed at " . now()->format('Y-m-d H:i'),
-                'occurred_at' => now(),
-            ]);
-        }
+        // Log timeline event for updating the inventory
+        $inventory->timelineEvents()->create([
+            'user_id'     => auth()->id(),
+            'event_type'  => 'updated',
+            'description' => 'Inventory record updated',
+            'occurred_at' => now(),
+        ]);
 
-        // 5. Redirect with success
+        // Redirect back with success message
         return redirect()->back()->with('success', 'Inventory updated successfully.');
     }
 
-
+    /**
+     * Display the timeline for the specified inventory.
+     */
     public function timeline(Inventory $inventory)
     {
         // Eager load the user relationship for each event if desired:
@@ -141,9 +148,6 @@ class InventoryController extends Controller
 
         return view('inventory.timeline', compact('inventory'));
     }
-
-
-
 
     /**
      * Remove the specified resource from storage.

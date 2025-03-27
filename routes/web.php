@@ -64,6 +64,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory.index')->middleware('can:view-inventory');
     Route::post('/inventory', [InventoryController::class, 'store'])->name('inventory.store');
+    Route::get('/{inventory}/edit', [InventoryController::class, 'edit'])
+        ->name('inventory.edit');
     Route::get('/inventory/{inventory}', [InventoryController::class, 'show'])->name('inventory.show');
     Route::patch('inventory/{inventory}', [InventoryController::class, 'update'])->name('inventory.update');
     Route::get('inventory/{inventory}/timeline', [InventoryController::class, 'timeline'])
