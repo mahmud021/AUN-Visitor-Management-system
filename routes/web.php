@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\SettingController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
@@ -19,8 +20,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     // routes/web.php
-    Route::get('settings', [App\Http\Controllers\SettingController::class, 'edit'])->name('settings.edit');
-    Route::post('settings', [App\Http\Controllers\SettingController::class, 'update'])->name('settings.update');
+    Route::get('settings', [SettingController::class, 'edit'])->name('settings.edit')->middleware('can:access-settings');
+    Route::post('settings', [SettingController::class, 'update'])->name('settings.update')->middleware('can:access-settings');
+
 
 
 
@@ -60,7 +62,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     });
 
-    Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory.index');
+    Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory.index')->middleware('can:view-inventory');
     Route::post('/inventory', [InventoryController::class, 'store'])->name('inventory.store');
     Route::get('/inventory/{inventory}', [InventoryController::class, 'show'])->name('inventory.show');
     Route::patch('inventory/{inventory}', [InventoryController::class, 'update'])->name('inventory.update');

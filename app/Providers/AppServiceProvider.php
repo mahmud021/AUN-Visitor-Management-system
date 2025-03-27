@@ -127,6 +127,13 @@ class AppServiceProvider extends ServiceProvider
         });
 
 
+        Gate::define('view-inventory', function ($user) {
+            return in_array($user->user_details->role, ['HR Admin', 'Security', 'super admin']);
+        });
+        Gate::define('access-settings', function ($user) {
+            return in_array($user->user_details->role, ['HR Admin', 'super admin']);
+        });
+
 
 
 
