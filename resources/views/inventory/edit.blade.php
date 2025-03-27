@@ -46,27 +46,15 @@
                             <div>
                                 <x-form.select name="location" label="Location">
                                     <option value="" disabled {{ old('location', $inventory->location) ? '' : 'selected' }}>Select a location</option>
-                                    <option value="Library" {{ old('location', $inventory->location) == 'Library' ? 'selected' : '' }}>Library</option>
-                                    <option value="Admin 2" {{ old('location', $inventory->location) == 'Admin 2' ? 'selected' : '' }}>Admin 2</option>
-                                    <option value="Admin 1 / Student Hub" {{ old('location', $inventory->location) == 'Admin 1 / Student Hub' ? 'selected' : '' }}>Admin 1 / Student Hub</option>
-                                    <option value="POH" {{ old('location', $inventory->location) == 'POH' ? 'selected' : '' }}>POH</option>
-                                    <option value="Commencement Hall" {{ old('location', $inventory->location) == 'Commencement Hall' ? 'selected' : '' }}>Commencement Hall</option>
-                                    <option value="SAS" {{ old('location', $inventory->location) == 'SAS' ? 'selected' : '' }}>SAS</option>
-                                    <option value="SOE" {{ old('location', $inventory->location) == 'SOE' ? 'selected' : '' }}>SOE</option>
-                                    <option value="SOL" {{ old('location', $inventory->location) == 'SOL' ? 'selected' : '' }}>SOL</option>
-                                    <option value="Dorm AA" {{ old('location', $inventory->location) == 'Dorm AA' ? 'selected' : '' }}>Dorm AA</option>
-                                    <option value="Dorm BB" {{ old('location', $inventory->location) == 'Dorm BB' ? 'selected' : '' }}>Dorm BB</option>
-                                    <option value="Dorm CC" {{ old('location', $inventory->location) == 'Dorm CC' ? 'selected' : '' }}>Dorm CC</option>
-                                    <option value="Dorm DD" {{ old('location', $inventory->location) == 'Dorm DD' ? 'selected' : '' }}>Dorm DD</option>
-                                    <option value="Dorm EE" {{ old('location', $inventory->location) == 'Dorm EE' ? 'selected' : '' }}>Dorm EE</option>
-                                    <option value="Dorm FF" {{ old('location', $inventory->location) == 'Dorm FF' ? 'selected' : '' }}>Dorm FF</option>
-                                    <option value="Aisha Kande" {{ old('location', $inventory->location) == 'Aisha Kande' ? 'selected' : '' }}>Aisha Kande</option>
-                                    <option value="Gabrreile Volpi Boys" {{ old('location', $inventory->location) == 'Gabrreile Volpi Boys' ? 'selected' : '' }}>Gabrreile Volpi Boys</option>
-                                    <option value="Rossaiare Volpi Girls" {{ old('location', $inventory->location) == 'Rossaiare Volpi Girls' ? 'selected' : '' }}>Rossaiare Volpi Girls</option>
-                                    <option value="Cafeteria" {{ old('location', $inventory->location) == 'Cafeteria' ? 'selected' : '' }}>Cafeteria</option>
+                                    @foreach($locations as $location)
+                                        <option value="{{ $location->name }}" {{ old('location', $inventory->location) == $location->name ? 'selected' : '' }}>
+                                            {{ $location->name }}
+                                        </option>
+                                    @endforeach
                                 </x-form.select>
                                 <x-input-error :messages="$errors->get('location')" class="mt-1 text-brand-400"/>
                             </div>
+
 
                             <!-- Image Upload -->
                             <div>

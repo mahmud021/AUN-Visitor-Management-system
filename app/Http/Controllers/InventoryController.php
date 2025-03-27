@@ -88,8 +88,10 @@ class InventoryController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit(Inventory $inventory)
+
     {
-        return view('inventory.edit', compact('inventory'));
+        $locations = \App\Models\Location::all();
+        return view('inventory.edit', compact('inventory', 'locations'));
     }
 
     /**
