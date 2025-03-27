@@ -105,8 +105,8 @@ class UserController extends Controller
             abort(403);
         }
 
-        $visitors = $user->visitors()->paginate(10);
-        $inventoryItems = Inventory::paginate(10);
+        $visitors = $user->visitors()->simplePaginate(10);
+        $inventoryItems = Inventory::simplepaginate(10);
         return view('users.show', compact('user', 'visitors', 'inventoryItems'));
     }
 
