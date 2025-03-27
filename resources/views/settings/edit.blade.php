@@ -58,14 +58,8 @@
             @csrf
             <div class="flex items-center gap-2">
                 <input type="text" name="name" placeholder="Enter new location" required
-                       class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:border-blue-500 dark:bg-neutral-800 dark:border-neutral-600 dark:text-white" />
-                <button type="submit" class="flex shrink-0 justify-center items-center gap-2 size-9.5 text-sm font-medium rounded-lg border border-transparent bg-green-600 text-white hover:bg-green-700 focus:outline-hidden focus:bg-green-700 disabled:opacity-50 disabled:pointer-events-none">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="12" y1="5" x2="12" y2="19"></line>
-                        <line x1="5" y1="12" x2="19" y2="12"></line>
-                    </svg>
-                    Add
-                </button>
+                       class="w-100 rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:border-blue-500 dark:bg-neutral-800 dark:border-neutral-600 dark:text-white" />
+                <x-primary-button>Create Location</x-primary-button>
             </div>
             @error('name')
             <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
@@ -84,7 +78,7 @@
                             <form action="{{ route('settings.locations.destroy', $location->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to permanently delete this location?');">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="flex shrink-0 justify-center items-center gap-2 size-9.5 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
+                                <button type="submit" class="flex shrink-0 justify-center items-center gap-2 size-9.5 text-sm font-medium rounded-lg border border-transparent  text-white hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         <line x1="18" y1="6" x2="6" y2="18"></line>
                                         <line x1="6" y1="6" x2="18" y2="18"></line>
