@@ -13,10 +13,13 @@ class InventoryController extends Controller
      */
     public function index()
     {
-        $inventory = Inventory::all();
+        // Correct order: latest() first, then pagination
+        $inventory = Inventory::latest()->simplePaginate(10);
 
         return view('inventory.index', compact('inventory'));
     }
+
+
 
 
     /**

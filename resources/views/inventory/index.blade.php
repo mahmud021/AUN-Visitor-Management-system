@@ -139,7 +139,7 @@
                     </x-slot>
 
                     <x-slot name="rows">
-                        @foreach ($inventory as $inventory)
+                        @foreach ($inventory as $item)
                             <x-table-row>
                                 <td class="size-px whitespace-nowrap"></td>
 
@@ -149,11 +149,11 @@
                                         <div class="flex items-center gap-x-3">
                                             <div class="grow">
                                                 <span class="block text-sm font-semibold text-neutral-200">
-                                                    {{ $inventory->appliance_name ?? 'Null' }}
+                                                    {{ $item->appliance_name ?? 'Null' }}
                                                 </span>
-                                                @if($inventory->user)
+                                                @if($item->user)
                                                     <span class="block text-sm text-neutral-500">
-                                                        Owned by: {{ $inventory->user->user_details->school_id ?? 'Null' }}
+                                                        Owned by: {{ $item->user->user_details->school_id ?? 'Null' }}
                                                     </span>
                                                 @endif
                                             </div>
@@ -165,7 +165,7 @@
                                 <td class="size-px whitespace-nowrap">
                                     <div class="px-6 py-3">
                                         <span class="block text-sm font-semibold text-neutral-200">
-                                            {{ $inventory->location ?? 'Null' }}
+                                            {{ $item->location ?? 'Null' }}
                                         </span>
                                     </div>
                                 </td>
@@ -174,7 +174,7 @@
                                 <td class="size-px whitespace-nowrap">
                                     <div class="px-6 py-3">
                                         <span class="block text-sm text-neutral-500">
-                                            {{ \Carbon\Carbon::parse($inventory->checked_in_at)->format('M d, h:i A') }}
+                                            {{ \Carbon\Carbon::parse($item->checked_in_at)->format('M d, h:i A') }}
                                         </span>
                                     </div>
                                 </td>
@@ -182,7 +182,7 @@
                                 <!-- Status Column -->
                                 <td class="size-px whitespace-nowrap">
                                     <div class="px-6 py-3">
-                                        <x-status-badge status="{{ $inventory->status }}"/>
+                                        <x-status-badge status="{{ $item->status }}"/>
                                     </div>
                                 </td>
 
@@ -190,7 +190,7 @@
                                 <td class="size-px whitespace-nowrap">
                                     <div class="px-6 py-3">
                                         <span class="text-sm text-neutral-500">
-                                            {{ \Carbon\Carbon::parse($inventory->created_at)->format('d M, Y') }}
+                                            {{ \Carbon\Carbon::parse($item->created_at)->format('d M, Y') }}
                                         </span>
                                     </div>
                                 </td>
@@ -200,7 +200,7 @@
                                     <div class="px-6 py-2">
                                         <div class="hs-dropdown [--placement:bottom-right] relative inline-block">
                                             <button
-                                                id="hs-table-dropdown-{{ $inventory->id }}"
+                                                id="hs-table-dropdown-{{ $item->id }}"
                                                 type="button"
                                                 class="hs-dropdown-toggle py-1.5 px-2 inline-flex justify-center items-center gap-2 rounded-lg text-neutral-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 text-sm"
                                                 aria-haspopup="menu"
@@ -219,7 +219,7 @@
                                                 class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden divide-y divide-neutral-700 min-w-40 z-20 bg-neutral-800 shadow-2xl rounded-lg p-2 mt-2 border border-neutral-700"
                                                 role="menu"
                                                 aria-orientation="vertical"
-                                                aria-labelledby="hs-table-dropdown-{{ $inventory->id }}"
+                                                aria-labelledby="hs-table-dropdown-{{ $item->id }}"
                                             >
 
                                                 <!-- Actions Section -->
@@ -229,13 +229,13 @@
                                                     </span>
 
                                                     {{-- Example Edit link --}}
-                                                    <a href="{{ route('inventory.show', $inventory->id) }}" class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-neutral-200 hover:bg-neutral-700 focus:outline-none focus:bg-neutral-700">
+                                                    <a href="{{ route('inventory.show', $item->id) }}" class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-neutral-200 hover:bg-neutral-700 focus:outline-none focus:bg-neutral-700">
                                                         View Item
                                                     </a>
 
                                                     {{-- Timeline link --}}
                                                     <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-neutral-200 hover:bg-neutral-700 focus:outline-none focus:bg-neutral-700"
-                                                       href="{{ route('inventory.timeline', $inventory->id) }}">
+                                                       href="{{ route('inventory.timeline', $item->id) }}">
                                                         View Timeline
                                                     </a>
                                                 </div>
@@ -259,8 +259,10 @@
 
                 <x-table-footer totalResults="">
                     <x-slot name="pagination">
+                        {{ $inventory->links() }}
                     </x-slot>
                 </x-table-footer>
+
             </x-table-wrapper>
             <!-- End Table Section -->
         </div>
