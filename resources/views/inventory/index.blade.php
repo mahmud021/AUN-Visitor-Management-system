@@ -16,7 +16,7 @@
                             x-data
                             @click="$dispatch('open-modal', 'inventory-modal')"
                         >
-                            Create Appliance
+                            Register An Appliance
                         </x-primary-button>
 
                         <x-modal name="inventory-modal" maxWidth="2xl">
@@ -27,6 +27,17 @@
                                     @csrf
 
                                     <div class="grid grid-cols-1 gap-4 lg:gap-4">
+
+
+                                            <x-form.select name="student_id" label="Select Student">
+                                                <option value="" disabled selected>Select a student</option>
+                                                @foreach($users as $user)
+                                                    <option value="{{ $user->user->id}}">{{ $user->school_id ?? 'Null' }} {{ $user->user->last_name ?? 'Null' }} </option>
+                                                @endforeach
+                                            </x-form.select>
+                                            <x-input-error :messages="$errors->get('student_id')" class="mt-1 text-brand-400"/>
+
+
                                         <!-- Appliance Name -->
                                         <div class="space-y-2">
                                             <x-form.input name="appliance_name" label="Appliance Name" type="text"

@@ -28,7 +28,7 @@
                     Create Visitor
                 </x-dropdown-link>
                 <x-dropdown-link @click="$dispatch('open-modal', 'inventory-modal')">
-                    Create Inventory
+                    Register An Appliance
                 </x-dropdown-link>
             </x-slot>
         </x-dropdown>

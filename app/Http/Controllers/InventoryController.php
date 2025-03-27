@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Inventory;
+use App\Models\UserDetails;
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -18,9 +20,12 @@ class InventoryController extends Controller
         $locations = \App\Models\Location::all();
 
         $inventory = Inventory::latest()->simplePaginate(10);
+        // Eager load user_details for all users
+        $users = UserDetails::all();
 
-        return view('inventory.index', compact('inventory', 'locations'));
+        return view('inventory.index', compact('inventory', 'locations', 'users'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -35,12 +40,13 @@ class InventoryController extends Controller
      */
     public function store(Request $request)
     {
-        // Validate form data
+        // Validate form data; 'student_id' is only required when provided.
         $validated = $request->validate([
             'appliance_name' => 'required|string|max:255',
             'location'       => 'required|string|max:255',
             'brand'          => 'required|string|max:255',
             'image'          => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
+            'student_id'     => 'sometimes|required|exists:users,id',
         ]);
 
         // Handle image upload
@@ -49,18 +55,22 @@ class InventoryController extends Controller
             $imagePath = $request->file('image')->store('appliance_images', 'public');
         }
 
+        // Determine which user this inventory belongs to:
+        // if a student_id is provided (for a security user), use that; otherwise, use the authenticated user's ID.
+        $ownerId = $validated['student_id'] ?? auth()->id();
+
         // Create inventory record
         $inventory = Inventory::create([
-            'user_id'        => Auth::id(),
+            'user_id'        => $ownerId,
             'appliance_name' => $validated['appliance_name'],
             'location'       => $validated['location'],
             'brand'          => $validated['brand'],
             'image_path'     => $imagePath,
-            'status'         => 'pending',   // optional if you want a default status
+            'status'         => 'pending',
             'checked_in_at'  => now(),
         ]);
 
-        // Log timeline event for creating the inventory item
+        // Log timeline event
         $inventory->timelineEvents()->create([
             'user_id'     => auth()->id(),
             'event_type'  => 'created',
@@ -68,10 +78,9 @@ class InventoryController extends Controller
             'occurred_at' => now(),
         ]);
 
-        // Redirect with success message
         return redirect()->back()->with('success', 'Inventory updated successfully.');
-
     }
+
 
     /**
      * Display the specified resource.
