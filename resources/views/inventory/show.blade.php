@@ -55,42 +55,43 @@
                                     {{ \Carbon\Carbon::parse($inventory->created_at)->format('d M, Y') }}
                                 </dd>
                             </div>
-                            <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                <dt class="text-sm/6 font-medium text-brand-50">Action Button</dt>
-                            @if($inventory->status === 'pending')
-                                    {{-- Show "Check In" button if status is "pending" --}}
-                                    <form action="{{ route('inventory.update', $inventory->id) }}" method="POST">
-                                        @csrf
-                                        @method('PATCH')
-                                        <input type="hidden" name="status" value="checked_in">
-                                        <x-primary-button>
-                                            Check In
+                            @can('check-in-out')
+                                <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                    <dt class="text-sm/6 font-medium text-brand-50">Action Button</dt>
+                                    @if($inventory->status === 'pending')
+                                        {{-- Show "Check In" button if status is "pending" --}}
+                                        <form action="{{ route('inventory.update', $inventory->id) }}" method="POST">
+                                            @csrf
+                                            @method('PATCH')
+                                            <input type="hidden" name="status" value="checked_in">
+                                            <x-primary-button>
+                                                Check In
                                             </x-primary-button>
-                                    </form>
+                                        </form>
+                                    @elseif($inventory->status === 'checked_in')
+                                        {{-- Show "Check Out" button if status is "checked_in" --}}
+                                        <form action="{{ route('inventory.update', $inventory->id) }}" method="POST">
+                                            @csrf
+                                            @method('PATCH')
+                                            <input type="hidden" name="status" value="checked_out">
+                                            <x-primary-button>
+                                                Check Out
+                                            </x-primary-button>
+                                        </form>
+                                    @elseif($inventory->status === 'checked_out')
+                                        {{-- Show "Check In" button again if status is "checked_out" --}}
+                                        <form action="{{ route('inventory.update', $inventory->id) }}" method="POST">
+                                            @csrf
+                                            @method('PATCH')
+                                            <input type="hidden" name="status" value="checked_in">
+                                            <x-primary-button>
+                                                Check In
+                                            </x-primary-button>
+                                        </form>
+                                    @endif
+                                </div>
+                            @endcan
 
-                                @elseif($inventory->status === 'checked_in')
-                                    {{-- Show "Check Out" button if status is "checked_in" --}}
-                                    <form action="{{ route('inventory.update', $inventory->id) }}" method="POST">
-                                        @csrf
-                                        @method('PATCH')
-                                        <input type="hidden" name="status" value="checked_out">
-                                        <x-primary-button>
-                                            Check Out
-                                            </x-primary-button>
-                                    </form>
-
-                                @elseif($inventory->status === 'checked_out')
-                                    {{-- Show "Check In" button again if status is "checked_out" --}}
-                                    <form action="{{ route('inventory.update', $inventory->id) }}" method="POST">
-                                        @csrf
-                                        @method('PATCH')
-                                        <input type="hidden" name="status" value="checked_in">
-                                        <x-primary-button>
-                                            Check In
-                                            </x-primary-button>
-                                    </form>
-                                @endif
-                            </div>
 
                             <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                                 <dt class="text-sm/6 font-medium text-brand-50"></dt>

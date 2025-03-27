@@ -114,6 +114,17 @@ class AppServiceProvider extends ServiceProvider
 
             return true;
         });
+        Gate::define('view-inventory-item', function ($user, $inventory) {
+            // Allow HR Admin, super admin, and security to view any inventory item.
+            if (in_array($user->user_details->role, ['HR Admin', 'super admin', 'Security'])) {
+                return true;
+            }
+            // For all other users, allow view only if the inventory belongs to them.
+            return $inventory->user_id === $user->id;
+        });
+        Gate::define('check-in-out', function ($user) {
+            return in_array($user->user_details->role, ['Security', 'HR Admin', 'super admin']);
+        });
 
         Gate::define('check-in-visitor', function ($user, $visitor) {
             // Super admin or HR Admin bypass time restrictions

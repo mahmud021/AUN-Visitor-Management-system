@@ -75,7 +75,10 @@ class InventoryController extends Controller
      * Display the specified resource.
      */
     public function show(Inventory $inventory)
+
     {
+        Gate::authorize('view-inventory-item', $inventory);
+
         return view('inventory.show', compact('inventory'));
     }
 
