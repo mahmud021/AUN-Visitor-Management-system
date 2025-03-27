@@ -18,6 +18,13 @@
                     <div class="mt-6 border-t border-brand-800 ">
                         <dl class="divide-y divide-brand-800">
                             <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                <dt class="text-sm/6 font-medium text-brand-50">Owner Name</dt>
+                                <dd class="mt-1 text-sm/6 text-brand-200 sm:col-span-2 sm:mt-0">
+                                    {{$inventory->user->first_name ?? 'Null' }}  {{$inventory->user->last_name ?? 'Null' }}
+                                    <p>{{$inventory->user->user_details->school_id}}</p>
+                                </dd>
+                            </div>
+                            <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                                 <dt class="text-sm/6 font-medium text-brand-50">Appliance Name</dt>
                                 <dd class="mt-1 text-sm/6 text-brand-200 sm:col-span-2 sm:mt-0">
                                     {{$inventory->appliance_name ?? 'Null' }}
@@ -43,7 +50,7 @@
                                 </dd>
                             </div>
                             <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                <dt class="text-sm/6 font-medium text-brand-50">Telephone</dt>
+                                <dt class="text-sm/6 font-medium text-brand-50">Created</dt>
                                 <dd class="mt-1 text-sm/6 text-brand-200 sm:col-span-2 sm:mt-0">
                                     {{ \Carbon\Carbon::parse($inventory->created_at)->format('d M, Y') }}
                                 </dd>
@@ -56,9 +63,9 @@
                                         @csrf
                                         @method('PATCH')
                                         <input type="hidden" name="status" value="checked_in">
-                                        <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded-md">
+                                        <x-primary-button>
                                             Check In
-                                        </button>
+                                            </x-primary-button>
                                     </form>
 
                                 @elseif($inventory->status === 'checked_in')
@@ -67,9 +74,9 @@
                                         @csrf
                                         @method('PATCH')
                                         <input type="hidden" name="status" value="checked_out">
-                                        <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded-md">
+                                        <x-primary-button>
                                             Check Out
-                                        </button>
+                                            </x-primary-button>
                                     </form>
 
                                 @elseif($inventory->status === 'checked_out')
@@ -78,12 +85,28 @@
                                         @csrf
                                         @method('PATCH')
                                         <input type="hidden" name="status" value="checked_in">
-                                        <button type="submit" class="px-4 py-2 bg-green-600 text-white rounded-md">
+                                        <x-primary-button>
                                             Check In
-                                        </button>
+                                            </x-primary-button>
                                     </form>
                                 @endif
                             </div>
+
+                            <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                <dt class="text-sm/6 font-medium text-brand-50"></dt>
+                                <dd class="mt-1 text-sm/6 text-brand-200 sm:col-span-2 sm:mt-0">
+                                    <a
+                                        href="{{ route('inventory.timeline', $inventory->id) }}"
+                                        class="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent
+                   rounded-md font-semibold text-xs text-white uppercase tracking-widest
+                   hover:bg-indigo-500 active:bg-indigo-700 focus:outline-none focus:border-indigo-700
+                   focus:ring ring-indigo-300 disabled:opacity-25 transition ease-in-out duration-150"
+                                    >
+                                        View Item Timeline
+                                    </a>
+                                </dd>
+                            </div>
+
 
 
                         </dl>
@@ -116,78 +139,7 @@
 
         <!-- Inventory Timeline Table -->
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-10">
-            <x-table-wrapper>
-                <x-table-header title="Appliance Timeline" description="Check-in and Check-out Details of Appliance.">
-                    <x-slot name="actions">
-                        <!-- Leave empty if no actions are required -->
-                    </x-slot>
-                </x-table-header>
 
-                <x-table>
-                    <x-slot name="header">
-                        <tr>
-                            <th scope="col" class="px-6 py-3 text-start">
-                                <span class="text-xs font-semibold uppercase tracking-wide text-neutral-200">
-                                    Checked In Time
-                                </span>
-                            </th>
-                            <th scope="col" class="px-6 py-3 text-start">
-                                <span class="text-xs font-semibold uppercase tracking-wide text-neutral-200">
-                                    Location
-                                </span>
-                            </th>
-                            <th scope="col" class="px-6 py-3 text-start">
-                                <span class="text-xs font-semibold uppercase tracking-wide text-neutral-200">
-                                    Checked Out Time
-                                </span>
-                            </th>
-                            <th scope="col" class="px-6 py-3 text-start">
-                                <span class="text-xs font-semibold uppercase tracking-wide text-neutral-200">
-                                    Status
-                                </span>
-                            </th>
-                        </tr>
-                    </x-slot>
-
-                    <x-slot name="rows">
-                        <x-table-row>
-                            <!-- Checked In Time -->
-                            <td class="px-6 py-3 whitespace-nowrap">
-                                <span class="text-sm text-neutral-200">
-                                    {{ $inventory->checked_in_at
-                                        ? \Carbon\Carbon::parse($inventory->checked_in_at)->format('M d, Y h:i A')
-                                        : 'N/A'
-                                    }}
-                                </span>
-                            </td>
-
-                            <!-- Location -->
-                            <td class="px-6 py-3 whitespace-nowrap">
-                                <span class="text-sm text-neutral-200">
-                                    {{ $inventory->location ?? 'Not Specified' }}
-                                </span>
-                            </td>
-
-                            <!-- Checked Out Time -->
-                            <td class="px-6 py-3 whitespace-nowrap">
-                                <span class="text-sm text-neutral-200">
-                                    {{ $inventory->checked_out_at
-                                        ? \Carbon\Carbon::parse($inventory->checked_out_at)->format('M d, Y h:i A')
-                                        : 'N/A'
-                                    }}
-                                </span>
-                            </td>
-
-                            <!-- Status -->
-                            <td class="px-6 py-3 whitespace-nowrap">
-                                <x-status-badge status="{{ $inventory->status }}"/>
-                            </td>
-                        </x-table-row>
-                    </x-slot>
-                </x-table>
-
-                <x-table-footer :totalResults="''"/>
-            </x-table-wrapper>
         </div>
     </div>
 </x-app-layout>
