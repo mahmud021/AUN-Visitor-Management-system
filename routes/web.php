@@ -64,6 +64,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/inventory', [InventoryController::class, 'store'])->name('inventory.store');
     Route::get('/inventory/{inventory}', [InventoryController::class, 'show'])->name('inventory.show');
     Route::patch('inventory/{inventory}', [InventoryController::class, 'update'])->name('inventory.update');
+    Route::get('inventory/{inventory}/timeline', [InventoryController::class, 'timeline'])
+        ->name('inventory.timeline');
+
 
 
 //    Route::get('/analytics', [AnalyticsController::class, 'index'])->name('analytics.index');

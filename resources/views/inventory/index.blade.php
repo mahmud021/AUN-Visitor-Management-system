@@ -235,17 +235,14 @@
 
                                                     {{-- Timeline link --}}
                                                     <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-neutral-200 hover:bg-neutral-700 focus:outline-none focus:bg-neutral-700"
-                                                       href="">
+                                                       href="{{ route('inventory.timeline', $inventory->id) }}">
                                                         View Timeline
                                                     </a>
                                                 </div>
 
                                                 <!-- Delete Section -->
                                                 <div class="py-2">
-                                                    <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-red-500 hover:bg-neutral-700 focus:outline-none focus:bg-neutral-700"
-                                                       href="/visitor/{{ $inventory->id }}/delete">
-                                                        Delete
-                                                    </a>
+
                                                 </div>
                                                 <!-- End Delete Section -->
 

@@ -14,4 +14,9 @@ class Inventory extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function timelineEvents()
+    {
+        return $this->hasMany(\App\Models\InventoryTimelineEvent::class);
+    }
+
 }
