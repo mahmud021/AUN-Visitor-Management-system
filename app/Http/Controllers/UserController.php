@@ -106,7 +106,8 @@ class UserController extends Controller
         }
 
         $visitors = $user->visitors()->simplePaginate(10);
-        $inventoryItems = Inventory::simplepaginate(10);
+        $inventoryItems = $user->inventory()->simplePaginate(10);
+
         return view('users.show', compact('user', 'visitors', 'inventoryItems'));
     }
 
