@@ -15,9 +15,11 @@ class InventoryController extends Controller
     public function index()
     {
         // Correct order: latest() first, then pagination
+        $locations = \App\Models\Location::all();
+
         $inventory = Inventory::latest()->simplePaginate(10);
 
-        return view('inventory.index', compact('inventory'));
+        return view('inventory.index', compact('inventory', 'locations'));
     }
 
     /**
