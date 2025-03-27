@@ -1,29 +1,38 @@
-<div class="flex items-center justify-between ">
-    <h1 class="text-xl font-bold text-white">
-        Welcome, {{ $user->user_details->user->first_name }}!
+<div class="flex items-center justify-between">
+    <!-- Left: Welcome Message -->
+    <div>
+        <h1 class="text-xl font-bold text-white">
+            Welcome, {{ $user->user_details->user->first_name }}!
+        </h1>
         <p class="text-sm text-gray-300">
-            {{$user->user_details->role}} Dashboard
+            {{ $user->user_details->role }} Dashboard
         </p>
-    </h1>
+    </div>
+
+    <!-- Center: Date and Time -->
     <p class="text-sm text-gray-300">
-        {{ \Illuminate\Support\Carbon::now()->format('l jS,  g:i A') }}
+        {{ \Illuminate\Support\Carbon::now()->format('l jS, g:i A') }}
     </p>
 
+    <!-- Right: Action Buttons -->
     <div class="flex items-center gap-4">
-        <!-- Create Visitor Button -->
-        <x-primary-button
-            type="button"
-            x-data
-            @click="$dispatch('open-modal', 'create-visitor-modal')"
-            @class([
-                'bg-brand-700 hover:bg-brand-600 text-white',
-                'cursor-not-allowed opacity-50' => Gate::denies('create-visitor'),
-            ])
-            :disabled="Gate::denies('create-visitor')"
-        >
-            Create Visitor
-        </x-primary-button>
+        <!-- Create Dropdown -->
+        <x-dropdown>
+            <x-slot name="trigger">
+                <x-primary-button>
+                    Create
 
+                </x-primary-button>
+            </x-slot>
+            <x-slot name="content">
+                <x-dropdown-link @click="$dispatch('open-modal', 'create-visitor-modal')">
+                    Create Visitor
+                </x-dropdown-link>
+                <x-dropdown-link @click="$dispatch('open-modal', 'create-inventory-modal')">
+                    Create Inventory
+                </x-dropdown-link>
+            </x-slot>
+        </x-dropdown>
 
         <!-- Logout Form -->
         <form method="POST" action="{{ route('logout') }}" class="inline">
@@ -33,8 +42,5 @@
                 {{ __('Log Out') }}
             </button>
         </form>
-
     </div>
-
 </div>
-
