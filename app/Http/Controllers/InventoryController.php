@@ -85,37 +85,40 @@ class InventoryController extends Controller
      */
     public function update(Request $request, Inventory $inventory)
     {
-        // If the request includes 'status', we process check-in/out logic
+        // If the request includes a 'status', we process check-in/out logic.
         if ($request->has('status')) {
             $request->validate([
                 'status' => 'required|in:pending,checked_in,checked_out',
             ]);
 
-            // Handle Check In
+            // If they are checking in...
             if ($request->input('status') === 'checked_in') {
                 $inventory->checked_in_at = now();
+                // Optionally reset checked_out_at
+                // $inventory->checked_out_at = null;
             }
 
-            // Handle Check Out
+            // If they are checking out...
             if ($request->input('status') === 'checked_out') {
                 $inventory->checked_out_at = now();
             }
 
-            // Update the inventory status
+            // Update the inventory record’s status
             $inventory->status = $request->input('status');
             $inventory->save();
 
-            // Optionally: log a timeline event or do other stuff here
+            // Optionally log a timeline event or do other logic here
 
             return redirect()->back()->with('success', 'Inventory status updated successfully.');
         }
 
-        // Otherwise, handle other updates (if any)
-        // e.g. changing name, brand, location, etc.
+        // Otherwise handle other form updates, if any
+        // For example: name, brand, location, etc.
         // ...
 
         return redirect()->back()->with('success', 'Inventory updated successfully.');
     }
+
 
 
     /**
