@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <!-- Header with Create Visitor and Logout buttons -->
-        <x-dashboard.header :user="$user" />
+        <x-dashboard.header :user="$user" :locations="$locations" />
     </x-slot>
     @if(auth()->user()->user_details->blacklist)
         <!-- Blacklisted Warning Banner -->
@@ -109,6 +109,65 @@
                     <button type="button"
                             class="px-4 py-2 bg-brand-700 hover:bg-brand-600 text-white rounded-md transition"
                             @click.prevent="$dispatch('close-modal', 'create-visitor-modal')">
+                        Cancel
+                    </button>
+
+                    <x-primary-button type="submit" class="bg-brand-700 hover:bg-brand-600 text-white">
+                        Submit
+                    </x-primary-button>
+                </div>
+            </form>
+        </div>
+    </x-modal>
+
+    <x-modal name="inventory-modal" maxWidth="2xl">
+        <div class="p-4 bg-brand-900 text-brand-100 overflow-y-auto">
+            <h3 class="text-xl font-semibold mb-4">Add Appliance</h3>
+
+            <form method="POST" action="{{ route('inventory.store') }}" enctype="multipart/form-data" onsubmit="disableSubmitButton(this)">
+                @csrf
+
+                <div class="grid grid-cols-1 gap-4 lg:gap-4">
+                    <!-- Appliance Name -->
+                    <div class="space-y-2">
+                        <x-form.input name="appliance_name" label="Appliance Name" type="text"
+                                      value="{{ old('appliance_name') }}"
+                                      class="bg-brand-800 border-brand-700 text-brand-100 placeholder-brand-300"/>
+                        <x-input-error :messages="$errors->get('appliance_name')" class="mt-1 text-brand-400"/>
+                    </div>
+
+                    <div class="space-y-2">
+                        <x-form.input name="brand" label="Brand" type="text"
+                                      value="{{ old('brand') }}"
+                                      class="bg-brand-800 border-brand-700 text-brand-100 placeholder-brand-300"/>
+                        <x-input-error :messages="$errors->get('brand')" class="mt-1 text-brand-400"/>
+                    </div>
+
+                    <!-- Location -->
+                    <div class="space-y-2">
+                        <x-form.select name="location" label="Location">
+                            <option value="" disabled selected>Select a location</option>
+                            @foreach($locations as $location)
+                                <option value="{{ $location->name }}" {{ old('location') == $location->name ? 'selected' : '' }}>
+                                    {{ $location->name }}
+                                </option>
+                            @endforeach
+                        </x-form.select>
+                        <x-input-error :messages="$errors->get('location')" class="mt-1 text-brand-400"/>
+                    </div>
+
+                    <!-- Image Upload -->
+                    <div class="space-y-2">
+                        <x-form.input name="image" label="Appliance Image" type="file" accept="image/*"
+                                      class="bg-brand-800 border-brand-700 text-brand-100 placeholder-brand-300"/>
+                        <x-input-error :messages="$errors->get('image')" class="mt-1 text-brand-400"/>
+                    </div>
+                </div>
+
+                <div class="mt-6 flex justify-end gap-x-2 bg-brand-900 py-3 px-4 rounded-md border-t border-brand-700">
+                    <button type="button"
+                            class="px-4 py-2 bg-brand-700 hover:bg-brand-600 text-white rounded-md transition"
+                            @click.prevent="$dispatch('close-modal', 'inventory-modal')">
                         Cancel
                     </button>
 

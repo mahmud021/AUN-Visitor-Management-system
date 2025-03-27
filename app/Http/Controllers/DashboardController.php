@@ -45,6 +45,7 @@ class DashboardController extends Controller
         // Data to pass to the view.
         $data = [
             'user' => $user,
+            'locations' => \App\Models\Location::all(),
             'myVisitors' => $this->getUserVisitors($user),  // Always shows user's own visitors.
             'dailyVisitorCount' => $dailyVisitorCount,
             'checkedInVisitorCount' => $checkedInVisitorCount,
@@ -60,6 +61,7 @@ class DashboardController extends Controller
         if ($canViewAll) {
             $data['allVisitors'] = $this->getAllVisitors();
         }
+
 
         return view('dashboard', $data);
     }

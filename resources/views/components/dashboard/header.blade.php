@@ -21,14 +21,13 @@
             <x-slot name="trigger">
                 <x-primary-button>
                     Create
-
                 </x-primary-button>
             </x-slot>
             <x-slot name="content">
                 <x-dropdown-link @click="$dispatch('open-modal', 'create-visitor-modal')">
                     Create Visitor
                 </x-dropdown-link>
-                <x-dropdown-link @click="$dispatch('open-modal', 'create-inventory-modal')">
+                <x-dropdown-link @click="$dispatch('open-modal', 'inventory-modal')">
                     Create Inventory
                 </x-dropdown-link>
             </x-slot>
@@ -44,3 +43,5 @@
         </form>
     </div>
 </div>
+
+
