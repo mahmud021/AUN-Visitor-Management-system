@@ -69,8 +69,8 @@ class InventoryController extends Controller
         ]);
 
         // Redirect with success message
-        return redirect()->route('inventory.index')
-            ->with('success', 'Appliance added successfully!');
+        return redirect()->back()->with('success', 'Inventory updated successfully.');
+
     }
 
     /**
