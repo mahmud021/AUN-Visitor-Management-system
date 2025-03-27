@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <h2 class="font-semibold text-xl text-gray-200 leading-tight">
             {{ __('User Information and Logs') }}
         </h2>
     </x-slot>
@@ -201,59 +201,66 @@
                                     <!-- Visitor Name -->
                                     <th scope="col" class="px-6 py-3 text-start">
                                         <div class="flex items-center gap-x-2">
-                        <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-neutral-200">
+                        <span class="text-xs font-semibold uppercase tracking-wide text-white">
                             Visitor Name
                         </span>
                                         </div>
                                     </th>
+
                                     <!-- Telephone -->
                                     <th scope="col" class="px-6 py-3 text-start">
                                         <div class="flex items-center gap-x-2">
-                        <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-neutral-200">
+                        <span class="text-xs font-semibold uppercase tracking-wide text-white">
                             Telephone
                         </span>
                                         </div>
                                     </th>
+
                                     <!-- Visit Date -->
                                     <th scope="col" class="px-6 py-3 text-start">
                                         <div class="flex items-center gap-x-2">
-                        <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-neutral-200">
+                        <span class="text-xs font-semibold uppercase tracking-wide text-white">
                             Visit Date
                         </span>
                                         </div>
                                     </th>
+
                                     <!-- Start Time -->
                                     <th scope="col" class="px-6 py-3 text-start">
                                         <div class="flex items-center gap-x-2">
-                        <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-neutral-200">
+                        <span class="text-xs font-semibold uppercase tracking-wide text-white">
                             Start Time
                         </span>
                                         </div>
                                     </th>
+
                                     <!-- End Time -->
                                     <th scope="col" class="px-6 py-3 text-start">
                                         <div class="flex items-center gap-x-2">
-                        <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-neutral-200">
+                        <span class="text-xs font-semibold uppercase tracking-wide text-white">
                             End Time
                         </span>
                                         </div>
                                     </th>
+
                                     <!-- Status -->
                                     <th scope="col" class="px-6 py-3 text-start">
                                         <div class="flex items-center gap-x-2">
-                        <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-neutral-200">
+                        <span class="text-xs font-semibold uppercase tracking-wide text-white">
                             Status
                         </span>
                                         </div>
                                     </th>
+
                                     <!-- Created At -->
                                     <th scope="col" class="px-6 py-3 text-start">
                                         <div class="flex items-center gap-x-2">
-                        <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-neutral-200">
+                        <span class="text-xs font-semibold uppercase tracking-wide text-white">
                             Created
                         </span>
                                         </div>
                                     </th>
+
                                     <!-- Actions Column -->
                                     <th scope="col" class="px-6 py-3 text-end">
                                         <!-- Optional: Actions header -->
@@ -266,135 +273,119 @@
                                     <x-table-row>
                                         <!-- Visitor Name -->
                                         <td class="px-6 py-3 whitespace-nowrap">
-                                            <div class="flex flex-col gap-y-1">
-                            <span class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">
-                                {{ $visitor->first_name }} {{ $visitor->last_name }}
-                            </span>
-                                            </div>
+                        <span class="block text-sm font-semibold text-white">
+                            {{ $visitor->first_name }} {{ $visitor->last_name }}
+                        </span>
                                         </td>
 
                                         <!-- Telephone -->
                                         <td class="px-6 py-3 whitespace-nowrap">
-                                            <div class="flex flex-col gap-y-1">
-                            <span class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">
-                                {{ $visitor->telephone }}
-                            </span>
-                                            </div>
+                        <span class="block text-sm font-semibold text-white">
+                            {{ $visitor->telephone }}
+                        </span>
                                         </td>
 
                                         <!-- Visit Date -->
                                         <td class="px-6 py-3 whitespace-nowrap">
-                                            <div class="flex flex-col gap-y-1">
-                                                @if($visitor->visit_date)
-                                                    <span
-                                                        class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">
-                                    {{ \Carbon\Carbon::parse($visitor->visit_date)->format('d M, Y') }}
-                                </span>
-                                                @else
-                                                    <span
-                                                        class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">
-                                    N/A
-                                </span>
-                                                @endif
-                                            </div>
+                                            @if($visitor->visit_date)
+                                                <span class="block text-sm font-semibold text-white">
+                                {{ \Carbon\Carbon::parse($visitor->visit_date)->format('d M, Y') }}
+                            </span>
+                                            @else
+                                                <span class="block text-sm font-semibold text-white">N/A</span>
+                                            @endif
                                         </td>
 
                                         <!-- Start Time -->
                                         <td class="px-6 py-3 whitespace-nowrap">
-                                            <div class="flex flex-col gap-y-1">
-                                                @if($visitor->start_time)
-                                                    <span
-                                                        class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">
-                                    {{ \Carbon\Carbon::parse($visitor->start_time)->format('g:i A') }}
-                                </span>
-                                                @else
-                                                    <span
-                                                        class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">
-                                    N/A
-                                </span>
-                                                @endif
-                                            </div>
+                                            @if($visitor->start_time)
+                                                <span class="block text-sm font-semibold text-white">
+                                {{ \Carbon\Carbon::parse($visitor->start_time)->format('g:i A') }}
+                            </span>
+                                            @else
+                                                <span class="block text-sm font-semibold text-white">N/A</span>
+                                            @endif
                                         </td>
 
                                         <!-- End Time -->
                                         <td class="px-6 py-3 whitespace-nowrap">
-                                            <div class="flex flex-col gap-y-1">
-                                                @if($visitor->end_time)
-                                                    <span
-                                                        class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">
-                                    {{ \Carbon\Carbon::parse($visitor->end_time)->format('g:i A') }}
-                                </span>
-                                                @else
-                                                    <span
-                                                        class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">
-                                    N/A
-                                </span>
-                                                @endif
-                                            </div>
+                                            @if($visitor->end_time)
+                                                <span class="block text-sm font-semibold text-white">
+                                {{ \Carbon\Carbon::parse($visitor->end_time)->format('g:i A') }}
+                            </span>
+                                            @else
+                                                <span class="block text-sm font-semibold text-white">N/A</span>
+                                            @endif
                                         </td>
 
                                         <!-- Status -->
                                         <td class="px-6 py-3 whitespace-nowrap">
-                                            <div class="flex flex-col gap-y-1">
-                        <span class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">
-    <x-status-badge status="{{ ($visitor->status ?? 'Null') }}"/>
-</span>
-
-                                            </div>
+                        <span class="block text-sm font-semibold text-white">
+                            <x-status-badge status="{{ $visitor->status ?? 'Null' }}" />
+                        </span>
                                         </td>
 
                                         <!-- Created At -->
                                         <td class="px-6 py-3 whitespace-nowrap">
-                                            <div class="flex flex-col gap-y-1">
-                            <span class="block text-sm text-gray-500 dark:text-neutral-500">
-                                {{ \Carbon\Carbon::parse($visitor->created_at)->format('d M, Y') }}
-                            </span>
-                                            </div>
+                        <span class="block text-sm text-white">
+                            {{ \Carbon\Carbon::parse($visitor->created_at)->format('d M, Y') }}
+                        </span>
                                         </td>
 
                                         <!-- Actions Column -->
                                         <td class="size-px whitespace-nowrap">
                                             <div class="px-6 py-2">
-                                                <div
-                                                    class="hs-dropdown [--placement:bottom-right] relative inline-block">
-                                                    <button id="hs-table-dropdown-{{ $user->id }}" type="button"
-                                                            class="hs-dropdown-toggle py-1.5 px-2 inline-flex justify-center items-center gap-2 rounded-lg text-neutral-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 text-sm"
-                                                            aria-haspopup="menu" aria-expanded="false"
-                                                            aria-label="Dropdown">
-                                                        <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg"
-                                                             width="24" height="24" fill="none" stroke="currentColor"
-                                                             stroke-width="2" stroke-linecap="round"
-                                                             stroke-linejoin="round">
+                                                <div class="hs-dropdown relative inline-block">
+                                                    <button
+                                                        id="hs-table-dropdown-{{ $user->id }}"
+                                                        type="button"
+                                                        class="hs-dropdown-toggle py-1.5 px-2 inline-flex justify-center items-center gap-2 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 text-sm"
+                                                        aria-haspopup="menu"
+                                                        aria-expanded="false"
+                                                        aria-label="Dropdown"
+                                                    >
+                                                        <svg
+                                                            class="shrink-0 size-4"
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            width="24"
+                                                            height="24"
+                                                            fill="none"
+                                                            stroke="currentColor"
+                                                            stroke-width="2"
+                                                            stroke-linecap="round"
+                                                            stroke-linejoin="round"
+                                                        >
                                                             <circle cx="12" cy="12" r="1"/>
                                                             <circle cx="19" cy="12" r="1"/>
                                                             <circle cx="5" cy="12" r="1"/>
                                                         </svg>
                                                     </button>
                                                     <div
-                                                        class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden divide-y divide-neutral-700 min-w-40 z-20 bg-neutral-800 shadow-2xl rounded-lg p-2 mt-2 border border-neutral-700"
-                                                        role="menu" aria-orientation="vertical"
-                                                        aria-labelledby="hs-table-dropdown-1">
+                                                        class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden divide-y min-w-40 z-20 bg-neutral-800 shadow-2xl rounded-lg p-2 mt-2 border border-neutral-700"
+                                                        role="menu"
+                                                        aria-orientation="vertical"
+                                                        aria-labelledby="hs-table-dropdown-1"
+                                                    >
                                                         <div class="py-2 first:pt-0 last:pb-0">
-                                                    <span
-                                                        class="block py-2 px-3 text-xs font-medium uppercase text-neutral-400">
-                                                        Actions
-                                                    </span>
-                                                            <a href="{{ route('visitors.edit', $visitor->id) }}"
-                                                               class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300">
+                                        <span class="block py-2 px-3 text-xs font-medium uppercase text-white">
+                                            Actions
+                                        </span>
+                                                            <a
+                                                                href="{{ route('visitors.edit', $visitor->id) }}"
+                                                                class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-white hover:bg-neutral-700 focus:outline-none focus:bg-neutral-700"
+                                                            >
                                                                 Edit
                                                             </a>
-                                                            <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300"
-                                                               href="{{ route('visitors.timeline', $visitor->id) }}">
+                                                            <a
+                                                                class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-white hover:bg-neutral-700 focus:outline-none focus:bg-neutral-700"
+                                                                href="{{ route('visitors.timeline', $visitor->id) }}"
+                                                            >
                                                                 View Timeline
                                                             </a>
                                                         </div>
-
                                                     </div>
                                                 </div>
                                             </div>
-                                            {{-- <div class="px-6 py-1.5">
-                                                <x-action-button href="/user/{{ $user['id'] }}" label="Edit"/>
-                                            </div> --}}
                                         </td>
                                     </x-table-row>
                                 @endforeach
@@ -408,6 +399,7 @@
                             </x-slot>
                         </x-table-footer>
                     </x-table-wrapper>
+
                 </div>
                 <div id="segment-3" class="hidden" role="tabpanel" aria-labelledby="segment-item-3">
                     <x-table-wrapper>
@@ -425,31 +417,31 @@
                                 <tr>
                                     <!-- Appliance Name -->
                                     <th scope="col" class="px-6 py-3 text-left">
-                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-neutral-200">
+                    <span class="text-xs font-semibold uppercase tracking-wide text-white">
                         Appliance Name
                     </span>
                                     </th>
                                     <!-- Brand -->
                                     <th scope="col" class="px-6 py-3 text-left">
-                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-neutral-200">
+                    <span class="text-xs font-semibold uppercase tracking-wide text-white">
                         Brand
                     </span>
                                     </th>
                                     <!-- Location -->
                                     <th scope="col" class="px-6 py-3 text-left">
-                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-neutral-200">
+                    <span class="text-xs font-semibold uppercase tracking-wide text-white">
                         Location
                     </span>
                                     </th>
                                     <!-- Status -->
                                     <th scope="col" class="px-6 py-3 text-left">
-                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-neutral-200">
+                    <span class="text-xs font-semibold uppercase tracking-wide text-white">
                         Status
                     </span>
                                     </th>
                                     <!-- Created At -->
                                     <th scope="col" class="px-6 py-3 text-left">
-                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-neutral-200">
+                    <span class="text-xs font-semibold uppercase tracking-wide text-white">
                         Created At
                     </span>
                                     </th>
@@ -464,68 +456,79 @@
                                 @foreach($inventoryItems as $item)
                                     <x-table-row>
                                         <!-- Appliance Name -->
-                                        <td class="px-6 py-3 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200">
+                                        <td class="px-6 py-3 whitespace-nowrap text-sm font-medium text-white">
                                             {{ $item->appliance_name }}
                                         </td>
                                         <!-- Brand -->
-                                        <td class="px-6 py-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
+                                        <td class="px-6 py-3 whitespace-nowrap text-sm text-white">
                                             {{ $item->brand }}
                                         </td>
                                         <!-- Location -->
-                                        <td class="px-6 py-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
+                                        <td class="px-6 py-3 whitespace-nowrap text-sm text-white">
                                             {{ $item->location ?? 'N/A' }}
                                         </td>
                                         <!-- Status -->
-                                        <td class="px-6 py-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
-                                            <x-status-badge status="{{ ($item->status) }}"/>
+                                        <td class="px-6 py-3 whitespace-nowrap text-sm text-white">
+                                            <x-status-badge status="{{ $item->status }}" />
                                         </td>
                                         <!-- Created At -->
-                                        <td class="px-6 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-neutral-500">
+                                        <td class="px-6 py-3 whitespace-nowrap text-sm text-white">
                                             {{ \Carbon\Carbon::parse($item->created_at)->format('d M, Y') }}
                                         </td>
                                         <!-- Actions Column -->
                                         <td class="size-px whitespace-nowrap">
                                             <div class="px-6 py-2">
-                                                <div
-                                                    class="hs-dropdown [--placement:bottom-right] relative inline-block">
-                                                    <button id="hs-table-dropdown-{{ $user->id }}" type="button"
-                                                            class="hs-dropdown-toggle py-1.5 px-2 inline-flex justify-center items-center gap-2 rounded-lg text-neutral-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 text-sm"
-                                                            aria-haspopup="menu" aria-expanded="false"
-                                                            aria-label="Dropdown">
-                                                        <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg"
-                                                             width="24" height="24" fill="none" stroke="currentColor"
-                                                             stroke-width="2" stroke-linecap="round"
-                                                             stroke-linejoin="round">
+                                                <div class="hs-dropdown relative inline-block">
+                                                    <button
+                                                        id="hs-table-dropdown-{{ $user->id }}"
+                                                        type="button"
+                                                        class="hs-dropdown-toggle py-1.5 px-2 inline-flex justify-center items-center gap-2 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 text-sm"
+                                                        aria-haspopup="menu"
+                                                        aria-expanded="false"
+                                                        aria-label="Dropdown"
+                                                    >
+                                                        <svg
+                                                            class="shrink-0 size-4"
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            width="24"
+                                                            height="24"
+                                                            fill="none"
+                                                            stroke="currentColor"
+                                                            stroke-width="2"
+                                                            stroke-linecap="round"
+                                                            stroke-linejoin="round"
+                                                        >
                                                             <circle cx="12" cy="12" r="1"/>
                                                             <circle cx="19" cy="12" r="1"/>
                                                             <circle cx="5" cy="12" r="1"/>
                                                         </svg>
                                                     </button>
                                                     <div
-                                                        class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden divide-y divide-neutral-700 min-w-40 z-20 bg-neutral-800 shadow-2xl rounded-lg p-2 mt-2 border border-neutral-700"
-                                                        role="menu" aria-orientation="vertical"
-                                                        aria-labelledby="hs-table-dropdown-1">
+                                                        class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden divide-y min-w-40 z-20 bg-neutral-800 shadow-2xl rounded-lg p-2 mt-2 border border-neutral-700"
+                                                        role="menu"
+                                                        aria-orientation="vertical"
+                                                        aria-labelledby="hs-table-dropdown-1"
+                                                    >
                                                         <div class="py-2 first:pt-0 last:pb-0">
-                                                    <span
-                                                        class="block py-2 px-3 text-xs font-medium uppercase text-neutral-400">
-                                                        Actions
-                                                    </span>
-                                                            <a href=""
-                                                               class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300">
+                                        <span class="block py-2 px-3 text-xs font-medium uppercase text-white">
+                                            Actions
+                                        </span>
+                                                            <a
+                                                                href=""
+                                                                class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-white hover:bg-neutral-700 focus:outline-none focus:bg-neutral-700"
+                                                            >
                                                                 Edit
                                                             </a>
-                                                            <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300"
-                                                               href="">
+                                                            <a
+                                                                class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-white hover:bg-neutral-700 focus:outline-none focus:bg-neutral-700"
+                                                                href=""
+                                                            >
                                                                 View Timeline
                                                             </a>
                                                         </div>
-
                                                     </div>
                                                 </div>
                                             </div>
-                                            {{-- <div class="px-6 py-1.5">
-                                                <x-action-button href="/user/{{ $user['id'] }}" label="Edit"/>
-                                            </div> --}}
                                         </td>
                                     </x-table-row>
                                 @endforeach
@@ -539,6 +542,7 @@
                             </x-slot>
                         </x-table-footer>
                     </x-table-wrapper>
+
 
                 </div>
             </div>
