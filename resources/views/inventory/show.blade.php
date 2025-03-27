@@ -48,6 +48,41 @@
                                     {{ \Carbon\Carbon::parse($inventory->created_at)->format('d M, Y') }}
                                 </dd>
                             </div>
+                            @if($inventory->status === 'pending')
+                                <!-- Show "Check In" button only if status is "pending" -->
+                                <form action="{{ route('inventory.update', $inventory->id) }}" method="POST">
+                                    @csrf
+                                    @method('PATCH')
+                                    <!-- Hidden input with status=checked_in -->
+                                    <input type="hidden" name="status" value="checked_in">
+                                    <button
+                                        type="submit"
+                                        class="inline-flex items-center px-4 py-2 bg-indigo-600 text-white rounded-md"
+                                    >
+                                        Check In
+                                    </button>
+                                </form>
+
+                            @elseif($inventory->status === 'checked_in')
+                                <!-- Show "Check Out" button if status is "checked_in" -->
+                                <form action="{{ route('inventory.update', $inventory->id) }}" method="POST">
+                                    @csrf
+                                    @method('PATCH')
+                                    <!-- Hidden input with status=checked_out -->
+                                    <input type="hidden" name="status" value="checked_out">
+                                    <button
+                                        type="submit"
+                                        class="inline-flex items-center px-4 py-2 bg-red-600 text-white rounded-md"
+                                    >
+                                        Check Out
+                                    </button>
+                                </form>
+
+                            @elseif($inventory->status === 'checked_out')
+                                <!-- If already checked out, just show a message or do nothing -->
+                                <span class="text-sm text-gray-400">Item checked out.</span>
+                            @endif
+
                         </dl>
                     </div>
                 </div>
