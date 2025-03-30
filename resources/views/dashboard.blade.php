@@ -179,15 +179,7 @@
         </div>
     </x-modal>
 
-    <script>
-        function disableSubmitButton(form) {
-            const submitButton = form.querySelector('button[type="submit"], input[type="submit"], x-primary-button');
-            if (submitButton) {
-                submitButton.disabled = true;
-                submitButton.innerText = 'Submitting...';
-            }
-        }
-    </script>
+
 
 
     <!-- Other Modals (Total Visitors, Active Visitors, Overstaying Visitors) -->

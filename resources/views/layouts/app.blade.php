@@ -49,7 +49,15 @@
 <script src="https://cdn.jsdelivr.net/npm/preline@2.7.0/dist/preline.min.js"></script>
 <script src="/public/js/preline.min.js"></script>
 <!-- Add the Clipboard JavaScript -->
-
+<script>
+    function disableSubmitButton(form) {
+        const submitButton = form.querySelector('button[type="submit"], input[type="submit"], x-primary-button');
+        if (submitButton) {
+            submitButton.disabled = true;
+            submitButton.innerText = 'Submitting...';
+        }
+    }
+</script>
 
 
 </body>
