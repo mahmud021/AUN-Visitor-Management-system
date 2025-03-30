@@ -1,46 +1,108 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-neutral-200 leading-tight text-center">
-            {{ __('QR Code') }}
+        <h2 class="font-semibold text-xl text-neutral-200 leading-tight">
+            {{ __('Visitor Details') }}
         </h2>
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-2xl mx-auto sm:px-6 lg:px-8 text-center text-white">
-
-            <div class="mb-4">
-                <x-primary-button type="submit" class="bg-brand-700 hover:bg-brand-600 text-white">
-                    <a href="{{ route('dashboard') }}" class="btn">Back to Home</a>
-                </x-primary-button>
-            </div>
-
-            <div class="bg-gray-800 p-6 rounded-lg shadow-md inline-block">
-                @if($qrCode)
-                    <img id="qrCodeImage" src="data:image/png;base64,{{ base64_encode($qrCode) }}" alt="QR Code" class="mx-auto">
-                    <h3 class="font-semibold text-lg mt-4">
-                        Please save or print this QR code and present it at check-in.
-                    </h3>
-                    <div class="mt-4">
-                        <a href="#" id="downloadBtn" class="bg-brand-700 hover:bg-brand-600 text-white font-semibold py-2 px-4 rounded">
-                            Download QR Code
-                        </a>
+        <!-- Carousel and Details -->
+        <div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
+            <div class="grid sm:grid-cols-2 sm:items-start gap-8">
+                <!-- Left Column: Item Details -->
+                <div>
+                    <div class="px-4 sm:px-0">
+                        <h3 class="text-base/7 font-semibold text-brand-50"></h3>
+                        <p class="mt-1 max-w-2xl text-sm/6 text-brand-300">Visitor details.</p>
                     </div>
-                @else
-                    <p class="text-red-500">Error: QR Code not generated.</p>
-                @endif
-            </div>
+                    <div class="mt-6 border-t border-brand-800 ">
+                        <dl class="divide-y divide-brand-800">
+                            <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                <dt class="text-sm/6 font-medium text-brand-50">Visitor Name</dt>
+                                <dd class="mt-1 text-sm/6 text-brand-200 sm:col-span-2 sm:mt-0">
+                                    {{$visitor->first_name ?? 'Null' }}  {{$visitor->last_name ?? 'Null' }}
+                                    <p>Hosted by: {{$visitor->user->first_name ?? 'Null' }}  {{$visitor->user->last_name ?? 'Null' }}</p>
+                                </dd>
+                            </div>
+                            <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                <dt class="text-sm/6 font-medium text-brand-50">Telephone Name</dt>
+                                <dd class="mt-1 text-sm/6 text-brand-200 sm:col-span-2 sm:mt-0">
+                                    {{$visitor->telephone ?? 'Null' }}
+                                </dd>
+                            </div>
+                            <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                <dt class="text-sm/6 font-medium text-brand-50">Date and Time</dt>
+                                <dd class="mt-1 text-sm/6 text-brand-200 sm:col-span-2 sm:mt-0">
+                                    {{ \Carbon\Carbon::parse($visitor->visit_date)->format('d M, Y') }}
+                                    <p> {{ \Carbon\Carbon::parse($visitor->start_time)->format('g:i a') }}
+                                        - {{ \Carbon\Carbon::parse($visitor->end_time)->format('g:i a') }}
+                                    </p>
+                                </dd>
+                            </div>
+                            <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                <dt class="text-sm/6 font-medium text-brand-50">Visitor Code</dt>
+                                <dd class="mt-1 text-sm/6 text-brand-200 sm:col-span-2 sm:mt-0">
+                                    {{$visitor->visitor_code ?? 'Null' }}
+                                </dd>
+                            </div>
 
+                            <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                <dt class="text-sm/6 font-medium text-brand-50">Status</dt>
+                                <dd class="mt-1 text-sm/6 text-brand-200 sm:col-span-2 sm:mt-0">
+                                    <x-status-badge status="{{ $visitor->status ?? 'Null' }}" />
+                                </dd>
+                            </div>
+                            <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                <dt class="text-sm/6 font-medium text-brand-50">Created</dt>
+                                <dd class="mt-1 text-sm/6 text-brand-200 sm:col-span-2 sm:mt-0">
+                                    {{ \Carbon\Carbon::parse($visitor->created_at)->format('d M, Y') }}
+                                </dd>
+                            </div>
+
+
+
+                            <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                <dt class="text-sm/6 font-medium text-brand-50"></dt>
+                                <dd class="mt-1 text-sm/6 text-brand-200 sm:col-span-2 sm:mt-0">
+                                    <a
+                                        href="{{ route('dashboard') }}"
+                                        class="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent
+                   rounded-md font-semibold text-xs text-white uppercase tracking-widest
+                   hover:bg-indigo-500 active:bg-indigo-700 focus:outline-none focus:border-indigo-700
+                   focus:ring ring-indigo-300 disabled:opacity-25 transition ease-in-out duration-150"
+                                    >
+                                        Back Home
+                                    </a>
+                                </dd>
+                            </div>
+
+
+
+                        </dl>
+                    </div>
+                </div>
+
+                <!-- Right Column: Item Image -->
+                <div class="flex justify-center sm:justify-end items-start">
+                    <div class="max-w-sm w-full">
+                        <!-- Adjust the `asset('...')` part to match the actual path to your image -->
+                        @if($qrCode)
+                            <img id="qrCodeImage" src="data:image/png;base64,{{ base64_encode($qrCode) }}" alt="QR Code" class="mx-auto">
+                            <h3 class="font-semibold text-lg mt-4 text-brand-50">
+                                Please save or print this QR code and present it at check-in.
+                            </h3>
+                            <div class="mt-4">
+                                <a href="#" id="downloadBtn" class="bg-brand-700 hover:bg-brand-600 text-white font-semibold py-2 px-4 rounded">
+                                    Download QR Code
+                                </a>
+                            </div>
+                        @else
+                            <p class="text-red-500">Error: QR Code not generated.</p>
+                        @endif
+
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-
-    <script>
-        document.getElementById('downloadBtn').addEventListener('click', function(e) {
-            e.preventDefault();
-            const qrImage = document.getElementById('qrCodeImage');
-            const link = document.createElement('a');
-            link.href = qrImage.src;
-            link.download = 'visitor-qr-code-{{ $visitor->first_name }}-{{ $visitor->last_name }}.png';
-            link.click();
-        });
-    </script>
 </x-app-layout>
