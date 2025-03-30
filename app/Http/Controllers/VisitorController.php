@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\VisitorQRCodeMail;
 use App\Models\TimelineEvent;
 use App\Models\Visitor;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class VisitorController extends Controller
 {
@@ -29,10 +33,8 @@ class VisitorController extends Controller
         $end   = \Carbon\Carbon::parse($settings->visitor_end_time);
         $now   = \Carbon\Carbon::now();
 
-        // Check if current time is within the allowed window.
-        // Optionally, you might allow an override gate here.
+        // Check if current time is within the allowed window
         if (!$now->between($start, $end)) {
-            // If you have an override permission, you can check it like so:
             if (!\Illuminate\Support\Facades\Gate::allows('override-visitor-creation')) {
                 return redirect()->back()->withErrors([
                     'time_window' => 'Visitor creation is not allowed outside the designated time window.'
@@ -56,9 +58,10 @@ class VisitorController extends Controller
         // Associate the visitor with the logged-in user and set initial status to pending
         $validated['user_id'] = auth()->id();
         $validated['status'] = 'pending';
-
-        // Generate a random 4-digit visitor code
         $validated['visitor_code'] = str_pad(rand(0, 9999), 4, '0', STR_PAD_LEFT);
+
+        // Generate a unique token for the QR code
+        $validated['token'] = Str::uuid()->toString();
 
         // Create the visitor record
         $visitor = Visitor::create($validated);
@@ -72,7 +75,7 @@ class VisitorController extends Controller
             'occurred_at' => now(),
         ]);
 
-        // Check if the user's details have bypass_hr_approval enabled
+        // Auto-approve if user has bypass_hr_approval
         if (auth()->user()->user_details->bypass_hr_approval) {
             $visitor->update(['status' => 'approved']);
             \App\Models\TimelineEvent::create([
@@ -84,14 +87,58 @@ class VisitorController extends Controller
             ]);
         }
 
-        return redirect()->back()->with('success', 'Visitor created successfully.');
-    }
+        // Generate the QR code in PNG format
+        $qrCode = QrCode::format('png')->size(200)->generate($visitor->token);
 
+        // Debug: Log the QR code to ensure it’s being generated
+        \Log::info('QR Code Generated:', ['qrCode' => base64_encode($qrCode)]);
+        // Redirect to a view to display the QR code
+        return redirect()->route('visitors.qr.show', $visitor->id)->with('qrCode', $qrCode);
+    }
+    public function checkInWithQR(Request $request)
+    {
+        $request->validate([
+            'token' => 'required|string',
+        ]);
+
+        $visitor = Visitor::where('token', $request->token)->first();
+
+        if ($visitor && $visitor->status == 'approved' && Carbon\Carbon::parse($visitor->visit_date)->isToday()) {
+            $visitor->status = 'checked_in';
+            $visitor->checked_in_at = now();
+            $visitor->save();
+
+            TimelineEvent::create([
+                'visitor_id'  => $visitor->id,
+                'user_id'     => auth()->id(),
+                'event_type'  => 'checked_in',
+                'description' => 'Visitor checked in via QR code',
+                'occurred_at' => now(),
+            ]);
+
+            return response()->json(['success' => true, 'message' => 'Visitor checked in successfully.']);
+        } else {
+            return response()->json(['success' => false, 'message' => 'Invalid QR code or visitor not approved.'], 400);
+        }
+    }
     public function show(Visitor $visitor)
     {
         // Show a single visitor if needed.
     }
 
+    public function showQR(Visitor $visitor)
+    {
+        // Retrieve the QR code from the session
+        $qrCode = session('qrCode');
+
+        // If the QR code is missing, regenerate it
+        if (!$qrCode) {
+            $qrCode = QrCode::format('png')->size(200)->generate($visitor->token);
+            \Log::info('QR Code Regenerated:', ['qrCode' => base64_encode($qrCode)]);
+        }
+
+        return view('visitors.qr', compact('visitor', 'qrCode'));
+    }
     public function edit(Visitor $visitor)
     {
         return view('visitors.edit', compact('visitor'));
