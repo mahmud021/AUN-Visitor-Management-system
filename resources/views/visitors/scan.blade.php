@@ -48,6 +48,12 @@
         .btn:hover {
             background-color: #0056b3;
         }
+        .toggle-btn {
+            background-color: #28a745;
+        }
+        .toggle-btn:hover {
+            background-color: #218838;
+        }
     </style>
 </head>
 <body>
@@ -55,6 +61,7 @@
     <h1>Scan Visitor QR Code</h1>
     <video id="video" autoplay playsinline></video>
     <canvas id="canvas" style="display: none;"></canvas>
+    <button id="toggleCamera" class="btn toggle-btn">Switch Camera</button>
     <p id="result"></p>
     <a href="{{ route('visitors.index') }}" class="btn">Back to Visitors</a>
 </div>
@@ -66,24 +73,56 @@
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
     const result = document.getElementById('result');
+    const toggleCameraBtn = document.getElementById('toggleCamera');
+    let stream = null;
+    let useRearCamera = true;
 
-    // Request access to the camera with minimal constraints
-    navigator.mediaDevices.getUserMedia({ video: true })
-        .then(stream => {
-            video.srcObject = stream;
-            video.play();
-            // Wait for the video to load metadata before scanning
-            video.onloadedmetadata = () => {
-                scanQRCode();
-            };
-        })
-        .catch(err => {
-            result.innerText = 'Error accessing camera: ' + err;
-            result.classList.add('error');
-        });
+    // Function to stop the current stream
+    function stopStream() {
+        if (stream) {
+            const tracks = stream.getTracks();
+            tracks.forEach(track => track.stop());
+        }
+    }
+
+    // Function to start the camera with given constraints
+    function startCamera() {
+        stopStream();
+        const constraints = {
+            video: {
+                facingMode: useRearCamera ? 'environment' : 'user'
+            }
+        };
+        console.log('Requesting camera with constraints:', constraints);
+
+        navigator.mediaDevices.getUserMedia(constraints)
+            .then(s => {
+                stream = s;
+                video.srcObject = stream;
+                video.play();
+                console.log('Camera started successfully:', stream.getVideoTracks()[0].label);
+                video.onloadedmetadata = () => {
+                    scanQRCode();
+                };
+            })
+            .catch(err => {
+                console.error('Error accessing camera:', err);
+                result.innerText = 'Error accessing camera: ' + err;
+                result.classList.add('error');
+            });
+    }
+
+    // Toggle between cameras
+    toggleCameraBtn.addEventListener('click', () => {
+        useRearCamera = !useRearCamera;
+        toggleCameraBtn.innerText = useRearCamera ? 'Switch to Front Camera' : 'Switch to Rear Camera';
+        startCamera();
+    });
+
+    // Start with the rear camera
+    startCamera();
 
     function scanQRCode() {
-        // Ensure video dimensions are available
         if (video.videoWidth === 0 || video.videoHeight === 0) {
             result.innerText = 'Video dimensions not available, retrying...';
             result.classList.add('error');
@@ -91,21 +130,17 @@
             return;
         }
 
-        // Set canvas size to match video
         canvas.width = video.videoWidth;
         canvas.height = video.videoHeight;
 
-        // Draw the video frame to the canvas
         ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
         const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
         const code = jsQR(imageData.data, imageData.width, imageData.height);
 
         if (code) {
-            // QR code found, extract the token
             const token = code.data;
             checkIn(token);
         } else {
-            // No QR code found, continue scanning
             requestAnimationFrame(scanQRCode);
         }
     }
@@ -123,14 +158,10 @@
             .then(data => {
                 result.innerText = data.message;
                 result.classList.add(data.success ? 'success' : 'error');
-                // Stop the camera after successful check-in
                 if (data.success) {
-                    const stream = video.srcObject;
-                    const tracks = stream.getTracks();
-                    tracks.forEach(track => track.stop());
+                    stopStream();
                     video.srcObject = null;
                 } else {
-                    // Continue scanning if check-in fails
                     setTimeout(() => {
                         result.innerText = '';
                         result.classList.remove('error');
