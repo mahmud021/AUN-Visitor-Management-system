@@ -39,7 +39,7 @@ class UserController extends Controller
     public function edit(User $user)
     {
         $user->load('user_details');
-        return view('users.edit', compact('user'));
+        return view('users.edit', compact('user'))->with('success', 'User details updated successfully.');
     }
     /**
      * Store a newly created resource in storage.

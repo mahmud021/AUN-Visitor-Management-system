@@ -91,7 +91,7 @@ class VisitorController extends Controller
         $qrCode = QrCode::format('png')->size(200)->generate($visitor->token);
 
         // Redirect to a view to display the QR code
-        return redirect()->route('visitors.show', $visitor->id)->with('qrCode', $qrCode)->with('success', 'Visitor status updated successfully.');
+        return redirect()->route('visitors.show', $visitor->id)->with('qrCode', $qrCode)->with('success', 'Visitor Created successfully.');
     }
     public function show(Visitor $visitor)
     {

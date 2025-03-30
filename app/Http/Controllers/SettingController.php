@@ -58,7 +58,7 @@ class SettingController extends Controller
         $settings = AppSetting::first();  // There's only one row (assuming)
         $locations = \App\Models\Location::all();
 
-        return view('settings.edit', compact('settings', 'locations'));
+        return view('settings.edit', compact('settings', 'locations'))->with('success', 'Settings updated successfully.');
     }
 
     public function update(Request $request)
