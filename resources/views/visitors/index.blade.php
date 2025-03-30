@@ -229,6 +229,7 @@
                                                         View Timeline
                                                     </a>
 
+
                                                     @if($visitor->status == 'pending')
                                                         <form action="{{ route('visitors.update', $visitor->id) }}" method="POST" style="display: inline;">
                                                             @csrf
