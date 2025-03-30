@@ -144,6 +144,11 @@ class VisitorController extends Controller
         return view('visitors.edit', compact('visitor'));
     }
 
+    public function scan()
+    {
+        return view('visitors.scan');
+    }
+
     /**
      * Update visitor personal details.
      *

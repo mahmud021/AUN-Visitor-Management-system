@@ -30,7 +30,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->middleware('can:access-settings');
     Route::post('/visitors/check-in-qr', [VisitorController::class, 'checkInWithQR'])->name('visitors.checkInWithQR');
     Route::get('/visitors/{visitor}/qr', [VisitorController::class, 'showQR'])->name('visitors.qr.show');
-
+    Route::get('/visitors/scan', [VisitorController::class, 'scan'])->name('visitors.scan');
 
     // User Management (only accessible to super admin and HR Admin)
     Route::prefix('user')->name('user.')->middleware('can:view-users')->group(function () {
