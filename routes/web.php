@@ -28,9 +28,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/settings/locations', [\App\Http\Controllers\SettingController::class, 'storeLocation'])
         ->name('settings.locations.store')
         ->middleware('can:access-settings');
-    Route::post('/visitors/check-in-qr', [VisitorController::class, 'checkInWithQR'])->name('visitors.checkInWithQR');
-    Route::get('/visitors/{visitor}/qr', [VisitorController::class, 'showQR'])->name('visitors.qr.show');
-    Route::get('/visitors/scan', [VisitorController::class, 'scan'])->name('visitors.scan');
 
     // User Management (only accessible to super admin and HR Admin)
     Route::prefix('user')->name('user.')->middleware('can:view-users')->group(function () {
@@ -65,6 +62,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/{visitor}/timeline', [VisitorController::class, 'timeline'])
             ->name('timeline')
             ->middleware('can:view-timeline,visitor');
+        Route::get('/visitors/{visitor}/qr', [VisitorController::class, 'show'])->name('show');
+
 
     });
 
