@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->string('telephone');
-
+            $table->string('token')->unique()->nullable();
             // We keep expected_arrival as a date or datetime if you also want time
             $table->date('visit_date')->nullable(); // Single date for the visit
             $table->time('start_time')->nullable(); // Start time on that date
