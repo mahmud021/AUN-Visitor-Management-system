@@ -45,7 +45,7 @@ class InventoryController extends Controller
             'appliance_name' => 'required|string|max:255',
             'location'       => 'required|string|max:255',
             'brand'          => 'required|string|max:255',
-            'image'          => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
+            'image'          => 'nullable|image|mimes:jpg,jpeg,png,gif|',
             'student_id'     => 'sometimes|required|exists:users,id',
         ]);
 
