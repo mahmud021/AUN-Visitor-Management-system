@@ -118,6 +118,28 @@ class VisitorController extends Controller
      * This update method is dedicated to updating the visitor’s basic information:
      * first name, last name, telephone, visit date, start time, and end time.
      */
+
+    public function checkIn(Request $request, Visitor $visitor)
+    {
+        // Validate visitor code and other check-in specific requirements here.
+
+        // Update check-in details
+        $visitor->checked_in_at = now();
+        $visitor->status = 'checked_in';
+        $visitor->save();
+
+        // Log the timeline event for check-in
+        \App\Models\TimelineEvent::create([
+            'visitor_id'  => $visitor->id,
+            'user_id'     => auth()->id(),
+            'event_type'  => 'checked_in',
+            'description' => 'Visitor checked in by security',
+            'occurred_at' => now(),
+        ]);
+
+        return redirect()->back()->with('success', 'Visitor checked in successfully.');
+    }
+
     public function update(Request $request, Visitor $visitor)
     {
         // If the request includes a 'status', process check‑in/out logic.
