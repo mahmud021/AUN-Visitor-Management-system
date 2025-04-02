@@ -1,9 +1,8 @@
 @can('check-in-visitor', $visitor)
     <!-- Check-in Form -->
-    <form action="{{ route('visitors.update', $visitor->id) }}" method="POST" class="inline">
+    <form action="{{ route('visitors.checkin', $visitor->id) }}" method="POST" class="inline">
         @csrf
         @method('PATCH')
-        <input type="hidden" name="status" value="checked_in">
         <input type="hidden" name="redirect_to" value="{{ route('dashboard') }}">
 
         <div class="flex items-center gap-2 mb-4">
@@ -18,26 +17,11 @@
             </label>
 
             <div class="py-2 px-3 bg-brand-900 border border-brand-700 rounded-lg">
-                <!--
-                  Note the data-hs-pin-input attribute below includes:
-                  "availableCharsRE": "^[0-9]+$"
-                  so only digits are allowed.
-                -->
-                <div class="flex gap-x-3"
-                     data-hs-pin-input='{
-                       "availableCharsRE": "^[0-9]+$"
-                     }'>
-
+                <div class="flex gap-x-3" data-hs-pin-input='{"availableCharsRE": "^[0-9]+$"}'>
                     @for ($i = 1; $i <= 4; $i++)
                         <input
                             id="visitor_code_{{ $i }}"
-                            class="w-8 h-8 text-sm text-center p-0
-                                   border-brand-700 rounded-md
-                                   focus:border-brand-500 focus:ring-brand-500
-                                   bg-brand-900 text-brand-200
-                                   [appearance:textfield]
-                                   [&::-webkit-outer-spin-button]:appearance-none
-                                   [&::-webkit-inner-spin-button]:appearance-none"
+                            class="w-8 h-8 text-sm text-center p-0 border-brand-700 rounded-md focus:border-brand-500 focus:ring-brand-500 bg-brand-900 text-brand-200 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                             type="text"
                             placeholder="○"
                             data-hs-pin-input-item
