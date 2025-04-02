@@ -17,7 +17,8 @@
     <!-- Right: Action Buttons -->
     <div class="flex items-center gap-4">
         <!-- Create Dropdown -->
-        <x-dropdown>
+        <!-- Create Dropdown -->
+        <x-dropdown :disabled="!Gate::allows('create-visitor')">
             <x-slot name="trigger">
                 <x-primary-button>
                     Create
@@ -32,6 +33,7 @@
                 </x-dropdown-link>
             </x-slot>
         </x-dropdown>
+
 
         <!-- Logout Form -->
         <form method="POST" action="{{ route('logout') }}" class="inline">

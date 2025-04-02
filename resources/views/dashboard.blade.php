@@ -1,14 +1,17 @@
 <x-app-layout>
     <x-slot name="header">
         <!-- Header with Create Visitor and Logout buttons -->
-        <x-dashboard.header :user="$user" :locations="$locations" />
+        <x-dashboard.header :user="$user" :locations="$locations"/>
     </x-slot>
     @if(auth()->user()->user_details->blacklist)
         <!-- Blacklisted Warning Banner -->
         <div class="max-w-[85rem] px-4 py-4 sm:px-6 lg:px-8 mx-auto text-center">
-            <div class="inline-flex items-center bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded-full shadow-md">
+            <div
+                class="inline-flex items-center bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded-full shadow-md">
             <span class="inline-flex items-center justify-center rounded-full bg-red-200 p-1 mr-2">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="#DC2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" class="lucide lucide-triangle-alert-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="#DC2626"
+                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"
+                     class="lucide lucide-triangle-alert-icon">
                     <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/>
                     <path d="M12 9v4"/>
                     <path d="M12 17h.01"/>
@@ -31,19 +34,19 @@
                 title="Total Visitors Today"
                 :count="$dailyVisitorCount"
                 tooltip="The number of visitors today"
-                modal-target="hs-total-visitors-modal" />
+                modal-target="hs-total-visitors-modal"/>
 
             <x-dashboard.card
                 title="Active Visitors Today"
                 :count="$checkedInVisitorCount"
                 tooltip="The number of active users"
-                modal-target="hs-basic-modal" />
+                modal-target="hs-basic-modal"/>
 
             <x-dashboard.card
                 title="Overstaying Visitors Today"
                 :count="$overstayingVisitorCount"
                 tooltip="The number of overstaying users"
-                modal-target="hs-overstaying-modal" />
+                modal-target="hs-overstaying-modal"/>
         </div>
     </div>
 
@@ -124,7 +127,8 @@
         <div class="p-4 bg-brand-900 text-brand-100 overflow-y-auto">
             <h3 class="text-xl font-semibold mb-4">Add Appliance</h3>
 
-            <form method="POST" action="{{ route('inventory.store') }}" enctype="multipart/form-data" onsubmit="disableSubmitButton(this)">
+            <form method="POST" action="{{ route('inventory.store') }}" enctype="multipart/form-data"
+                  onsubmit="disableSubmitButton(this)">
                 @csrf
 
                 <div class="grid grid-cols-1 gap-4 lg:gap-4">
@@ -148,7 +152,8 @@
                         <x-form.select name="location" label="Location">
                             <option value="" disabled selected>Select a location</option>
                             @foreach($locations as $location)
-                                <option value="{{ $location->name }}" {{ old('location') == $location->name ? 'selected' : '' }}>
+                                <option
+                                    value="{{ $location->name }}" {{ old('location') == $location->name ? 'selected' : '' }}>
                                     {{ $location->name }}
                                 </option>
                             @endforeach
@@ -180,13 +185,11 @@
     </x-modal>
 
 
-
-
     <!-- Other Modals (Total Visitors, Active Visitors, Overstaying Visitors) -->
     <x-dashboard.modals
         :totalVisitors="$totalVisitors"
         :checkedInVisitors="$checkedInVisitors"
-        :overstayingVisitors="$overstayingVisitors" />
+        :overstayingVisitors="$overstayingVisitors"/>
 
     <!-- Additional Dashboard Content -->
     <div class="py-12 bg-primary text-white min-h-screen">
@@ -194,8 +197,8 @@
 
             <div class="flex justify-center">
                 <div class="max-w-lg w-full">
-                <!-- SearchBox -->
-                <div class="relative" data-hs-combo-box='{
+                    <!-- SearchBox -->
+                    <div class="relative" data-hs-combo-box='{
     "groupingType": "default",
     "isOpenOnFocus": true,
     "apiUrl": "../assets/data/searchbox.json",
@@ -203,22 +206,32 @@
     "outputItemTemplate": "<div data-hs-combo-box-output-item><span class=\"flex items-center cursor-pointer py-2 px-4 w-full text-sm text-gray-800 hover:bg-gray-100 dark:bg-neutral-800 dark:hover:bg-neutral-700 dark:text-neutral-200\"><div class=\"flex items-center w-full\"><div class=\"flex items-center justify-center rounded-full bg-gray-200 size-6 overflow-hidden me-2.5\"><img class=\"shrink-0\" data-hs-combo-box-output-item-attr=&apos;[{\"valueFrom\": \"image\", \"attr\": \"src\"}, {\"valueFrom\": \"name\", \"attr\": \"alt\"}]&apos; /></div><div data-hs-combo-box-output-item-field=\"name\" data-hs-combo-box-search-text data-hs-combo-box-value></div></div><span class=\"hidden hs-combo-box-selected:block\"><svg class=\"shrink-0 size-3.5 text-blue-600 dark:text-blue-500\" xmlns=\"http:.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"20 6 9 17 4 12\"></polyline></svg></span></span></div>",
     "groupingTitleTemplate": "<div class=\"text-xs uppercase text-gray-500 m-3 mb-1 dark:text-neutral-500\"></div>"
   }'>
-                    <div class="relative">
-                        <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none z-20 ps-3.5">
-                            <svg class="shrink-0 size-4 text-gray-400 dark:text-white/60" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="11" cy="11" r="8"></circle>
-                                <path d="m21 21-4.3-4.3"></path>
-                            </svg>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none z-20 ps-3.5">
+                                <svg class="shrink-0 size-4 text-gray-400 dark:text-white/60"
+                                     xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                     stroke-linejoin="round">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <path d="m21 21-4.3-4.3"></path>
+                                </svg>
+                            </div>
+                            <input
+                                class="py-2.5 py-3 ps-10 pe-4 block w-full border-gray-200 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
+                                type="text" role="combobox" aria-expanded="false" placeholder="Type a name" value=""
+                                data-hs-combo-box-input="">
                         </div>
-                        <input class="py-2.5 py-3 ps-10 pe-4 block w-full border-gray-200 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" type="text" role="combobox" aria-expanded="false" placeholder="Type a name" value="" data-hs-combo-box-input="">
-                    </div>
 
-                    <!-- SearchBox Dropdown -->
-                    <div class="absolute z-50 w-full bg-white border border-gray-200 rounded-lg dark:bg-neutral-800 dark:border-neutral-700" style="display: none;" data-hs-combo-box-output="">
-                        <div class="max-h-72 rounded-b-lg overflow-hidden overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500" data-hs-combo-box-output-items-wrapper=""></div>
+                        <!-- SearchBox Dropdown -->
+                        <div
+                            class="absolute z-50 w-full bg-white border border-gray-200 rounded-lg dark:bg-neutral-800 dark:border-neutral-700"
+                            style="display: none;" data-hs-combo-box-output="">
+                            <div
+                                class="max-h-72 rounded-b-lg overflow-hidden overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500"
+                                data-hs-combo-box-output-items-wrapper=""></div>
+                        </div>
+                        <!-- End SearchBox Dropdown -->
                     </div>
-                    <!-- End SearchBox Dropdown -->
-                </div>
                 </div>
                 <!-- End SearchBox -->
             </div>

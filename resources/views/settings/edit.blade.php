@@ -49,11 +49,6 @@
         </form>
         <hr class="border-gray-500 dark:border-neutral-500 mt-5">
 
-        <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-neutral-200 hover:bg-neutral-700 focus:outline-none focus:bg-neutral-700"
-           href="{{ route('visitors.scan') }}">
-            Scan QR Code
-        </a>
-
         <hr class="border-gray-500 dark:border-neutral-500 mt-5">
         <h3 class="font-semibold text-lg text-white mt-5">
             Locations
