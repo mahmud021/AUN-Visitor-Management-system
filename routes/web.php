@@ -59,17 +59,18 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::patch('/{visitor}', [VisitorController::class, 'update'])
             ->name('update')
             ->middleware('can:update-visitor,visitor');
+
+        // New check‑in route using the check-in-visitor gate.
         Route::patch('/{visitor}/check-in', [VisitorController::class, 'checkIn'])
-            ->name('visitors.checkin')
+            ->name('checkin')
             ->middleware('can:check-in-visitor,visitor');
 
         Route::get('/{visitor}/timeline', [VisitorController::class, 'timeline'])
             ->name('timeline')
             ->middleware('can:view-timeline,visitor');
         Route::get('/visitors/{visitor}/qr', [VisitorController::class, 'show'])->name('show');
-
-
     });
+
 
     Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory.index')->middleware('can:view-inventory');
     Route::post('/inventory', [InventoryController::class, 'store'])->name('inventory.store');

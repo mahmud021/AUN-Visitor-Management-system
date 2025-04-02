@@ -121,14 +121,32 @@ class VisitorController extends Controller
 
     public function checkIn(Request $request, Visitor $visitor)
     {
-        // Validate visitor code and other check-in specific requirements here.
+        // Validate the visitor code.
+        $request->validate([
+            'visitor_code'   => 'required|array',
+            'visitor_code.*' => 'required|string|size:1',
+        ]);
 
-        // Update check-in details
+        $inputVisitorCode = implode('', $request->input('visitor_code'));
+        if ($visitor->visitor_code !== $inputVisitorCode) {
+            return redirect()->back()->withErrors([
+                'visitor_code' => 'The visitor code entered does not match our records.'
+            ]);
+        }
+
+        // Ensure the visitor is checking in on the correct date.
+        if (!\Carbon\Carbon::parse($visitor->visit_date)->isToday()) {
+            return redirect()->back()->withErrors([
+                'checkin' => 'Visitors can only check in on their scheduled date.'
+            ]);
+        }
+
+        // Update the visitor record with check‑in details.
         $visitor->checked_in_at = now();
         $visitor->status = 'checked_in';
         $visitor->save();
 
-        // Log the timeline event for check-in
+        // Log the timeline event.
         \App\Models\TimelineEvent::create([
             'visitor_id'  => $visitor->id,
             'user_id'     => auth()->id(),
@@ -140,45 +158,30 @@ class VisitorController extends Controller
         return redirect()->back()->with('success', 'Visitor checked in successfully.');
     }
 
+
     public function update(Request $request, Visitor $visitor)
     {
-        // If the request includes a 'status', process check‑in/out logic.
+        // If the request includes a 'status' for check‑in and the user is Security,
+        // force them to use the dedicated check‑in route.
+        if ($request->has('status') && $request->input('status') === 'checked_in') {
+            if (auth()->user()->user_details->role === 'Security') {
+                abort(403, 'Security users must use the check‑in route.');
+            }
+        }
+
+        // Process other status updates (such as check‑out) or personal detail updates.
         if ($request->has('status')) {
+            // Validate status value.
             $request->validate([
-                'status' => 'required|in:approved,denied,checked_in,checked_out',
+                'status' => 'required|in:approved,denied,checked_out',
             ]);
 
-            // Check if the visitor is trying to check in.
-            if ($request->input('status') === 'checked_in') {
-                // Validate the visitor code.
-                $request->validate([
-                    'visitor_code'   => 'required|array',
-                    'visitor_code.*' => 'required|string|size:1',
-                ]);
-
-                $inputVisitorCode = implode('', $request->input('visitor_code'));
-                if ($visitor->visitor_code !== $inputVisitorCode) {
-                    return redirect()->back()->withErrors([
-                        'visitor_code' => 'The visitor code entered does not match our records.'
-                    ]);
-                }
-
-                // Ensure the visitor is checking in on the correct date.
-                if (!Carbon::parse($visitor->visit_date)->isToday()) {
-                    return redirect()->back()->withErrors([
-                        'checkin' => 'Visitors can only check in on their scheduled date.'
-                    ]);
-                }
-
-                $visitor->checked_in_at = now();
-            }
-
-            // Handle check-out.
+            // Handle check‑out if applicable.
             if ($request->input('status') === 'checked_out') {
                 $visitor->checked_out_at = now();
             }
 
-            // Update the visitor status.
+            // Update visitor status.
             $visitor->status = $request->input('status');
             $visitor->save();
 
@@ -186,12 +189,11 @@ class VisitorController extends Controller
             $description = match ($visitor->status) {
                 'approved'   => 'Visitor approved by HR',
                 'denied'     => 'Visitor denied',
-                'checked_in' => 'Visitor checked in by security',
                 'checked_out'=> 'Visitor checked out by security',
                 default      => '',
             };
 
-            TimelineEvent::create([
+            \App\Models\TimelineEvent::create([
                 'visitor_id'  => $visitor->id,
                 'user_id'     => auth()->id(),
                 'event_type'  => $visitor->status,
@@ -202,10 +204,9 @@ class VisitorController extends Controller
             return redirect()->back()->with('success', 'Visitor status updated successfully.');
         }
 
-        // Use the new 'edit-visitor' gate to check if the user can update personal details.
-        Gate::authorize('update-visitor', $visitor);
+        // For updating personal details:
+        \Illuminate\Support\Facades\Gate::authorize('update-visitor', $visitor);
 
-        // Validate personal details.
         $validated = $request->validate([
             'first_name' => 'required|string|max:20',
             'last_name'  => 'required|string|max:20',
@@ -215,7 +216,7 @@ class VisitorController extends Controller
             'end_time'   => 'required|date_format:H:i|after:start_time',
         ]);
 
-        // Explicitly assign each field.
+        // Update personal details.
         $visitor->first_name = $validated['first_name'];
         $visitor->last_name  = $validated['last_name'];
         $visitor->telephone  = $validated['telephone'];
@@ -225,7 +226,7 @@ class VisitorController extends Controller
         $visitor->save();
 
         // Log a timeline event for updating personal details.
-        TimelineEvent::create([
+        \App\Models\TimelineEvent::create([
             'visitor_id'  => $visitor->id,
             'user_id'     => auth()->id(),
             'event_type'  => 'updated_details',
@@ -235,6 +236,7 @@ class VisitorController extends Controller
 
         return redirect()->back()->with('success', 'Visitor updated successfully.');
     }
+
 
     public function timeline(Visitor $visitor)
     {
