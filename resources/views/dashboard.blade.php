@@ -145,28 +145,28 @@
         </div>
     </x-modal>
 
-    <x-modal name="walk-in-modal" maxWidth="2xl">
+    <x-modal name="walk-in-modal" maxWidth="lg">
         <div class="p-4 bg-brand-900 text-brand-100 overflow-y-auto">
             <h3 class="text-xl font-semibold mb-4">Add Walk-In Visitor</h3>
 
             <form method="POST" action="{{ route('visitors.store') }}" onsubmit="disableSubmitButton(this)">
                 @csrf
 
-                <div class="grid grid-cols-1 gap-4 lg:gap-4">
-                    <!-- Name Row -->
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="space-y-2">
-                            <x-form.input name="first_name" label="First Name" type="text"
-                                          value="{{ old('first_name') }}"
-                                          class="bg-brand-800 border-brand-700 text-brand-100 placeholder-brand-300"/>
-                            <x-input-error :messages="$errors->get('first_name')" class="mt-1 text-brand-400"/>
-                        </div>
-                        <div class="space-y-2">
-                            <x-form.input name="last_name" label="Last Name" type="text"
-                                          value="{{ old('last_name') }}"
-                                          class="bg-brand-800 border-brand-700 text-brand-100 placeholder-brand-300"/>
-                            <x-input-error :messages="$errors->get('last_name')" class="mt-1 text-brand-400"/>
-                        </div>
+                <div class="grid grid-cols-2 gap-4 lg:gap-4">
+                    <!-- First Name -->
+                    <div class="space-y-2">
+                        <x-form.input name="first_name" label="First Name" type="text"
+                                      value="{{ old('first_name') }}"
+                                      class="bg-brand-800 border-brand-700 text-brand-100 placeholder-brand-300"/>
+                        <x-input-error :messages="$errors->get('first_name')" class="mt-1 text-brand-400"/>
+                    </div>
+
+                    <!-- Last Name -->
+                    <div class="space-y-2">
+                        <x-form.input name="last_name" label="Last Name" type="text"
+                                      value="{{ old('last_name') }}"
+                                      class="bg-brand-800 border-brand-700 text-brand-100 placeholder-brand-300"/>
+                        <x-input-error :messages="$errors->get('last_name')" class="mt-1 text-brand-400"/>
                     </div>
 
                     <!-- Telephone -->
@@ -177,10 +177,6 @@
                         <x-input-error :messages="$errors->get('telephone')" class="mt-1 text-brand-400"/>
                     </div>
 
-                    <!-- Hidden visit_date and start_time -->
-                    <input type="hidden" name="visit_date" value="{{ \Carbon\Carbon::now()->toDateString() }}">
-                    <input type="hidden" name="start_time" value="{{ \Carbon\Carbon::now()->format('H:i') }}">
-
                     <!-- End Time -->
                     <div class="space-y-2">
                         <x-form.input name="end_time" label="End Time" type="time"
@@ -189,8 +185,8 @@
                         <x-input-error :messages="$errors->get('end_time')" class="mt-1 text-brand-400"/>
                     </div>
 
-                    <!-- Location -->
-                    <div class="space-y-2">
+                    <!-- Location (full width) -->
+                    <div class="space-y-2 col-span-2">
                         <x-form.select name="location" label="Location">
                             <option value="" disabled selected>Select a location</option>
                             @foreach($locations as $location)
@@ -202,16 +198,18 @@
                         <x-input-error :messages="$errors->get('location')" class="mt-1 text-brand-400"/>
                     </div>
 
-                    <!-- Purpose of Visit -->
-                    <div class="space-y-2">
+                    <!-- Purpose of Visit (full width) -->
+                    <div class="space-y-2 col-span-2">
                         <x-form.input name="purpose_of_visit" label="Purpose of Visit" type="text"
                                       value="{{ old('purpose_of_visit') }}"
                                       class="bg-brand-800 border-brand-700 text-brand-100 placeholder-brand-300"/>
                         <x-input-error :messages="$errors->get('purpose_of_visit')" class="mt-1 text-brand-400"/>
                     </div>
 
-                    <!-- Hidden Walk-In Flag -->
+                    <!-- Hidden auto-filled values -->
                     <input type="hidden" name="walk_in" value="true">
+                    <input type="hidden" name="visit_date" value="{{ \Carbon\Carbon::now()->toDateString() }}">
+                    <input type="hidden" name="start_time" value="{{ \Carbon\Carbon::now()->format('H:i') }}">
                 </div>
 
                 <!-- Footer -->
@@ -229,6 +227,7 @@
             </form>
         </div>
     </x-modal>
+
 
 
 
