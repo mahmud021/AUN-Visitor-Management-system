@@ -6,7 +6,7 @@
 <div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
     <div class="grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
         @foreach ($allVisitors as $allVisitor)
-            <x-card class="bg-brand-900 text-gray-100 border border-gray-700">
+            <x-card class="bg-brand-900 text-gray-100 border border-gray-700 overflow-visible">
                 <div class="flex justify-between items-start gap-x-3">
                     <!-- Main Content -->
                     <div class="grow">
@@ -116,8 +116,8 @@
                                                     <path d="M20 6 9 17l-5-5"/>
                                                 </svg>
                                                 <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-2xs dark:bg-neutral-700" role="tooltip">
-                            Approve
-                        </span>
+                                            Approve
+                                        </span>
                                             </button>
                                         </div>
                                     </form>
@@ -137,8 +137,8 @@
                                                     <path d="m6 6 12 12"/>
                                                 </svg>
                                                 <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-2xs dark:bg-neutral-700" role="tooltip">
-                            Deny
-                        </span>
+                                            Deny
+                                        </span>
                                             </button>
                                         </div>
                                     </form>
@@ -160,66 +160,51 @@
                                 <span class="text-red-400">Visitor denied</span>
                             @endif
                         </div>
-
-
-
                     </div>
 
                     <!-- Dropdown Menu -->
-                    <div class="hs-dropdown [--placement:bottom-end] relative inline-flex self-start">
-                        <button
-                            id="hs-table-dropdown-{{ $allVisitor->id }}"
-                            type="button"
-                            class="hs-dropdown-toggle py-1.5 px-2 inline-flex justify-center items-center gap-2 rounded-lg text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 text-sm"
-                            aria-haspopup="menu"
-                            aria-expanded="false"
-                            aria-label="Dropdown"
-                        >
-                            <svg
-                                class="shrink-0 size-4"
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="24"
-                                height="24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
+                    <div class="flex-shrink-0">
+                        <div class="hs-dropdown [--placement:bottom-end] relative inline-flex self-start">
+                            <button
+                                id="hs-table-dropdown-{{ $allVisitor->id }}"
+                                type="button"
+                                class="hs-dropdown-toggle py-1 px-1 inline-flex justify-center items-center gap-2 rounded-lg text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 text-sm"
+                                aria-haspopup="menu"
+                                aria-expanded="false"
+                                aria-label="Dropdown"
                             >
-                                <circle cx="12" cy="12" r="1"/>
-                                <circle cx="19" cy="12" r="1"/>
-                                <circle cx="5" cy="12" r="1"/>
-                            </svg>
-                        </button>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-ellipsis-icon lucide-ellipsis"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+                            </button>
 
-                        <div
-                            class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-40 z-20 bg-white shadow-2xl rounded-lg p-2 mt-2 dark:bg-neutral-800"
-                            role="menu"
-                            aria-orientation="vertical"
-                            aria-labelledby="hs-table-dropdown-{{ $allVisitor->id }}"
-                        >
-                            <div class="py-2">
-                        <span class="block py-2 px-3 text-xs font-medium uppercase text-gray-400 dark:text-neutral-600">
-                            Actions
-                        </span>
-                                <a
-                                    href="{{ route('visitors.edit', $allVisitor->id) }}"
-                                    class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300"
-                                >
-                                    Edit
-                                </a>
-                                <a
-                                    class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300"
-                                    href="{{ route('visitors.timeline', $allVisitor->id) }}"
-                                >
-                                    View Timeline
-                                </a>
-                                <a
-                                    class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300"
-                                    href="{{ route('visitors.timeline', $allVisitor->id) }}"
-                                >
-                                    Allow Overstay
-                                </a>
+                            <div
+                                class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-40 z-20 bg-white shadow-2xl rounded-lg p-2 mt-2 dark:bg-neutral-800"
+                                role="menu"
+                                aria-orientation="vertical"
+                                aria-labelledby="hs-table-dropdown-{{ $allVisitor->id }}"
+                            >
+                                <div class="py-2">
+                            <span class="block py-2 px-3 text-xs font-medium uppercase text-gray-400 dark:text-neutral-600">
+                                Actions
+                            </span>
+                                    <a
+                                        href="{{ route('visitors.edit', $allVisitor->id) }}"
+                                        class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300"
+                                    >
+                                        Edit
+                                    </a>
+                                    <a
+                                        class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300"
+                                        href="{{ route('visitors.timeline', $allVisitor->id) }}"
+                                    >
+                                        View Timeline
+                                    </a>
+                                    <a
+                                        class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300"
+                                        href="{{ route('visitors.timeline', $allVisitor->id) }}"
+                                    >
+                                        Allow Overstay
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
