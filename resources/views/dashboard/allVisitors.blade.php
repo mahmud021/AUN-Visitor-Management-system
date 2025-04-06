@@ -32,7 +32,7 @@
                             <span>: {{ $allVisitor->telephone ?? 'Null' }}</span>
                         </p>
 
-                        <!-- School ID -->
+                        <!-- Hosted By -->
                         <p class="flex items-center text-sm text-gray-400 mt-2">
                             <svg
                                 class="mr-1 h-4 w-4 text-gray-400"
@@ -47,7 +47,15 @@
                                 <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
                                 <circle cx="12" cy="7" r="4"/>
                             </svg>
-                            <span>: {{ $allVisitor->user->user_details->school_id ?? 'Null' }}</span>
+
+                            <span>
+        :
+        @if($allVisitor->user_id === null)
+                                    Walk-In
+                                @else
+                                    {{ $allVisitor->user->user_details->school_id ?? 'Unknown' }}
+                                @endif
+    </span>
                         </p>
 
                         <!-- Visit Date -->

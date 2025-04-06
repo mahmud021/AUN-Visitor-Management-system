@@ -22,7 +22,15 @@
                                 <dt class="text-sm/6 font-medium text-brand-50">Visitor Name</dt>
                                 <dd class="mt-1 text-sm/6 text-brand-200 sm:col-span-2 sm:mt-0">
                                     {{ $visitor->first_name ?? 'Null' }} {{ $visitor->last_name ?? 'Null' }}
-                                    <p>Hosted by: {{ $visitor->user->first_name ?? 'Null' }} {{ $visitor->user->last_name ?? 'Null' }}</p>
+                                    <p>
+                                        Hosted by:
+                                        @if(is_null($visitor->user_id))
+                                            Walk-In
+                                        @else
+                                            {{ $visitor->user->first_name ?? 'Null' }} {{ $visitor->user->last_name ?? 'Null' }}
+                                        @endif
+                                    </p>
+
                                 </dd>
                             </div>
 

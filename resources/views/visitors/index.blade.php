@@ -11,7 +11,7 @@
             <x-table-wrapper>
                 <x-table-header title="Visitors" description="Manage your visitor records.">
                     <x-slot name="actions">
-                        
+
 
                     </x-slot>
                 </x-table-header>
@@ -69,18 +69,22 @@
                                     <div class="ps-6 lg:ps-3 xl:ps-0 pe-6 py-3">
                                         <div class="flex items-center gap-x-3">
                                             <div class="grow">
-                                                <span class="block text-sm font-semibold text-neutral-200">
-                                                    {{ $visitor->first_name ?? 'Null' }} {{ $visitor->last_name ?? 'Null' }}
-                                                </span>
-                                                @if($visitor->user)
-                                                    <span class="block text-sm text-neutral-500">
-                                                        Hosted by: {{ $visitor->user->user_details->school_id ?? 'Null' }}
-                                                    </span>
-                                                @endif
+                <span class="block text-sm font-semibold text-neutral-200">
+                    {{ $visitor->first_name ?? 'Null' }} {{ $visitor->last_name ?? 'Null' }}
+                </span>
+
+                                                <span class="block text-sm text-neutral-500">
+                    @if(is_null($visitor->user_id))
+                                                        Hosted by: Walk-In
+                                                    @else
+                                                        Hosted by: {{ $visitor->user->user_details->school_id ?? 'Unknown' }}
+                                                    @endif
+                </span>
                                             </div>
                                         </div>
                                     </div>
                                 </td>
+
 
                                 <!-- Telephone Column -->
                                 <td class="size-px whitespace-nowrap">
@@ -160,35 +164,10 @@
                                                         View Timeline
                                                     </a>
 
-
-                                                    @if($visitor->status == 'pending')
-                                                        <form action="{{ route('visitors.update', $visitor->id) }}" method="POST" style="display: inline;">
-                                                            @csrf
-                                                            @method('PATCH')
-                                                            <input type="hidden" name="status" value="approved">
-                                                            <button type="submit" class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-neutral-200 hover:bg-neutral-700 focus:outline-none focus:bg-neutral-700">
-                                                                Approve
-                                                            </button>
-                                                        </form>
-                                                    @elseif($visitor->status == 'approved')
-                                                        <form action="{{ route('visitors.update', $visitor->id) }}" method="POST" style="display: inline;">
-                                                            @csrf
-                                                            @method('PATCH')
-                                                            <input type="hidden" name="status" value="checked_in">
-                                                            <button type="submit" class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-neutral-200 hover:bg-neutral-700 focus:outline-none focus:bg-neutral-700">
-                                                                Check In
-                                                            </button>
-                                                        </form>
-                                                    @elseif($visitor->status == 'checked_in')
-                                                        <form action="{{ route('visitors.update', $visitor->id) }}" method="POST" style="display: inline;">
-                                                            @csrf
-                                                            @method('PATCH')
-                                                            <input type="hidden" name="status" value="checked_out">
-                                                            <button type="submit" class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-neutral-200 hover:bg-neutral-700 focus:outline-none focus:bg-neutral-700">
-                                                                Check Out
-                                                            </button>
-                                                        </form>
-                                                    @endif
+                                                    <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-neutral-200 hover:bg-neutral-700 focus:outline-none focus:bg-neutral-700"
+                                                       href="{{ route('visitors.show', $visitor->id) }}">
+                                                        View Info
+                                                    </a>
                                                 </div>
 
                                                 <!-- Delete Section -->
