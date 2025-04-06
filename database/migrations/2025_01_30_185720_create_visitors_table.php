@@ -14,19 +14,24 @@ return new class extends Migration
     {
         Schema::create('visitors', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
+
+            $table->foreignIdFor(User::class)->nullable()->constrained()->nullOnDelete();
 
             $table->string('first_name');
             $table->string('last_name');
             $table->string('telephone');
+
+            $table->string('location')->nullable(); // New
+            $table->text('purpose_of_visit')->nullable(); // New
+
             $table->string('token')->unique()->nullable();
-            // We keep expected_arrival as a date or datetime if you also want time
+
             $table->date('visit_date')->nullable(); // Single date for the visit
             $table->time('start_time')->nullable(); // Start time on that date
-            $table->time('end_time')->nullable();   // Eted end of visit
+            $table->time('end_time')->nullable();   // End time of visit
+
             $table->string('visitor_code', 4)->nullable();
 
-            // Expand status to include checked_in, checked_out, etc.
             $table->enum('status', [
                 'pending',
                 'approved',
@@ -35,11 +40,10 @@ return new class extends Migration
                 'checked_out'
             ])->default('pending');
 
-            // Timestamps for each event
             $table->timestamp('approved_at')->nullable();
             $table->timestamp('checked_in_at')->nullable();
             $table->timestamp('checked_out_at')->nullable();
-            $table->timestamp('denied_at')->nullable(); // If you want a record of when it was denied
+            $table->timestamp('denied_at')->nullable();
 
             $table->timestamps(); // created_at & updated_at
         });
