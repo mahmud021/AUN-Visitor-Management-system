@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\VisitorQRCodeMail;
+use App\Models\Location;
 use App\Models\TimelineEvent;
 use App\Models\Visitor;
 use Illuminate\Http\Request;
@@ -104,13 +105,15 @@ class VisitorController extends Controller
             $qrCode = QrCode::format('png')->size(200)->generate($visitor->token);
         }
 
-        return view('visitors.qr', compact('visitor', 'qrCode'));
+        return view('visitors.show', compact('visitor', 'qrCode'));
     }
 
     public function edit(Visitor $visitor)
     {
-        return view('visitors.edit', compact('visitor'));
+        $locations = Location::all(); // or however you fetch locations
+        return view('visitors.edit', compact('visitor', 'locations'));
     }
+
 
 
 
@@ -163,36 +166,29 @@ class VisitorController extends Controller
 
     public function update(Request $request, Visitor $visitor)
     {
-        // If the request includes a 'status' for check‑in and the user is Security,
-        // force them to use the dedicated check‑in route.
         if ($request->has('status') && $request->input('status') === 'checked_in') {
             if (auth()->user()->user_details->role === 'Security') {
                 abort(403, 'Security users must use the check‑in route.');
             }
         }
 
-        // Process other status updates (such as check‑out) or personal detail updates.
         if ($request->has('status')) {
-            // Validate status value.
             $request->validate([
                 'status' => 'required|in:approved,denied,checked_out',
             ]);
 
-            // Handle check‑out if applicable.
             if ($request->input('status') === 'checked_out') {
                 $visitor->checked_out_at = now();
             }
 
-            // Update visitor status.
             $visitor->status = $request->input('status');
             $visitor->save();
 
-            // Log the timeline event.
             $description = match ($visitor->status) {
-                'approved'   => 'Visitor approved by HR',
-                'denied'     => 'Visitor denied',
-                'checked_out'=> 'Visitor checked out by security',
-                default      => '',
+                'approved'    => 'Visitor approved by HR',
+                'denied'      => 'Visitor denied',
+                'checked_out' => 'Visitor checked out by security',
+                default       => '',
             };
 
             \App\Models\TimelineEvent::create([
@@ -206,28 +202,29 @@ class VisitorController extends Controller
             return redirect()->back()->with('success', 'Visitor status updated successfully.');
         }
 
-        // For updating personal details:
         \Illuminate\Support\Facades\Gate::authorize('update-visitor', $visitor);
 
         $validated = $request->validate([
-            'first_name' => 'required|string|max:20',
-            'last_name'  => 'required|string|max:20',
-            'telephone'  => 'required|string|regex:/^0\d{10}$/|min:11|max:11',
-            'visit_date' => 'required|date',
-            'start_time' => 'required|date_format:H:i',
-            'end_time'   => 'required|date_format:H:i|after:start_time',
+            'first_name'         => 'required|string|max:20',
+            'last_name'          => 'required|string|max:20',
+            'telephone'          => 'required|string|regex:/^0\d{10}$/|min:11|max:11',
+            'visit_date'         => 'required|date',
+            'start_time'         => 'required|date_format:H:i',
+            'end_time'           => 'required|date_format:H:i|after:start_time',
+            'location'           => 'required|string|max:50',
+            'purpose_of_visit'   => 'required|string|max:100',
         ]);
 
-        // Update personal details.
-        $visitor->first_name = $validated['first_name'];
-        $visitor->last_name  = $validated['last_name'];
-        $visitor->telephone  = $validated['telephone'];
-        $visitor->visit_date = $validated['visit_date'];
-        $visitor->start_time = $validated['start_time'];
-        $visitor->end_time   = $validated['end_time'];
+        $visitor->first_name        = $validated['first_name'];
+        $visitor->last_name         = $validated['last_name'];
+        $visitor->telephone         = $validated['telephone'];
+        $visitor->visit_date        = $validated['visit_date'];
+        $visitor->start_time        = $validated['start_time'];
+        $visitor->end_time          = $validated['end_time'];
+        $visitor->location          = $validated['location'];
+        $visitor->purpose_of_visit  = $validated['purpose_of_visit'];
         $visitor->save();
 
-        // Log a timeline event for updating personal details.
         \App\Models\TimelineEvent::create([
             'visitor_id'  => $visitor->id,
             'user_id'     => auth()->id(),
