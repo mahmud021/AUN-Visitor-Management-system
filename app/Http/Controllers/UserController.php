@@ -63,7 +63,8 @@ class UserController extends Controller
             'school_id' => 'required|string|unique:user_details,school_id',
             'telephone' => ['required', 'string', 'regex:/^0\d{10}$/', 'min:11', 'max:11'],
             'blacklist' => 'boolean',
-            // bypass_hr_approval is not required here because the migration default is true.
+            // Here's our new field. "sometimes|boolean" means if it's not in the request, it won't fail.
+            'bypass_late_checkin' => 'sometimes|boolean',
         ], [
             'school_id.unique' => 'This School ID is already assigned to another user.',
         ]);
@@ -77,22 +78,23 @@ class UserController extends Controller
             'remember_token' => Str::random(60),
         ]);
 
-        // Create the user details record.
-        // Note: bypass_hr_approval will default to true per your migration if not provided.
+        // Create the user details record
         UserDetails::create([
             'role' => $validated['role'],
             'status' => $validated['status'],
             'school_id' => $validated['school_id'],
             'telephone' => $validated['telephone'],
             'blacklist' => $validated['blacklist'] ?? false,
+            'bypass_hr_approval' => true, // or override if needed
+            // Our new field: default to false if not given
+            'bypass_late_checkin' => $validated['bypass_late_checkin'] ?? false,
             'user_id' => $user->id,
-            // If you need to explicitly set bypass_hr_approval during creation,
-            // you could do so here (e.g., 'bypass_hr_approval' => $request->input('bypass_hr_approval', true)).
         ]);
 
         return redirect()->route('user.index')
             ->with('success', 'User created successfully.');
     }
+
 
     /**
      * Display the specified resource.
@@ -117,7 +119,7 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        // Validate the incoming data including the new bypass toggle.
+        // Validate the incoming data including the new bypass_late_checkin field
         $validated = $request->validate([
             'first_name' => 'required|string',
             'last_name' => 'required|string',
@@ -128,6 +130,7 @@ class UserController extends Controller
             'blacklist' => 'boolean',
             'telephone' => ['required', 'string', 'regex:/^0\d{10}$/', 'min:11', 'max:11'],
             'bypass_hr_approval' => 'sometimes|boolean',
+            'bypass_late_checkin' => 'sometimes|boolean',
         ]);
 
         // Update the user's basic information
@@ -137,20 +140,23 @@ class UserController extends Controller
             'email' => $validated['email'],
         ]);
 
-        // Update the user's related details, including the bypass flag.
+        // Update the user's related details, including the new bypass_late_checkin
         $user->user_details->update([
             'role' => $validated['role'],
             'status' => $validated['status'],
             'blacklist' => $validated['blacklist'],
             'school_id' => $validated['school_id'],
             'telephone' => $validated['telephone'],
-            // Use the validated value if provided; otherwise, keep the current value.
-            'bypass_hr_approval' => $validated['bypass_hr_approval'] ?? $user->user_details->bypass_hr_approval,
+            'bypass_hr_approval' => $validated['bypass_hr_approval']
+                ?? $user->user_details->bypass_hr_approval,
+            'bypass_late_checkin' => $validated['bypass_late_checkin']
+                ?? $user->user_details->bypass_late_checkin,
         ]);
 
-        return redirect()->route('user.show', $user->id)
+        return redirect()->route('user.edit', $user->id)
             ->with('success', 'User updated successfully.');
     }
+
 
     /**
      * Update the user's password.
