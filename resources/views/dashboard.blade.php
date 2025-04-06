@@ -177,28 +177,16 @@
                         <x-input-error :messages="$errors->get('telephone')" class="mt-1 text-brand-400"/>
                     </div>
 
-                    <!-- Date -->
-                    <div class="space-y-2">
-                        <x-form.input name="visit_date" label="Visit Date" type="date"
-                                      value="{{ old('visit_date', \Carbon\Carbon::now()->toDateString()) }}"
-                                      class="bg-brand-800 border-brand-700 text-brand-100 placeholder-brand-300"/>
-                        <x-input-error :messages="$errors->get('visit_date')" class="mt-1 text-brand-400"/>
-                    </div>
+                    <!-- Hidden visit_date and start_time -->
+                    <input type="hidden" name="visit_date" value="{{ \Carbon\Carbon::now()->toDateString() }}">
+                    <input type="hidden" name="start_time" value="{{ \Carbon\Carbon::now()->format('H:i') }}">
 
-                    <!-- Time Row -->
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="space-y-2">
-                            <x-form.input name="start_time" label="Start Time" type="time"
-                                          value="{{ old('start_time', \Carbon\Carbon::now()->format('H:i')) }}"
-                                          class="bg-brand-800 border-brand-700 text-brand-100 placeholder-brand-300"/>
-                            <x-input-error :messages="$errors->get('start_time')" class="mt-1 text-brand-400"/>
-                        </div>
-                        <div class="space-y-2">
-                            <x-form.input name="end_time" label="End Time" type="time"
-                                          value="{{ old('end_time', \Carbon\Carbon::now()->addHour()->format('H:i')) }}"
-                                          class="bg-brand-800 border-brand-700 text-brand-100 placeholder-brand-300"/>
-                            <x-input-error :messages="$errors->get('end_time')" class="mt-1 text-brand-400"/>
-                        </div>
+                    <!-- End Time -->
+                    <div class="space-y-2">
+                        <x-form.input name="end_time" label="End Time" type="time"
+                                      value="{{ old('end_time', \Carbon\Carbon::now()->addHour()->format('H:i')) }}"
+                                      class="bg-brand-800 border-brand-700 text-brand-100 placeholder-brand-300"/>
+                        <x-input-error :messages="$errors->get('end_time')" class="mt-1 text-brand-400"/>
                     </div>
 
                     <!-- Location -->
@@ -241,6 +229,7 @@
             </form>
         </div>
     </x-modal>
+
 
 
     <x-modal name="inventory-modal" maxWidth="2xl">
