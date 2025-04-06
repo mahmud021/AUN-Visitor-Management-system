@@ -28,6 +28,9 @@
                 <x-dropdown-link @click="$dispatch('open-modal', 'create-visitor-modal')">
                     Create Visitor
                 </x-dropdown-link>
+                <x-dropdown-link @click="$dispatch('open-modal', 'walk-in-modal')">
+                    Add walk In Visitor
+                </x-dropdown-link>
                 <x-dropdown-link @click="$dispatch('open-modal', 'inventory-modal')">
                     Register An Appliance
                 </x-dropdown-link>

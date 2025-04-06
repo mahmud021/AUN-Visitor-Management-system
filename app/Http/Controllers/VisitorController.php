@@ -45,31 +45,37 @@ class VisitorController extends Controller
 
         // Validate incoming request data
         $validated = $request->validate([
-            'first_name'   => 'required|string|max:20',
-            'last_name'    => 'required|string|max:20',
-            'telephone'    => 'required|string|regex:/^0\d{10}$/|min:11|max:11',
-            'visit_date'   => 'required|date|after_or_equal:today',
-            'start_time'   => 'required|date_format:H:i',
-            'location'   => 'required|string|max:50',
+            'first_name'         => 'required|string|max:20',
+            'last_name'          => 'required|string|max:20',
+            'telephone'          => 'required|string|regex:/^0\d{10}$/|min:11|max:11',
+            'visit_date'         => 'required|date|after_or_equal:today',
+            'start_time'         => 'required|date_format:H:i',
+            'end_time'           => 'required|date_format:H:i|after:start_time',
+            'location'           => 'required|string|max:50',
             'purpose_of_visit'   => 'required|string|max:100',
-            'end_time'     => 'required|date_format:H:i|after:start_time',
         ]);
 
-        // Combine visit_date and end_time to ensure proper datetime handling
+        // Convert end_time to proper datetime if needed
         $validated['end_time'] = \Carbon\Carbon::parse($validated['visit_date'] . ' ' . $validated['end_time']);
 
-        // Associate the visitor with the logged-in user and set initial status to pending
-        $validated['user_id'] = auth()->id();
-        $validated['status'] = 'pending';
-        $validated['visitor_code'] = str_pad(rand(0, 9999), 4, '0', STR_PAD_LEFT);
+        // Assign user_id and status based on visitor type
+        if ($request->has('walk_in')) {
+            $validated['user_id'] = null;
+            $validated['status'] = 'checked_in';
+            $validated['checked_in_at'] = now();
+        } else {
+            $validated['user_id'] = auth()->id();
+            $validated['status'] = 'pending';
+        }
 
-        // Generate a unique token for the QR code
+        // Generate visitor code and token
+        $validated['visitor_code'] = str_pad(rand(0, 9999), 4, '0', STR_PAD_LEFT);
         $validated['token'] = Str::uuid()->toString();
 
-        // Create the visitor record
+        // Create the visitor
         $visitor = Visitor::create($validated);
 
-        // Log timeline event for visitor creation
+        // Timeline event: created
         \App\Models\TimelineEvent::create([
             'visitor_id'  => $visitor->id,
             'user_id'     => auth()->id(),
@@ -78,9 +84,21 @@ class VisitorController extends Controller
             'occurred_at' => now(),
         ]);
 
+        // Walk-in gets auto checked-in — log that too
+        if ($request->has('walk_in')) {
+            \App\Models\TimelineEvent::create([
+                'visitor_id'  => $visitor->id,
+                'user_id'     => null,
+                'event_type'  => 'checked_in',
+                'description' => 'Walk-in visitor checked in automatically.',
+                'occurred_at' => now(),
+            ]);
+        }
+
         // Auto-approve if user has bypass_hr_approval
-        if (auth()->user()->user_details->bypass_hr_approval) {
+        if (!$request->has('walk_in') && auth()->user()->user_details->bypass_hr_approval) {
             $visitor->update(['status' => 'approved']);
+
             \App\Models\TimelineEvent::create([
                 'visitor_id'  => $visitor->id,
                 'user_id'     => auth()->id(),
@@ -90,11 +108,13 @@ class VisitorController extends Controller
             ]);
         }
 
-        // Generate the QR code in PNG format
+        // Generate QR code
         $qrCode = QrCode::format('png')->size(200)->generate($visitor->token);
 
-        // Redirect to a view to display the QR code
-        return redirect()->route('visitors.show', $visitor->id)->with('qrCode', $qrCode)->with('success', 'Visitor Created successfully.');
+        // Redirect to show view
+        return redirect()->route('visitors.show', $visitor->id)
+            ->with('qrCode', $qrCode)
+            ->with('success', 'Visitor created successfully.');
     }
     public function show(Visitor $visitor)
     {

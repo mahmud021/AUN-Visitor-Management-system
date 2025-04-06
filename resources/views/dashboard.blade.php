@@ -145,6 +145,104 @@
         </div>
     </x-modal>
 
+    <x-modal name="walk-in-modal" maxWidth="2xl">
+        <div class="p-4 bg-brand-900 text-brand-100 overflow-y-auto">
+            <h3 class="text-xl font-semibold mb-4">Add Walk-In Visitor</h3>
+
+            <form method="POST" action="{{ route('visitors.store') }}" onsubmit="disableSubmitButton(this)">
+                @csrf
+
+                <div class="grid grid-cols-1 gap-4 lg:gap-4">
+                    <!-- Name Row -->
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="space-y-2">
+                            <x-form.input name="first_name" label="First Name" type="text"
+                                          value="{{ old('first_name') }}"
+                                          class="bg-brand-800 border-brand-700 text-brand-100 placeholder-brand-300"/>
+                            <x-input-error :messages="$errors->get('first_name')" class="mt-1 text-brand-400"/>
+                        </div>
+                        <div class="space-y-2">
+                            <x-form.input name="last_name" label="Last Name" type="text"
+                                          value="{{ old('last_name') }}"
+                                          class="bg-brand-800 border-brand-700 text-brand-100 placeholder-brand-300"/>
+                            <x-input-error :messages="$errors->get('last_name')" class="mt-1 text-brand-400"/>
+                        </div>
+                    </div>
+
+                    <!-- Telephone -->
+                    <div class="space-y-2">
+                        <x-form.input name="telephone" label="Telephone" type="text"
+                                      value="{{ old('telephone') }}"
+                                      class="bg-brand-800 border-brand-700 text-brand-100 placeholder-brand-300"/>
+                        <x-input-error :messages="$errors->get('telephone')" class="mt-1 text-brand-400"/>
+                    </div>
+
+                    <!-- Date -->
+                    <div class="space-y-2">
+                        <x-form.input name="visit_date" label="Visit Date" type="date"
+                                      value="{{ old('visit_date', \Carbon\Carbon::now()->toDateString()) }}"
+                                      class="bg-brand-800 border-brand-700 text-brand-100 placeholder-brand-300"/>
+                        <x-input-error :messages="$errors->get('visit_date')" class="mt-1 text-brand-400"/>
+                    </div>
+
+                    <!-- Time Row -->
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="space-y-2">
+                            <x-form.input name="start_time" label="Start Time" type="time"
+                                          value="{{ old('start_time', \Carbon\Carbon::now()->format('H:i')) }}"
+                                          class="bg-brand-800 border-brand-700 text-brand-100 placeholder-brand-300"/>
+                            <x-input-error :messages="$errors->get('start_time')" class="mt-1 text-brand-400"/>
+                        </div>
+                        <div class="space-y-2">
+                            <x-form.input name="end_time" label="End Time" type="time"
+                                          value="{{ old('end_time', \Carbon\Carbon::now()->addHour()->format('H:i')) }}"
+                                          class="bg-brand-800 border-brand-700 text-brand-100 placeholder-brand-300"/>
+                            <x-input-error :messages="$errors->get('end_time')" class="mt-1 text-brand-400"/>
+                        </div>
+                    </div>
+
+                    <!-- Location -->
+                    <div class="space-y-2">
+                        <x-form.select name="location" label="Location">
+                            <option value="" disabled selected>Select a location</option>
+                            @foreach($locations as $location)
+                                <option value="{{ $location->name }}" {{ old('location') == $location->name ? 'selected' : '' }}>
+                                    {{ $location->name }}
+                                </option>
+                            @endforeach
+                        </x-form.select>
+                        <x-input-error :messages="$errors->get('location')" class="mt-1 text-brand-400"/>
+                    </div>
+
+                    <!-- Purpose of Visit -->
+                    <div class="space-y-2">
+                        <x-form.input name="purpose_of_visit" label="Purpose of Visit" type="text"
+                                      value="{{ old('purpose_of_visit') }}"
+                                      class="bg-brand-800 border-brand-700 text-brand-100 placeholder-brand-300"/>
+                        <x-input-error :messages="$errors->get('purpose_of_visit')" class="mt-1 text-brand-400"/>
+                    </div>
+
+                    <!-- Hidden Walk-In Flag -->
+                    <input type="hidden" name="walk_in" value="true">
+                </div>
+
+                <!-- Footer -->
+                <div class="mt-6 flex justify-end gap-x-2 bg-brand-900 py-3 px-4 rounded-md border-t border-brand-700">
+                    <button type="button"
+                            class="px-4 py-2 bg-brand-700 hover:bg-brand-600 text-white rounded-md transition"
+                            @click.prevent="$dispatch('close-modal', 'walk-in-modal')">
+                        Cancel
+                    </button>
+
+                    <x-primary-button type="submit" class="bg-brand-700 hover:bg-brand-600 text-white">
+                        Submit
+                    </x-primary-button>
+                </div>
+            </form>
+        </div>
+    </x-modal>
+
+
     <x-modal name="inventory-modal" maxWidth="2xl">
         <div class="p-4 bg-brand-900 text-brand-100 overflow-y-auto">
             <h3 class="text-xl font-semibold mb-4">Add Appliance</h3>
