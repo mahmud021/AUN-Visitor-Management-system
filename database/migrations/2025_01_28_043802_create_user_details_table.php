@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('telephone');
             $table->boolean('blacklist')->default(false);
             $table->boolean('bypass_hr_approval')->default(true);
+            $table->boolean('bypass_late_checkin')->default(false);
             $table->timestamps();
         });
     }

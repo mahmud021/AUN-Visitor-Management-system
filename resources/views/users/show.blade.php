@@ -149,6 +149,29 @@
                                             </svg>
                                         @endif
                                     </dd>
+                                    <!-- Allow Late Check-In Status -->
+                                    <dt class="text-sm/6 font-medium text-brand-50">Allow Late Check-In</dt>
+                                    <dd class="mt-1 text-sm/6 text-brand-200 sm:col-span-2 sm:mt-0">
+                                        @if($user->user_details && $user->user_details->allow_late_checkin)
+                                            <!-- If allow_late_checkin is TRUE, show a "check" icon -->
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                 stroke-linecap="round" stroke-linejoin="round"
+                                                 class="lucide lucide-check-icon">
+                                                <path d="M20 6 9 17l-5-5"/>
+                                            </svg>
+                                        @else
+                                            <!-- Otherwise, show an "X" icon -->
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                 stroke-linecap="round" stroke-linejoin="round"
+                                                 class="lucide lucide-x-icon">
+                                                <line x1="18" y1="6" x2="6" y2="18"/>
+                                                <line x1="6" y1="6" x2="18" y2="18"/>
+                                            </svg>
+                                        @endif
+                                    </dd>
+
 
                                     <!-- Bypass HR Approval -->
                                     <dt class="text-sm/6 font-medium text-brand-50">Bypass HR Approval</dt>
