@@ -15,7 +15,7 @@
     </p>
 
     <!-- Right: Action Buttons -->
-    <div class="flex items-center gap-4">
+    <div class="flex items-center gap-3">
         <!-- Create Dropdown -->
         <!-- Create Dropdown -->
         <x-dropdown :disabled="!Gate::allows('create-visitor')">
