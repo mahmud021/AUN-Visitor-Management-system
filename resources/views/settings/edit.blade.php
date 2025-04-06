@@ -47,7 +47,7 @@
                 Save
             </x-primary-button>
         </form>
-        <hr class="border-gray-500 dark:border-neutral-500 mt-5">
+
 
         <hr class="border-gray-500 dark:border-neutral-500 mt-5">
         <h3 class="font-semibold text-lg text-white mt-5">
