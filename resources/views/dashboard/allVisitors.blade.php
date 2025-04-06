@@ -198,6 +198,10 @@
                                     >
                                         View Timeline
                                     </a>
+                                    <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-neutral-200 hover:bg-neutral-700 focus:outline-none focus:bg-neutral-700"
+                                       href="{{ route('visitors.show', $allVisitor->id) }}">
+                                        View Info
+                                    </a>
                                 </div>
                             </div>
                         </div>
