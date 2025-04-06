@@ -147,7 +147,7 @@ class AppServiceProvider extends ServiceProvider
                 // Check if we're in the normal check-in window
                 if (!$now->between($start, $end)) {
                     // 4) If we’re outside normal hours, only allow if user has bypass_late_checkin = true
-                    return $user->user_details->bypass_late_checkin === true;
+                    return $user->user_details->bypass_late_checkin == true;
                 }
             }
 
