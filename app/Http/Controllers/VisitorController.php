@@ -22,7 +22,7 @@ class VisitorController extends Controller
 
     public function create()
     {
-        return view('visitors.create');
+
     }
 
     public function store(Request $request)
@@ -49,6 +49,8 @@ class VisitorController extends Controller
             'telephone'    => 'required|string|regex:/^0\d{10}$/|min:11|max:11',
             'visit_date'   => 'required|date|after_or_equal:today',
             'start_time'   => 'required|date_format:H:i',
+            'location'   => 'required|string|max:50',
+            'purpose_of_visit'   => 'required|string|max:100',
             'end_time'     => 'required|date_format:H:i|after:start_time',
         ]);
 
