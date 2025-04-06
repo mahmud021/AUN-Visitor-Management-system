@@ -127,30 +127,34 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Gate::define('check-in-visitor', function ($user, $visitor) {
-            // Super admin or HR Admin bypass time restrictions
+            // 1) Super admin or HR Admin can do anything, anytime.
             if (in_array($user->user_details->role, ['super admin', 'HR Admin'])) {
                 return true;
             }
 
-            // Only allow security users to check in visitors
+            // 2) Only Security staff can (normally) check in visitors
             if ($user->user_details->role !== 'Security') {
                 return false;
             }
 
-            // Retrieve the time window from settings
+            // 3) Retrieve the time window from settings
             $settings = \App\Models\AppSetting::first();
             if ($settings) {
                 $start = \Carbon\Carbon::parse($settings->visitor_start_time);
                 $end   = \Carbon\Carbon::parse($settings->visitor_end_time);
                 $now   = \Carbon\Carbon::now();
-                // Security users can only check in if current time is within allowed time window
+
+                // Check if we're in the normal check-in window
                 if (!$now->between($start, $end)) {
-                    return false;
+                    // 4) If we’re outside normal hours, only allow if user has bypass_late_checkin = true
+                    return $user->user_details->bypass_late_checkin === true;
                 }
             }
 
+            // 5) If we’re in the normal window, allow the Security user to proceed
             return true;
         });
+
 
 
         Gate::define('view-inventory', function ($user) {
