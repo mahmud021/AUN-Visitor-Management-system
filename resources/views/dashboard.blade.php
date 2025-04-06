@@ -106,6 +106,28 @@
                                       class="bg-brand-800 border-brand-700 text-brand-100 placeholder-brand-300"/>
                         <x-input-error :messages="$errors->get('end_time')" class="mt-1 text-brand-400"/>
                     </div>
+
+                    <!-- Location -->
+                    <div class="space-y-2 col-span-2">
+                        <x-form.select name="location" label="Location">
+                            <option value="" disabled selected>Select a location</option>
+                            @foreach($locations as $location)
+                                <option
+                                    value="{{ $location->name }}" {{ old('location') == $location->name ? 'selected' : '' }}>
+                                    {{ $location->name }}
+                                </option>
+                            @endforeach
+                        </x-form.select>
+                        <x-input-error :messages="$errors->get('location')" class="mt-1 text-brand-400"/>
+                    </div>
+
+                    <!-- Purpose of Visit -->
+                    <div class="space-y-2 col-span-2">
+                        <x-form.input name="purpose_of_visit" label="Purpose of Visit"
+                                         class="bg-brand-800 border-brand-700 text-brand-100 placeholder-brand-300"
+                                         rows="3">{{ old('purpose_of_visit') }}</x-form.input>
+                        <x-input-error :messages="$errors->get('purpose_of_visit')" class="mt-1 text-brand-400"/>
+                    </div>
                 </div>
 
                 <div class="mt-6 flex justify-end gap-x-2 bg-brand-900 py-3 px-4 rounded-md border-t border-brand-700">
