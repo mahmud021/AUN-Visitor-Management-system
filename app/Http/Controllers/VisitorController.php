@@ -112,7 +112,6 @@ class VisitorController extends Controller
         $qrCode = QrCode::format('png')->size(200)->generate($visitor->token);
 
         return redirect()->back()
-
             ->with('success', 'Visitor created successfully.');
     }
     public function show(Visitor $visitor)
