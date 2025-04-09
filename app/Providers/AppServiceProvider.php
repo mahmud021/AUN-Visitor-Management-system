@@ -42,6 +42,14 @@ class AppServiceProvider extends ServiceProvider
             return $visitor->user_id === $user->id;
         });
 
+        Gate::define('create-inventory', function ($user) {
+            if (!$user->relationLoaded('user_details')) {
+                $user->load('user_details');
+            }
+            // Allow Students, Staff, HR Admin, and Super Admin
+            return in_array($user->user_details->role, ['Student', 'Staff', 'HR Admin', 'super admin']);
+        });
+
         Gate::define('update-inventory', function ($user, $inventory) {
             // Super admin, HR Admin, and Security roles can update any inventory record.
             if (in_array($user->user_details->role, ['HR Admin', 'super admin', 'security'])) {
@@ -85,35 +93,36 @@ class AppServiceProvider extends ServiceProvider
                 $user->load('user_details');
             }
 
-            // Super admin or HR Admin bypass all restrictions.
+            // Super admin or HR Admin bypass all restrictions
             if (in_array($user->user_details->role, ['super admin', 'HR Admin'])) {
                 return true;
             }
 
-            // Deny if the user's role is 'Security'
+            // Explicitly deny Security from creating regular visitors
             if ($user->user_details->role === 'Security') {
                 return false;
             }
 
-            // Deny if the user is blacklisted.
+            // Deny if the user is blacklisted
             if ($user->user_details->blacklist) {
                 return false;
             }
 
-            // Check the time window.
+            // Check the time window
             $settings = \App\Models\AppSetting::first();
             if ($settings) {
                 $start = \Carbon\Carbon::parse($settings->visitor_start_time);
                 $end   = \Carbon\Carbon::parse($settings->visitor_end_time);
                 $now   = \Carbon\Carbon::now();
-                // Deny if the current time is not within the allowed range.
                 if (!$now->between($start, $end)) {
                     return false;
                 }
             }
 
+            // Allow Students, Staff, and others by default
             return true;
         });
+
         Gate::define('view-inventory-item', function ($user, $inventory) {
             // Allow HR Admin, super admin, and security to view any inventory item.
             if (in_array($user->user_details->role, ['HR Admin', 'super admin', 'Security'])) {

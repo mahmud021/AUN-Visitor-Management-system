@@ -13,7 +13,7 @@
 
     <!-- Right: Action Buttons -->
     <div class="flex items-center gap-4">
-        <x-dropdown :disabled="!Gate::allows('create-visitor')">
+        <x-dropdown :disabled="!Gate::allows('create-visitor') && !Gate::allows('add-walk-in-visitor')">
             <x-slot name="trigger">
                 <x-primary-button aria-label="Create options" aria-haspopup="true">
                     Create
@@ -23,15 +23,26 @@
                 </x-primary-button>
             </x-slot>
             <x-slot name="content">
-                <x-dropdown-link @click="$dispatch('open-modal', 'create-visitor-modal')">
-                    Create Visitor
-                </x-dropdown-link>
-                <x-dropdown-link @click="$dispatch('open-modal', 'walk-in-modal')">
-                    Add Walk-In Visitor
-                </x-dropdown-link>
-                <x-dropdown-link @click="$dispatch('open-modal', 'inventory-modal')">
-                    Register Appliance
-                </x-dropdown-link>
+                <!-- Show Create Visitor for Students, Staff, HR Admin, Super Admin -->
+                @can('create-visitor')
+                    <x-dropdown-link @click="$dispatch('open-modal', 'create-visitor-modal')">
+                        Create Visitor
+                    </x-dropdown-link>
+                @endcan
+
+                <!-- Show Add Walk-In Visitor for Security, HR Admin, Super Admin -->
+                @can('add-walk-in-visitor')
+                    <x-dropdown-link @click="$dispatch('open-modal', 'walk-in-modal')">
+                        Add Walk-In Visitor
+                    </x-dropdown-link>
+                @endcan
+
+                <!-- Show Register Appliance for Students, Staff, HR Admin, Super Admin -->
+                @can('create-inventory')
+                    <x-dropdown-link @click="$dispatch('open-modal', 'inventory-modal')">
+                        Register Appliance
+                    </x-dropdown-link>
+                @endcan
             </x-slot>
         </x-dropdown>
     </div>

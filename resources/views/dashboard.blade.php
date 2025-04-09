@@ -228,9 +228,6 @@
         </div>
     </x-modal>
 
-
-
-
     <x-modal name="inventory-modal" maxWidth="2xl">
         <div class="p-4 bg-brand-900 text-brand-100 overflow-y-auto">
             <h3 class="text-xl font-semibold mb-4">Add Appliance</h3>
