@@ -164,7 +164,13 @@ class AppServiceProvider extends ServiceProvider
             return in_array($user->user_details->role, ['HR Admin', 'super admin']);
         });
 
-
+        Gate::define('add-walk-in-visitor', function ($user) {
+            if (!$user->relationLoaded('user_details')) {
+                $user->load('user_details');
+            }
+            // Only Security and HR Admin can add walk-in visitors
+            return in_array($user->user_details->role, ['Security', 'HR Admin', 'super admin']);
+        });
 
 
         // New gate: only allow super admin and HR Admin to access user management routes.
