@@ -106,6 +106,9 @@
                             Home
                         </x-nav-link>
                     </li>
+
+
+                    @role('super admin', 'HR Admin')
                     <li>
                         <x-nav-link href="{{ route('user.index') }}" :active="request()->routeIs('user.index')">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -119,6 +122,9 @@
                             Users
                         </x-nav-link>
                     </li>
+                    @endrole
+
+                    @role('super admin', 'HR Admin')
                     <li>
                         <x-nav-link href="{{ route('visitors.index') }}" :active="request()->routeIs('visitors.index')">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -131,6 +137,9 @@
                             Visitors
                         </x-nav-link>
                     </li>
+                    @endrole
+
+                    @role('super admin', 'HR Admin','Security')
                     <li>
                         <x-nav-link href="{{ route('inventory.index') }}"
                                     :active="request()->routeIs('inventory.index')">
@@ -148,6 +157,8 @@
                             Inventory
                         </x-nav-link>
                     </li>
+                    @endrole
+                    @role('super admin', 'HR Admin')
                     <li>
                         <x-nav-link href="{{ route('settings.edit') }}"
                                     :active="request()->routeIs('settings.edit')">
@@ -161,6 +172,8 @@
                             App settings
                         </x-nav-link>
                     </li>
+                    @endrole
+
                     {{--                    <li>--}}
                     {{--                        <x-nav-link href="{{ route('analytics.index') }}" :active="request()->routeIs('analytics.index')">--}}
                     {{--                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"--}}

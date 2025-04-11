@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
@@ -41,6 +42,11 @@ class AppServiceProvider extends ServiceProvider
             // Otherwise, allow update if the visitor belongs to the user.
             return $visitor->user_id === $user->id;
         });
+
+        Blade::if('role', function (...$roles) {
+            return in_array(auth()->user()?->user_details->role, $roles);
+        });
+
 
         Gate::define('create-inventory', function ($user) {
             if (!$user->relationLoaded('user_details')) {
