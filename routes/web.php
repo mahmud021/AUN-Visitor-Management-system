@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SettingController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
@@ -19,6 +20,7 @@ Route::redirect('/', '/login');
 Route::middleware(['auth', 'verified'])->group(function () {
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/search', SearchController::class);
     // routes/web.php
     Route::get('settings', [SettingController::class, 'edit'])->name('settings.edit')->middleware('can:access-settings');
     Route::post('settings', [SettingController::class, 'update'])->name('settings.update')->middleware('can:access-settings');
