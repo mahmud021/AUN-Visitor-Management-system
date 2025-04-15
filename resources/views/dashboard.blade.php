@@ -331,7 +331,7 @@
                  dark:text-neutral-400 dark:placeholder-neutral-500
                  dark:focus:ring-neutral-600"
                                 type="text"
-                                placeholder="Type a name"
+                                placeholder="Search Visitors"
                             />
                         </form>
                     </div>
