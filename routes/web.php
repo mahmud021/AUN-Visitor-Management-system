@@ -67,6 +67,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::patch('/{visitor}/check-in', [VisitorController::class, 'checkIn'])
             ->name('checkin')
             ->middleware('can:check-in-visitor,visitor');
+        Route::get('/visitors/search', [VisitorController::class, 'search'])->name('search');
 
         Route::get('/{visitor}/timeline', [VisitorController::class, 'timeline'])
             ->name('timeline')

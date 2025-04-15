@@ -21,6 +21,25 @@ class VisitorController extends Controller
         return view('visitors.index', compact('visitors'));
     }
 
+    public function search(Request $request)
+    {
+        $query = $request->input('q'); // Get the search query
+
+        // Start building the query to search by first name and last name
+        $visitorsQuery = Visitor::query();
+
+        if ($query) {
+            $visitorsQuery->where(function ($queryBuilder) use ($query) {
+                $queryBuilder->where('first_name', 'LIKE', '%' . $query . '%')
+                    ->orWhere('last_name', 'LIKE', '%' . $query . '%');
+            });
+        }
+
+        // Get the filtered visitors
+        $visitors = $visitorsQuery->paginate(10); // Paginate the search results
+
+        return view('visitors.index', compact('visitors'));
+    }
     public function create()
     {
 
