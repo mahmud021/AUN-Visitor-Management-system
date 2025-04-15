@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 
 class SearchController extends Controller
 {
-    public function __invoke()
+    public function dashboardSearch(Request $request)
     {
-        $query = request('q');
+        $query = $request->input('q'); // Using $request to get the search query
 
         // Start with base query
         $visitorsQuery = Visitor::where('first_name', 'LIKE', '%' . $query . '%')

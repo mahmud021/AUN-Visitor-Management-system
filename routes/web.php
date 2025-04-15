@@ -20,7 +20,7 @@ Route::redirect('/', '/login');
 Route::middleware(['auth', 'verified'])->group(function () {
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/search', SearchController::class);
+    Route::get('/search', [SearchController::class, 'dashboardSearch'])->name('search');
     // routes/web.php
     Route::get('settings', [SettingController::class, 'edit'])->name('settings.edit')->middleware('can:access-settings');
     Route::post('settings', [SettingController::class, 'update'])->name('settings.update')->middleware('can:access-settings');
