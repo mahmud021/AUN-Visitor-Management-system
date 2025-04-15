@@ -68,6 +68,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
             ->name('checkin')
             ->middleware('can:check-in-visitor,visitor');
         Route::get('/visitors/search', [VisitorController::class, 'search'])->name('search');
+// In routes/web.php
+        Route::get('/visitor/scan', function () {
+            return view('visitors.scan');
+        })->name('scan');
 
         Route::get('/{visitor}/timeline', [VisitorController::class, 'timeline'])
             ->name('timeline')

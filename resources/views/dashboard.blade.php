@@ -340,7 +340,7 @@
                 </div>
             </div>
 
-
+<a href="{{route('visitors.scan')}}">QR scanner </a>
 
 
             <div class="overflow-hidden shadow-sm sm:rounded-lg">
