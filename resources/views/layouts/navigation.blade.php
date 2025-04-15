@@ -9,24 +9,30 @@
                 aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-application-sidebar"
                 aria-label="Toggle navigation" data-hs-overlay="#hs-application-sidebar">
             <span class="sr-only">Toggle Navigation</span>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu-icon lucide-menu"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                 class="lucide lucide-menu-icon lucide-menu">
+                <line x1="4" x2="20" y1="12" y2="12"/>
+                <line x1="4" x2="20" y1="6" y2="6"/>
+                <line x1="4" x2="20" y1="18" y2="18"/>
+            </svg>
         </button>
         <!-- End Navigation Toggle -->
 
         <!-- Breadcrumb -->
-{{--        <ol class="ms-3 flex items-center whitespace-nowrap">--}}
-{{--            <li class="flex items-center text-sm text-neutral-200">--}}
-{{--                Application Layout--}}
-{{--                <svg class="shrink-0 mx-3 overflow-visible size-2.5 text-neutral-500"--}}
-{{--                     width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">--}}
-{{--                    <path d="M5 1L10.6869 7.16086C10.8637 7.35239 10.8637 7.64761 10.6869 7.83914L5 14"--}}
-{{--                          stroke="currentColor" stroke-width="2" stroke-linecap="round"/>--}}
-{{--                </svg>--}}
-{{--            </li>--}}
-{{--            <li class="text-sm font-semibold text-neutral-200 truncate" aria-current="page">--}}
-{{--                Dashboard--}}
-{{--            </li>--}}
-{{--        </ol>--}}
+        {{--        <ol class="ms-3 flex items-center whitespace-nowrap">--}}
+        {{--            <li class="flex items-center text-sm text-neutral-200">--}}
+        {{--                Application Layout--}}
+        {{--                <svg class="shrink-0 mx-3 overflow-visible size-2.5 text-neutral-500"--}}
+        {{--                     width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">--}}
+        {{--                    <path d="M5 1L10.6869 7.16086C10.8637 7.35239 10.8637 7.64761 10.6869 7.83914L5 14"--}}
+        {{--                          stroke="currentColor" stroke-width="2" stroke-linecap="round"/>--}}
+        {{--                </svg>--}}
+        {{--            </li>--}}
+        {{--            <li class="text-sm font-semibold text-neutral-200 truncate" aria-current="page">--}}
+        {{--                Dashboard--}}
+        {{--            </li>--}}
+        {{--        </ol>--}}
         <!-- End Breadcrumb -->
     </div>
 </div>
@@ -155,6 +161,28 @@
                                     d="M21.378 5.626a1 1 0 1 0-3.004-3.004l-5.01 5.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z"/>
                             </svg>
                             Inventory
+                        </x-nav-link>
+                    </li>
+                    <li>
+                        <x-nav-link href="{{ route('visitors.scan') }}"
+                                    :active="request()->routeIs('visitors.scan')">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                 stroke-linejoin="round" class="lucide lucide-qr-code-icon lucide-qr-code">
+                                <rect width="5" height="5" x="3" y="3" rx="1"/>
+                                <rect width="5" height="5" x="16" y="3" rx="1"/>
+                                <rect width="5" height="5" x="3" y="16" rx="1"/>
+                                <path d="M21 16h-3a2 2 0 0 0-2 2v3"/>
+                                <path d="M21 21v.01"/>
+                                <path d="M12 7v3a2 2 0 0 1-2 2H7"/>
+                                <path d="M3 12h.01"/>
+                                <path d="M12 3h.01"/>
+                                <path d="M12 16v.01"/>
+                                <path d="M16 12h1"/>
+                                <path d="M21 12v.01"/>
+                                <path d="M12 21v-1"/>
+                            </svg>
+                            QR Scanner
                         </x-nav-link>
                     </li>
                     @endrole
