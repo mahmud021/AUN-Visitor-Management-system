@@ -181,21 +181,27 @@ class UserController extends Controller
     {
         $query = $request->input('q'); // Get search query from request
 
-        // Search query logic as before
+        // Start building the query to search users and user_details
         $usersQuery = User::query();
 
         if ($query) {
             $usersQuery->where(function ($queryBuilder) use ($query) {
+                // Search in User fields (first_name, last_name, email)
                 $queryBuilder->where('first_name', 'LIKE', '%' . $query . '%')
                     ->orWhere('last_name', 'LIKE', '%' . $query . '%')
-                    ->orWhere('email', 'LIKE', '%' . $query . '%');
+                    ->orWhere('email', 'LIKE', '%' . $query . '%')
+                    ->orWhereHas('user_details', function ($queryDetails) use ($query) {
+                        $queryDetails->where('school_id', 'LIKE', '%' . $query . '%');
+                    });
             });
         }
 
+        // Get the filtered users with pagination
         $users = $usersQuery->simplePaginate(10);
 
         return view('users.index', compact('users'));
     }
+
 
     /**
      * Remove the specified resource from storage.
