@@ -20,7 +20,7 @@ Route::redirect('/', '/login');
 Route::middleware(['auth', 'verified'])->group(function () {
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/search', [SearchController::class, 'dashboardSearch'])->name('search');
+    Route::get('/search', [SearchController::class, 'dashboardSearch'])->name('dashboardSearch');
     // routes/web.php
     Route::get('settings', [SettingController::class, 'edit'])->name('settings.edit')->middleware('can:access-settings');
     Route::post('settings', [SettingController::class, 'update'])->name('settings.update')->middleware('can:access-settings');
@@ -38,6 +38,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/{user}/edit', [UserController::class, 'edit'])->name('edit');
         Route::get('/{user}/visitorLogs', [UserController::class, 'visitorLogs'])->name('visitorLogs');
         Route::patch('/{user}', [UserController::class, 'update'])->name('update');
+        Route::get('/users/search', [UserController::class, 'search'])->name('search');
         Route::put('/{user}/password', [UserController::class, 'updatePassword'])->name('password.update');
         Route::delete('/{user}', [UserController::class, 'destroy'])->name('destroy');
     });

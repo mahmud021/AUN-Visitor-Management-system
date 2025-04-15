@@ -177,6 +177,26 @@ class UserController extends Controller
             ->with('password_success', 'User password updated successfully.');
     }
 
+    public function search(Request $request)
+    {
+        $query = $request->input('q'); // Get search query from request
+
+        // Search query logic as before
+        $usersQuery = User::query();
+
+        if ($query) {
+            $usersQuery->where(function ($queryBuilder) use ($query) {
+                $queryBuilder->where('first_name', 'LIKE', '%' . $query . '%')
+                    ->orWhere('last_name', 'LIKE', '%' . $query . '%')
+                    ->orWhere('email', 'LIKE', '%' . $query . '%');
+            });
+        }
+
+        $users = $usersQuery->simplePaginate(10);
+
+        return view('users.index', compact('users'));
+    }
+
     /**
      * Remove the specified resource from storage.
      */
