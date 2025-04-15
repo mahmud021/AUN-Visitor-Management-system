@@ -1,8 +1,8 @@
+<!-- visitors/scan.blade.php -->
 <!DOCTYPE html>
 <html>
 <head>
     <title>QR Code Scanner</title>
-    <!-- Include the library -->
     <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
     <style>
         #reader {
@@ -27,9 +27,28 @@
         .btn:hover {
             background: #0056b3;
         }
+        .alert-danger {
+            color: #721c24;
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+        }
     </style>
 </head>
 <body>
+<!-- Display errors if any -->
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
 <!-- Scan options -->
 <div class="scan-options">
     <button id="camera-btn" class="btn">Use Camera</button>
@@ -40,16 +59,11 @@
 <!-- Scanner container -->
 <div id="reader"></div>
 
-<!-- Result display -->
-<div id="result" style="display: none;">
-    <p>Scanned Result: <span id="result-text"></span></p>
-    <form id="scan-form" method="POST" action="">
-        @csrf
-        <input type="hidden" name="qr_content" id="qr-content">
-        <button type="submit" class="btn">Process Scan</button>
-        <button id="rescan-btn" type="button" class="btn">Scan Again</button>
-    </form>
-</div>
+<!-- Hidden form for automatic submission -->
+<form id="scan-form" method="POST" action="{{ route('visitors.scan-process') }}">
+    @csrf
+    <input type="hidden" name="qr_content" id="qr-content">
+</form>
 
 <script>
     let html5QrcodeScanner;
@@ -69,17 +83,14 @@
             html5QrcodeScanner.clear();
         }
 
-        // Hide scanner and show results
-        document.getElementById('reader').style.display = 'none';
-        document.getElementById('result').style.display = 'block';
-        document.getElementById('result-text').textContent = decodedText;
+        // Set the hidden input value and submit the form
         document.getElementById('qr-content').value = decodedText;
+        document.getElementById('scan-form').submit();
     }
 
     function startCameraScan() {
         currentScanType = 'camera';
         document.getElementById('reader').style.display = 'block';
-        document.getElementById('result').style.display = 'none';
 
         if (html5QrcodeScanner) {
             html5QrcodeScanner.clear();
@@ -103,7 +114,6 @@
         if (!file) return;
 
         document.getElementById('reader').style.display = 'block';
-        document.getElementById('result').style.display = 'none';
 
         // Clear previous scanner if exists
         if (html5QrcodeScanner) {
@@ -127,12 +137,8 @@
         document.getElementById('file-input').click();
     });
     document.getElementById('file-input').addEventListener('change', handleFileUpload);
-    document.getElementById('rescan-btn').addEventListener('click', () => {
-        document.getElementById('result').style.display = 'none';
-        startCameraScan();
-    });
 
-    // Initialize camera scan by default
+    // Start camera scan by default
     startCameraScan();
 </script>
 </body>
