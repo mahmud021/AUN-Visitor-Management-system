@@ -11,6 +11,25 @@
             <x-table-wrapper>
                 <x-table-header title="Inventory" description="View and Manage All Appliances.">
                     <x-slot name="actions">
+                        <div class="relative max-w-xs">
+                            <label for="hs-table-search" class="sr-only">Search</label>
+                            <form action="{{ route('inventory.search') }}" method="GET">
+                                <input type="text" name="q" class="py-1.5 sm:py-2 px-3 ps-9 block w-full border-gray-200 shadow-2xs rounded-lg sm:text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" placeholder="Search Visitors" value="{{ request()->input('q') }}">
+                            </form>
+                            <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-3">
+                                <svg class="size-4 text-gray-400 dark:text-neutral-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <path d="m21 21-4.3-4.3"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <!-- Reset Search Button -->
+                        @if(request()->has('q')) <!-- Show Reset button if there's a query -->
+                        <form action="{{ route('inventory.index') }}" method="GET">
+                            <x-primary-button type="submit" >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-list-restart-icon lucide-list-restart"><path d="M21 6H3"/><path d="M7 12H3"/><path d="M7 18H3"/><path d="M12 18a5 5 0 0 0 9-3 4.5 4.5 0 0 0-4.5-4.5c-1.33 0-2.54.54-3.41 1.41L11 14"/><path d="M11 10v4h4"/></svg>                            </x-primary-button>
+                        </form>
+                        @endif
                         <x-primary-button
                             type="button"
                             x-data

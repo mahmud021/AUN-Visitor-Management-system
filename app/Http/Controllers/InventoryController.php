@@ -26,6 +26,40 @@ class InventoryController extends Controller
         return view('inventory.index', compact('inventory', 'locations', 'users'));
     }
 
+    public function search(Request $request)
+    {
+        $locations = \App\Models\Location::all();
+
+        $inventory = Inventory::latest()->simplePaginate(10);
+        // Eager load user_details for all users
+        $users = UserDetails::all();
+
+        $query = $request->input('q'); // Get the search query
+
+        // Start building the query for searching inventory
+        $inventoryQuery = Inventory::query();
+
+        if ($query) {
+            $inventoryQuery->where(function ($queryBuilder) use ($query) {
+                // Search in appliance name and location
+                $queryBuilder->where('appliance_name', 'LIKE', '%' . $query . '%')
+                    ->orWhere('location', 'LIKE', '%' . $query . '%')
+                    // Search in the related student's school ID
+                    ->orWhereHas('user', function ($userQuery) use ($query) {
+                        $userQuery->whereHas('user_details', function ($userDetailsQuery) use ($query) {
+                            $userDetailsQuery->where('school_id', 'LIKE', '%' . $query . '%');
+                        });
+                    });
+            });
+        }
+
+        // Get the filtered inventory (paginated)
+        $inventory = $inventoryQuery->paginate(10);
+
+        return view('inventory.index', compact('inventory', 'locations', 'users'));
+    }
+
+
 
     /**
      * Show the form for creating a new resource.
