@@ -30,7 +30,6 @@
                                             {{ $visitor->user->first_name ?? 'Null' }} {{ $visitor->user->last_name ?? 'Null' }}
                                         @endif
                                     </p>
-
                                 </dd>
                             </div>
 
@@ -114,13 +113,14 @@
                 <div class="flex justify-center sm:justify-end items-start">
                     <div class="max-w-sm w-full">
                         @if($qrCode)
-                            <img id="qrCodeImage" src="data:image/png;base64,{{ base64_encode($qrCode) }}" alt="QR Code" class="mx-auto w-[400px] h-[400px]">                            <h3 class="font-semibold text-lg mt-4 text-brand-50">
+                            <img id="qrCodeImage" src="data:image/png;base64,{{ base64_encode($qrCode) }}" alt="QR Code" class="mx-auto w-[400px] h-[400px]">
+                            <h3 class="font-semibold text-lg mt-4 text-brand-50">
                                 Please save or print this QR code and present it at check-in.
                             </h3>
                             <div class="mt-4">
-                                <a href="#" id="downloadBtn" class="bg-brand-700 hover:bg-brand-600 text-white font-semibold py-2 px-4 rounded">
+                                <button id="downloadBtn" class="bg-brand-700 hover:bg-brand-600 text-white font-semibold py-2 px-4 rounded">
                                     Download QR Code
-                                </a>
+                                </button>
                             </div>
                         @else
                             <p class="text-red-500">Error: QR Code not generated.</p>
@@ -130,4 +130,15 @@
             </div>
         </div>
     </div>
+
+    <!-- JavaScript for QR Code Download -->
+    <script>
+        document.getElementById('downloadBtn').addEventListener('click', function() {
+            const img = document.getElementById('qrCodeImage');
+            const link = document.createElement('a');
+            link.href = img.src;
+            link.download = 'visitor-qr-code.png';
+            link.click();
+        });
+    </script>
 </x-app-layout>
