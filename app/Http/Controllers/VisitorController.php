@@ -128,8 +128,7 @@ class VisitorController extends Controller
         }
 
         // Generate QR code
-        $qrCode = QrCode::format('png')->size(200)->generate($visitor->token);
-
+        $qrCode = QrCode::format('png')->size(400)->generate($visitor->token);
         return redirect()->back()
             ->with('success', 'Visitor created successfully.');
     }
@@ -139,8 +138,7 @@ class VisitorController extends Controller
 
         // If the QR code is missing, regenerate it
         if (!$qrCode) {
-            $qrCode = QrCode::format('png')->size(200)->generate($visitor->token);
-        }
+            $qrCode = QrCode::format('png')->size(400)->generate($visitor->token);        }
 
         return view('visitors.show', compact('visitor', 'qrCode'));
     }

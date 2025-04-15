@@ -114,8 +114,7 @@
                 <div class="flex justify-center sm:justify-end items-start">
                     <div class="max-w-sm w-full">
                         @if($qrCode)
-                            <img id="qrCodeImage" src="data:image/png;base64,{{ base64_encode($qrCode) }}" alt="QR Code" class="mx-auto">
-                            <h3 class="font-semibold text-lg mt-4 text-brand-50">
+                            <img id="qrCodeImage" src="data:image/png;base64,{{ base64_encode($qrCode) }}" alt="QR Code" class="mx-auto w-[400px] h-[400px]">                            <h3 class="font-semibold text-lg mt-4 text-brand-50">
                                 Please save or print this QR code and present it at check-in.
                             </h3>
                             <div class="mt-4">
