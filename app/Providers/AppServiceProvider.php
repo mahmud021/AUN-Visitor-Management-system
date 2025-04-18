@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Gate;
@@ -22,6 +23,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+
         // Existing gate: allows Security, super admin, HR Admin for visitor management.
         Gate::define('view-all-visitors', function ($user) {
             return in_array($user->user_details->role, ['Security', 'super admin', 'HR Admin']);
