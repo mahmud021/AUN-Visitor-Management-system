@@ -18,7 +18,7 @@
                 </svg>
             </span>
                 <p class="text-sm font-semibold">
-                    You have been blacklisted. Please contact HR for more information.
+                    You have been blacklisted. Please contact HR for more Information.
                 </p>
             </div>
         </div>
