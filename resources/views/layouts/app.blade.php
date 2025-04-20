@@ -10,7 +10,10 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet"/>
-
+    <!-- Load the Scanbot UI bundle (for PoC only!) -->
+    <script defer src="https://cdn.jsdelivr.net/npm/scanbot-web-sdk@7.1.0/bundle/ScanbotSDK.ui2.min.js"></script>
+    <!-- Your main logic must come _after_ the SDK bundle -->
+    <script defer src="{{ asset('js/main.js') }}"></script>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Preline CSS -->
