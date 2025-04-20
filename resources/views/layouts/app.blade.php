@@ -3,65 +3,44 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Fonts -->
+    <!-- Google / Bunny / custom fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet"/>
-    <!-- Load the Scanbot UI bundle (for PoC only!) -->
-    <script defer src="https://cdn.jsdelivr.net/npm/scanbot-web-sdk@7.1.0/bundle/ScanbotSDK.ui2.min.js"></script>
-    <!-- Your main logic must come _after_ the SDK bundle -->
-    <script defer src="{{ asset('js/main.js') }}"></script>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Preline CSS -->
-{{--    <link href="https://cdn.jsdelivr.net/npm/preline@latest/dist/preline.min.css" rel="stylesheet">--}}
 
-    <!-- Vite Assets -->
+    <!-- Tailwind + app code (built with Vite) -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    <!-- REMOVE this Toastify script since it's bundled via Vite -->
-    <!-- <script src="./node_modules/toastify-js/src/toastify.js"></script> -->
+    <!-- Extra <head> assets injected by individual pages -->
+    @stack('head')
 </head>
-<body class="font-sans antialiased">
+<body class="font-sans antialiased bg-primary">
 @include('layouts.navigation')
-<div class="w-full lg:ps-64">
-    <div class="min-h-screen  bg-primary">
-        <!-- Page Heading -->
-        @isset($header)
-            <header class=" shadow">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 border-b border-gray-200 dark:border-gray-700">
-                    {{ $header }}
-                </div>
-            </header>
 
-        @endisset
+<div class="w-full lg:ps-64 min-h-screen">
+    @isset($header)
+        <header class="shadow border-b border-gray-200 dark:border-gray-700">
+            <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                {{ $header }}
+            </div>
+        </header>
+    @endisset
 
-        <!-- Page Content -->
-        <main>
-            {{ $slot }}
-        </main>
-    </div>
+    <main>
+        {{ $slot }}
+    </main>
 </div>
 
-
-@stack('scripts')
+<!-- Global helpers -->
 @include('components.flash-toast')
-<script src="https://cdn.jsdelivr.net/npm/preline@2.7.0/dist/preline.min.js"></script>
-<script src="/public/js/preline.min.js"></script>
-<!-- Add the Clipboard JavaScript -->
-<script>
-    function disableSubmitButton(form) {
-        const submitButton = form.querySelector('button[type="submit"], input[type="submit"], x-primary-button');
-        if (submitButton) {
-            submitButton.disabled = true;
-            submitButton.innerText = 'Submitting...';
-        }
-    }
-</script>
 
+<!-- Preline (UI helpers) -->
+<script defer src="{{ asset('js/preline.min.js') }}"></script>
 
+<!-- Page‑specific scripts injected by individual views -->
+@stack('scripts')
 </body>
 </html>

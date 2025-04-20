@@ -5,10 +5,12 @@
         </h2>
     </x-slot>
 
-    <div class="py-12 bg-primary text-white min-h-screen">
+    <div class="py-12 min-h-screen text-white">
         <div class="max-w-lg mx-auto sm:px-6 lg:px-8">
             @if ($errors->any())
-                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative dark:bg-red-800 dark:border-red-700 dark:text-red-200 mb-4">
+                <div class="mb-4 rounded border px-4 py-3
+                            bg-red-100 text-red-700 border-red-400
+                            dark:bg-red-800 dark:text-red-200 dark:border-red-700">
                     <ul>
                         @foreach ($errors->all() as $error)
                             <li>{{ $error }}</li>
@@ -17,16 +19,20 @@
                 </div>
             @endif
 
-            <p class="text-lg text-gray-300 mb-4">Scan the QR code using the camera or upload an image.</p>
+            <p class="text-lg text-gray-300 mb-4">
+                Scan the QR code using the camera or upload an image.
+            </p>
 
-            <!-- Scan options -->
-            <div class="scan-options mb-4 flex gap-3">
-                <button id="camera-btn" class="bg-gray-700 hover:bg-gray-600 text-white py-2 px-4 rounded">Use Camera</button>
-                <button id="file-btn" class="bg-gray-700 hover:bg-gray-600 text-white py-2 px-4 rounded">Upload Image</button>
+            <div class="flex gap-3 mb-4">
+                <button id="camera-btn" class="bg-gray-700 hover:bg-gray-600 text-white py-2 px-4 rounded">
+                    Use Camera
+                </button>
+                <button id="file-btn" class="bg-gray-700 hover:bg-gray-600 text-white py-2 px-4 rounded">
+                    Upload Image
+                </button>
                 <input type="file" id="file-input" accept="image/*" class="hidden">
             </div>
 
-            <!-- Hidden form for automatic submission -->
             <form id="scan-form" method="POST" action="{{ route('visitors.scan-process') }}">
                 @csrf
                 <input type="hidden" name="qr_content" id="qr-content">
@@ -34,64 +40,66 @@
         </div>
     </div>
 
-    {{-- 1) Load Scanbot UI bundle (PoC only!) --}}
-    <script defer src="https://cdn.jsdelivr.net/npm/scanbot-web-sdk@7.1.0/bundle/ScanbotSDK.ui2.min.js"></script>
+    {{-- Push Scanbot + page‑specific JS --}}
+    @push('head')
+        <script defer src="https://cdn.jsdelivr.net/npm/scanbot-web-sdk@7.1.0/bundle/ScanbotSDK.ui2.min.js"></script>
+    @endpush
 
-    <script>
-        window.addEventListener('DOMContentLoaded', async () => {
-            // 2) Initialize Scanbot SDK
-            const sdk = await ScanbotSDK.initialize({
-                licenseKey: "",
-                enginePath: "https://cdn.jsdelivr.net/npm/scanbot-web-sdk@7.1.0/bundle/bin/complete/"
-            });
-            console.log("✅ Scanbot initialized");
-
-            // Camera-based scanning
-            document.getElementById('camera-btn').addEventListener('click', async () => {
-                console.log("🔘 Camera scan launched");
-                const config = new ScanbotSDK.UI.Config.BarcodeScannerScreenConfiguration({
-                    beepOnScan: true,
-                    multiScanEnabled: false,
+    @push('scripts')
+        <script>
+            window.addEventListener('DOMContentLoaded', async () => {
+                /* 1) Initialise Scanbot */
+                const sdk = await ScanbotSDK.initialize({
+                    licenseKey: "",   // TODO: add your key
+                    enginePath: "https://cdn.jsdelivr.net/npm/scanbot-web-sdk@7.1.0/bundle/bin/complete/"
                 });
-                const result = await ScanbotSDK.UI.createBarcodeScanner(config);
-                console.log("📷 Camera scan result:", result);
-                if (result?.items?.length) {
-                    // take first item
-                    handleScanResult(result.items[0].barcode.text);
+                console.log("✅ Scanbot initialised");
+
+                /* 2) Camera scan */
+                document.getElementById('camera-btn')
+                    .addEventListener('click', async () => {
+                        const result = await ScanbotSDK.UI.createBarcodeScanner(
+                            new ScanbotSDK.UI.Config.BarcodeScannerScreenConfiguration({
+                                beepOnScan: true,
+                                multiScanEnabled: false
+                            })
+                        );
+                        if (result?.items?.length) {
+                            handleScanResult(result.items[0].barcode.text);
+                        }
+                    });
+
+                /* 3) File scan */
+                const fileInput = document.getElementById('file-input');
+                document.getElementById('file-btn')
+                    .addEventListener('click', () => fileInput.click());
+
+                fileInput.addEventListener('change', e => {
+                    const file = e.target.files[0];
+                    if (!file) return;
+                    const reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onload = async () => {
+                        try {
+                            const res = await sdk.detectBarcodes(reader.result);
+                            if (res.items?.length) {
+                                handleScanResult(res.items[0].barcode.text);
+                            } else {
+                                alert('No QR code found in the image.');
+                            }
+                        } catch (err) {
+                            console.error(err);
+                            alert('Error scanning the image.');
+                        }
+                    };
+                });
+
+                /* 4) Shared handler */
+                function handleScanResult(text) {
+                    document.getElementById('qr-content').value = text;
+                    document.getElementById('scan-form').submit();
                 }
             });
-
-            // File-based scanning
-            const fileInput = document.getElementById('file-input');
-            document.getElementById('file-btn').addEventListener('click', () => fileInput.click());
-
-            fileInput.addEventListener('change', (e) => {
-                const file = e.target.files[0];
-                if (!file) return;
-                const reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = async () => {
-                    try {
-                        // 3) Detect barcodes in the image
-                        const imageResult = await sdk.detectBarcodes(reader.result);  // :contentReference[oaicite:0]{index=0}
-                        console.log("🖼️ Image scan result:", imageResult);
-                        if (imageResult.items?.length) {
-                            handleScanResult(imageResult.items[0].barcode.text);
-                        } else {
-                            alert('No QR code found in the image.');
-                        }
-                    } catch (err) {
-                        console.error("❌ File scan error:", err);
-                        alert('Error scanning the image. See console for details.');
-                    }
-                };
-            });
-        });
-
-        // Shared handler: fills form & submits
-        function handleScanResult(decodedText) {
-            document.getElementById('qr-content').value = decodedText;
-            document.getElementById('scan-form').submit();
-        }
-    </script>
+        </script>
+    @endpush
 </x-app-layout>
