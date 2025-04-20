@@ -42,16 +42,19 @@
 
     {{-- Push Scanbot + page‑specific JS --}}
     @push('head')
-        <script defer src="https://cdn.jsdelivr.net/npm/scanbot-web-sdk@7.1.0/bundle/ScanbotSDK.ui2.min.js"></script>
+        <script defer src="{{ asset('vendor/scanbot/ScanbotSDK.ui2.min.js') }}"></script>
     @endpush
 
-    @push('scripts')
+
+
+
+@push('scripts')
         <script>
             window.addEventListener('DOMContentLoaded', async () => {
                 /* 1) Initialise Scanbot */
                 const sdk = await ScanbotSDK.initialize({
                     licenseKey: "",   // TODO: add your key
-                    enginePath: "https://cdn.jsdelivr.net/npm/scanbot-web-sdk@7.1.0/bundle/bin/complete/"
+                    enginePath: "/vendor/scanbot/bin/complete/"
                 });
                 console.log("✅ Scanbot initialised");
 
