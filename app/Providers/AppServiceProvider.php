@@ -60,7 +60,7 @@ class AppServiceProvider extends ServiceProvider
 
         Gate::define('update-inventory', function ($user, $inventory) {
             // Super admin, HR Admin, and Security roles can update any inventory record.
-            if (in_array($user->user_details->role, ['HR Admin', 'super admin', 'security'])) {
+            if (in_array($user->user_details->role, ['HR Admin', 'super admin', 'Security'])) {
                 return true;
             }
             // For all other users:
