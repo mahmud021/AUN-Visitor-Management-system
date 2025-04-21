@@ -364,6 +364,7 @@
                             }
                         },
                         tooltip: {
+                            theme: 'dark',
                             x: {
                                 format: 'MMMM yyyy'
                             },
