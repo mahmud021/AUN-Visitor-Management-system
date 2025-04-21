@@ -1,10 +1,15 @@
-import { defineConfig } from 'vite';
-import laravel from 'laravel-vite-plugin';
-import { viteStaticCopy } from 'vite-plugin-static-copy';
+import { defineConfig } from "vite";
+import laravel from "laravel-vite-plugin";
+import { viteStaticCopy } from "vite-plugin-static-copy";
 
 export default defineConfig({
     plugins: [
-        laravel(['resources/css/app.css', 'resources/js/app.js']),
+        laravel([
+            "resources/css/app.css",
+            "resources/js/app.js",
+            "node_modules/apexcharts/dist/apexcharts.css",
+            "node_modules/preline/dist/helper-apexcharts.js",
+        ]),
 
         // viteStaticCopy({
         //     targets: [
@@ -20,5 +25,5 @@ export default defineConfig({
         //         }
         //     ]
         // })
-    ]
+    ],
 });
