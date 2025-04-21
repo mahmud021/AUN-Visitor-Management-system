@@ -198,6 +198,42 @@ class VisitorController extends Controller
         return redirect()->back()->with('success', 'Visitor checked in successfully.');
     }
 
+    public function autoCheckIn(Visitor $visitor)
+    {
+        // Prevent duplicate check‑ins
+        if ($visitor->status === 'checked_in') {
+            return redirect()->back()->withErrors([
+                'checkin' => 'Visitor is already checked in.',
+            ]);
+        }
+
+        // Only allow checking in on the scheduled date
+        if (! \Carbon\Carbon::parse($visitor->visit_date)->isToday()) {
+            return redirect()->back()->withErrors([
+                'checkin' => 'Visitors can only check in on their scheduled date.',
+            ]);
+        }
+
+        // Perform the check‑in
+        $visitor->update([
+            'status'        => 'checked_in',
+            'checked_in_at' => now(),
+        ]);
+
+        // Log the event
+        TimelineEvent::create([
+            'visitor_id'  => $visitor->id,
+            'user_id'     => auth()->id(),
+            'event_type'  => 'checked_in',
+            'description' => 'Visitor automatically checked in via QR scan',
+            'occurred_at' => now(),
+        ]);
+
+        return redirect()
+            ->route('visitors.scan')     // or wherever you want to send them
+            ->with('success', 'Visitor checked in successfully.');
+    }
+
 
     public function update(Request $request, Visitor $visitor)
     {
@@ -286,50 +322,30 @@ class VisitorController extends Controller
     // VisitorController.php
     public function processScan(Request $request)
     {
-        // Validate the scanned QR content
         $request->validate([
             'qr_content' => 'required|string',
         ]);
 
-        $token = $request->input('qr_content');
-        $visitor = Visitor::where('token', $token)->first();
+        $visitor = Visitor::where('token', $request->qr_content)->first();
 
-        // Check if visitor exists
-        if (!$visitor) {
-            return redirect()->route('visitors.scan')->withErrors([
-                'qr_content' => 'No visitor found with this QR code.',
-            ]);
+        if (! $visitor) {
+            return redirect()->route('visitors.scan')
+                ->withErrors(['qr_content' => 'No visitor found with this QR code.']);
         }
 
-        // Prevent duplicate check-ins
         if ($visitor->status === 'checked_in') {
-            return redirect()->route('visitors.scan')->withErrors([
-                'checkin' => 'Visitor is already checked in.',
-            ]);
+            return redirect()->route('visitors.scan')
+                ->withErrors(['checkin' => 'Visitor is already checked in.']);
         }
 
-        // Ensure check-in occurs on the scheduled date
-        if (!Carbon::parse($visitor->visit_date)->isToday()) {
-            return redirect()->route('visitors.scan')->withErrors([
-                'checkin' => 'Visitors can only check in on their scheduled date.',
-            ]);
+        if (! Carbon::parse($visitor->visit_date)->isToday()) {
+            return redirect()->route('visitors.scan')
+                ->withErrors(['checkin' => 'Visitors can only check in on their scheduled date.']);
         }
 
-        // Update visitor record
-        $visitor->checked_in_at = now();
-        $visitor->status = 'checked_in';
-        $visitor->save();
-
-        // Log the check-in event
-        TimelineEvent::create([
-            'visitor_id'  => $visitor->id,
-            'user_id'     => auth()->id(),
-            'event_type'  => 'checked_in',
-            'description' => 'Visitor checked in via QR code',
-            'occurred_at' => now(),
-        ]);
-
-        // Redirect to dashboard
-        return redirect()->route('dashboard')->with('success', 'Visitor checked in successfully.');
+        // Render the same scan view, now with a $visitor to confirm
+        return view('visitors.scan', compact('visitor'));
     }
+
+
 }

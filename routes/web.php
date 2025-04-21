@@ -67,6 +67,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::patch('/{visitor}/check-in', [VisitorController::class, 'checkIn'])
             ->name('checkin')
             ->middleware('can:check-in-visitor,visitor');
+        // in routes/web.php
+        Route::patch('visitors/{visitor}/auto-checkin', [VisitorController::class,'autoCheckIn'])
+            ->name('autoCheckin');
+
         Route::get('/visitors/search', [VisitorController::class, 'search'])->name('search');
         Route::get('/visitor/scan', function () {
             return view('visitors.scan');
