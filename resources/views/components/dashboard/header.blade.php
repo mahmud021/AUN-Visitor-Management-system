@@ -13,6 +13,7 @@
 
     <!-- Right: Action Buttons -->
     <div class="flex items-center gap-4">
+        @role('super admin', 'HR Admin','Security')
         <a href="{{ route('visitors.scan') }}"
            class="flex items-center gap-2 px-3 py-2 border border-gray-600 rounded-lg hover:border-gray-300 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
             <svg xmlns="http://www.w3.org/2000/svg"
@@ -37,6 +38,7 @@
             </svg>
             <span class="text-white text-sm font-medium">Scan QR</span>
         </a>
+        @endrole
         <x-dropdown :disabled="!Gate::allows('create-visitor') && !Gate::allows('add-walk-in-visitor')">
             <x-slot name="trigger">
                 <x-primary-button aria-label="Create options" aria-haspopup="true">
