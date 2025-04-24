@@ -41,6 +41,7 @@
 <script defer src="{{ asset('js/preline.min.js') }}"></script>
 
 <!-- Page‑specific scripts injected by individual views -->
+@vite('resources/js/app.js')
 @stack('scripts')
 </body>
 </html>
