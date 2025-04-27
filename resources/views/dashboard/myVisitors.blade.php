@@ -98,7 +98,6 @@
                 </dl>
 
                 {{-- ACTIONS DROPDOWN ───────────────────────────────────────────--}}
-                {{-- ACTIONS DROPDOWN ───────────────────────────────────────────--}}
                 <div class="mt-auto flex justify-end">
                     <x-dropdown align="right" width="48">
                         {{-- Trigger (3-dot icon) --}}
