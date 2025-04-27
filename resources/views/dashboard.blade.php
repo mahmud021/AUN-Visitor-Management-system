@@ -379,7 +379,7 @@
                                     <polyline points="9 22 9 12 15 12 15 22"></polyline>
                                 </svg>                                All Visitors
                             </button>
-
+                        @endcan
                             <button id="tab-btn-pending"  type="button" role="tab"
                                     aria-controls="tab-pending" aria-selected="false"
                                     data-hs-tab="#tab-pending"
@@ -405,7 +405,7 @@
                                     <polyline points="9 22 9 12 15 12 15 22"></polyline>
                                 </svg>                                Approved
                             </button>
-                        @endcan
+
 
                         {{-- 5 ▸ Checked-in (everyone can see their own, admins see all) --}}
                         <button id="tab-btn-in"  type="button" role="tab"
@@ -422,7 +422,7 @@
                         </button>
 
                         {{-- 6 ▸ Checked-out (admins only) --}}
-                        @can('view-all-visitors')
+
                             <button id="tab-btn-out" type="button" role="tab"
                                     aria-controls="tab-out" aria-selected="false"
                                     data-hs-tab="#tab-out"
@@ -435,7 +435,6 @@
                                     <polyline points="9 22 9 12 15 12 15 22"></polyline>
                                 </svg>                                Checked-Out
                             </button>
-                        @endcan
                     </nav>
                 </div>
 
@@ -451,6 +450,7 @@
                         <div id="tab-all"      class="hidden" role="tabpanel" aria-labelledby="tab-btn-all">
                             @include('dashboard.allVisitors')
                         </div>
+                    @endcan
                         <div id="tab-pending"  class="hidden" role="tabpanel" aria-labelledby="tab-btn-pending">
                             @include('dashboard.statusVisitors', ['visitors' => $pendingVisitors])
                         </div>
@@ -460,7 +460,7 @@
                         <div id="tab-out"      class="hidden" role="tabpanel" aria-labelledby="tab-btn-out">
                             @include('dashboard.statusVisitors', ['visitors' => $checkedOutVisitors])
                         </div>
-                    @endcan
+
 
                     {{-- Checked-in (everyone sees their scoped list) --}}
                     <div id="tab-in" class="hidden" role="tabpanel" aria-labelledby="tab-btn-in">
