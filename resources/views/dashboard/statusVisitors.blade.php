@@ -94,7 +94,7 @@
                         @if($visitor->status == 'pending')
                             @if(auth()->user()?->user_details?->role === 'HR Admin' || auth()->user()?->user_details?->role === 'super admin')
                                 <!-- Approve Form -->
-                                <form action="{{ route('visitors.update', $visitors->id) }}" method="POST" class="inline">
+                                <form action="{{ route('visitors.update', $visitor->id) }}" method="POST" class="inline">
                                     @csrf
                                     @method('PATCH')
                                     <input type="hidden" name="status" value="approved">
