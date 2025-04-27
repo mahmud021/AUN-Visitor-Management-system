@@ -37,18 +37,19 @@ class DashboardController extends Controller
             ->get();
 
         /* ─────────────── 2.  Paginated tab data ─────────────── */
+// 1. everyone gets their own visitors (any status)
+        $myVisitors        = $this->paginatedVisitors($user, false);
 
-        // collections you already had
-        $myVisitors        = $this->paginatedVisitors($user, false);              // always
-        $checkedInVisitors = $this->paginatedVisitors($user, $canViewAll, 'checked_in');
+// 2. status-filtered lists — pass $canViewAll so admins get global, others get personal
+        $pendingVisitors    = $this->paginatedVisitors($user, $canViewAll, 'pending');
+        $approvedVisitors   = $this->paginatedVisitors($user, $canViewAll, 'approved');
+        $checkedInVisitors  = $this->paginatedVisitors($user, $canViewAll, 'checked_in');
+        $checkedOutVisitors = $this->paginatedVisitors($user, $canViewAll, 'checked_out');
 
-        // only admins / HR see global lists
-        $allVisitors       = $canViewAll ? $this->paginatedVisitors($user, true)                 : collect();
-        $pendingVisitors   = $canViewAll ? $this->paginatedVisitors($user, true, 'pending')      : collect();
-        $approvedVisitors  = $canViewAll ? $this->paginatedVisitors($user, true, 'approved')     : collect();
-        $checkedOutVisitors= $canViewAll ? $this->paginatedVisitors($user, true, 'checked_out')  : collect();
+// 3. the *only* truly global list
+        $allVisitors = $canViewAll ? $this->paginatedVisitors($user, true)
+            : collect();          // or null if you prefer
 
-        /* ─────────────── 3.  Push everything to the view ─────── */
 
         return view('dashboard', [
             'user'                    => $user,

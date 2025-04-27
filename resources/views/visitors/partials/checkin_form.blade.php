@@ -34,5 +34,8 @@
         </div>
     </form>
 @else
-    <span class="text-red-400">Check-in is not allowed at this time.</span>
+    @can('view-all-visitors')
+
+        <span class="text-red-400">Check-in is not allowed at this time.</span>
+        @endcan
 @endcan

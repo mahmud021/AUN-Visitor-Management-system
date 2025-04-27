@@ -1,6 +1,4 @@
-{{-- ─────────────────────────────────────────────────────────────────────
-│  My Visitors grid
-└─────────────────────────────────────────────────────────────────── --}}
+
 <div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
     <div class="grid gap-6 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
         @foreach ($myVisitors as $v)
