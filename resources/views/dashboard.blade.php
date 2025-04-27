@@ -344,9 +344,23 @@
 
             {{-- ───────────────────────── Tabs + panes ───────────────────────── --}}
             <div class="overflow-hidden shadow-sm sm:rounded-lg">
-                {{-- TAB BAR --}}
-                <div class="border-b border-gray-200 dark:border-neutral-700 mt-10">
-                    <nav class="flex gap-x-1 justify-center" role="tablist" aria-orientation="horizontal">
+                {{-- Mobile Select Dropdown --}}
+                <div class="sm:hidden flex justify-center mt-10">
+                    <select id="tab-select" class="py-3 px-4 pe-9 w-64 border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400" aria-label="Tabs">
+                        <option value="#tab-my">My Visitors</option>
+                        @can('view-all-visitors')
+                            <option value="#tab-all">All Visitors</option>
+                        @endcan
+                        <option value="#tab-pending">Pending</option>
+                        <option value="#tab-approved">Approved</option>
+                        <option value="#tab-in">Checked-In</option>
+                        <option value="#tab-out">Checked-Out</option>
+                    </select>
+                </div>
+
+                {{-- Desktop Tab Bar --}}
+                <div class="hidden sm:block border-b border-gray-200 dark:border-neutral-700 mt-10">
+                    <nav class="flex gap-x-1 justify-center" role="tablist" aria-orientation="horizontal" data-hs-tab-select="#tab-select">
                         {{-- 1 ▸ My visitors (always visible) --}}
                         <button
                             id="tab-btn-my"
@@ -356,85 +370,92 @@
                             aria-selected="true"
                             data-hs-tab="#tab-my"
                             class="active hs-tab-active:font-semibold hs-tab-active:border-blue-600 hs-tab-active:text-blue-600
-               py-4 px-1 inline-flex items-center gap-x-2 border-b-2 border-transparent text-sm
-               whitespace-nowrap text-gray-500 hover:text-blue-600 focus:outline-hidden focus:text-blue-600
-               dark:text-neutral-400 dark:hover:text-blue-500">
+                   py-4 px-1 inline-flex items-center gap-x-2 border-b-2 border-transparent text-sm
+                   whitespace-nowrap text-gray-500 hover:text-blue-600 focus:outline-hidden focus:text-blue-600
+                   dark:text-neutral-400 dark:hover:text-blue-500">
                             <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                                 <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                            </svg>                            My Visitors
+                            </svg>
+                            My Visitors
                         </button>
 
                         {{-- 2 ▸ All visitors (admins/HR only) --}}
                         @can('view-all-visitors')
-                            <button id="tab-btn-all"  type="button" role="tab"
-                                    aria-controls="tab-all"  aria-selected="false"
+                            <button id="tab-btn-all" type="button" role="tab"
+                                    aria-controls="tab-all" aria-selected="false"
                                     data-hs-tab="#tab-all"
                                     class="hs-tab-active:font-semibold hs-tab-active:border-blue-600 hs-tab-active:text-blue-600
-                       py-4 px-1 inline-flex items-center gap-x-2 border-b-2 border-transparent text-sm
-                       whitespace-nowrap text-gray-500 hover:text-blue-600 focus:outline-hidden focus:text-blue-600
-                       dark:text-neutral-400 dark:hover:text-blue-500">
+                           py-4 px-1 inline-flex items-center gap-x-2 border-b-2 border-transparent text-sm
+                           whitespace-nowrap text-gray-500 hover:text-blue-600 focus:outline-hidden focus:text-blue-600
+                           dark:text-neutral-400 dark:hover:text-blue-500">
                                 <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                                     <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                                </svg>                                All Visitors
+                                </svg>
+                                All Visitors
                             </button>
                         @endcan
-                            <button id="tab-btn-pending"  type="button" role="tab"
-                                    aria-controls="tab-pending" aria-selected="false"
-                                    data-hs-tab="#tab-pending"
-                                    class="hs-tab-active:font-semibold hs-tab-active:border-blue-600 hs-tab-active:text-blue-600
-                       py-4 px-1 inline-flex items-center gap-x-2 border-b-2 border-transparent text-sm
-                       whitespace-nowrap text-gray-500 hover:text-blue-600 focus:outline-hidden focus:text-blue-600
-                       dark:text-neutral-400 dark:hover:text-blue-500">
-                                <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                                </svg>                                Pending
-                            </button>
 
-                            <button id="tab-btn-approved" type="button" role="tab"
-                                    aria-controls="tab-approved" aria-selected="false"
-                                    data-hs-tab="#tab-approved"
-                                    class="hs-tab-active:font-semibold hs-tab-active:border-blue-600 hs-tab-active:text-blue-600
-                       py-4 px-1 inline-flex items-center gap-x-2 border-b-2 border-transparent text-sm
-                       whitespace-nowrap text-gray-500 hover:text-blue-600 focus:outline-hidden focus:text-blue-600
-                       dark:text-neutral-400 dark:hover:text-blue-500">
-                                <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                                </svg>                                Approved
-                            </button>
-
-
-                        {{-- 5 ▸ Checked-in (everyone can see their own, admins see all) --}}
-                        <button id="tab-btn-in"  type="button" role="tab"
-                                aria-controls="tab-in"  aria-selected="false"
-                                data-hs-tab="#tab-in"
+                        {{-- 3 ▸ Pending --}}
+                        <button id="tab-btn-pending" type="button" role="tab"
+                                aria-controls="tab-pending" aria-selected="false"
+                                data-hs-tab="#tab-pending"
                                 class="hs-tab-active:font-semibold hs-tab-active:border-blue-600 hs-tab-active:text-blue-600
-                     py-4 px-1 inline-flex items-center gap-x-2 border-b-2 border-transparent text-sm
-                     whitespace-nowrap text-gray-500 hover:text-blue-600 focus:outline-hidden focus:text-blue-600
-                     dark:text-neutral-400 dark:hover:text-blue-500">
+                       py-4 px-1 inline-flex items-center gap-x-2 border-b-2 border-transparent text-sm
+                       whitespace-nowrap text-gray-500 hover:text-blue-600 focus:outline-hidden focus:text-blue-600
+                       dark:text-neutral-400 dark:hover:text-blue-500">
                             <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                                 <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                            </svg>                            Checked-In
+                            </svg>
+                            Pending
                         </button>
 
-                        {{-- 6 ▸ Checked-out (admins only) --}}
-
-                            <button id="tab-btn-out" type="button" role="tab"
-                                    aria-controls="tab-out" aria-selected="false"
-                                    data-hs-tab="#tab-out"
-                                    class="hs-tab-active:font-semibold hs-tab-active:border-blue-600 hs-tab-active:text-blue-600
+                        {{-- 4 ▸ Approved --}}
+                        <button id="tab-btn-approved" type="button" role="tab"
+                                aria-controls="tab-approved" aria-selected="false"
+                                data-hs-tab="#tab-approved"
+                                class="hs-tab-active:font-semibold hs-tab-active:border-blue-600 hs-tab-active:text-blue-600
                        py-4 px-1 inline-flex items-center gap-x-2 border-b-2 border-transparent text-sm
                        whitespace-nowrap text-gray-500 hover:text-blue-600 focus:outline-hidden focus:text-blue-600
                        dark:text-neutral-400 dark:hover:text-blue-500">
-                                <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                                </svg>                                Checked-Out
-                            </button>
+                            <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                            </svg>
+                            Approved
+                        </button>
+
+                        {{-- 5 ▸ Checked-in --}}
+                        <button id="tab-btn-in" type="button" role="tab"
+                                aria-controls="tab-in" aria-selected="false"
+                                data-hs-tab="#tab-in"
+                                class="hs-tab-active:font-semibold hs-tab-active:border-blue-600 hs-tab-active:text-blue-600
+                       py-4 px-1 inline-flex items-center gap-x-2 border-b-2 border-transparent text-sm
+                       whitespace-nowrap text-gray-500 hover:text-blue-600 focus:outline-hidden focus:text-blue-600
+                       dark:text-neutral-400 dark:hover:text-blue-500">
+                            <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                            </svg>
+                            Checked-In
+                        </button>
+
+                        {{-- 6 ▸ Checked-out --}}
+                        <button id="tab-btn-out" type="button" role="tab"
+                                aria-controls="tab-out" aria-selected="false"
+                                data-hs-tab="#tab-out"
+                                class="hs-tab-active:font-semibold hs-tab-active:border-blue-600 hs-tab-active:text-blue-600
+                       py-4 px-1 inline-flex items-center gap-x-2 border-b-2 border-transparent text-sm
+                       whitespace-nowrap text-gray-500 hover:text-blue-600 focus:outline-hidden focus:text-blue-600
+                       dark:text-neutral-400 dark:hover:text-blue-500">
+                            <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                            </svg>
+                            Checked-Out
+                        </button>
                     </nav>
                 </div>
 
@@ -445,29 +466,30 @@
                         @include('dashboard.myVisitors')
                     </div>
 
-                    {{-- All visitors, pending, approved, checked-out are admin-only --}}
+                    {{-- All visitors, pending, approved, checked-out --}}
                     @can('view-all-visitors')
-                        <div id="tab-all"      class="hidden" role="tabpanel" aria-labelledby="tab-btn-all">
+                        <div id="tab-all" class="hidden" role="tabpanel" aria-labelledby="tab-btn-all">
                             @include('dashboard.allVisitors')
                         </div>
                     @endcan
-                        <div id="tab-pending"  class="hidden" role="tabpanel" aria-labelledby="tab-btn-pending">
-                            @include('dashboard.statusVisitors', ['visitors' => $pendingVisitors])
-                        </div>
-                        <div id="tab-approved" class="hidden" role="tabpanel" aria-labelledby="tab-btn-approved">
-                            @include('dashboard.statusVisitors', ['visitors' => $approvedVisitors])
-                        </div>
-                        <div id="tab-out"      class="hidden" role="tabpanel" aria-labelledby="tab-btn-out">
-                            @include('dashboard.statusVisitors', ['visitors' => $checkedOutVisitors])
-                        </div>
 
+                    <div id="tab-pending" class="hidden" role="tabpanel" aria-labelledby="tab-btn-pending">
+                        @include('dashboard.statusVisitors', ['visitors' => $pendingVisitors])
+                    </div>
 
-                    {{-- Checked-in (everyone sees their scoped list) --}}
+                    <div id="tab-approved" class="hidden" role="tabpanel" aria-labelledby="tab-btn-approved">
+                        @include('dashboard.statusVisitors', ['visitors' => $approvedVisitors])
+                    </div>
+
+                    <div id="tab-out" class="hidden" role="tabpanel" aria-labelledby="tab-btn-out">
+                        @include('dashboard.statusVisitors', ['visitors' => $checkedOutVisitors])
+                    </div>
+
+                    {{-- Checked-in --}}
                     <div id="tab-in" class="hidden" role="tabpanel" aria-labelledby="tab-btn-in">
                         @include('dashboard.statusVisitors', ['visitors' => $checkedInVisitors])
                     </div>
                 </div>
-            </div>
-        </div>
+            </div>        </div>
     </div>
 </x-app-layout>
