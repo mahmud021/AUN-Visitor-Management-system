@@ -345,7 +345,7 @@
             {{-- ───────────────────────── Tabs + panes ───────────────────────── --}}
             <div class="overflow-hidden shadow-sm sm:rounded-lg">
                 {{-- TAB BAR --}}
-                <div class="border-b border-gray-200 dark:border-neutral-700">
+                <div class="border-b border-gray-200 dark:border-neutral-700 mt-10">
                     <nav class="flex gap-x-1 justify-center" role="tablist" aria-orientation="horizontal">
                         {{-- 1 ▸ My visitors (always visible) --}}
                         <button
