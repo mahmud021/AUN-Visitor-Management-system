@@ -170,26 +170,22 @@
                         </div>
                     </div>
 
-                    <!-- Dropdown Menu -->
-                    <div class="flex-shrink-0">
-                        <div class="hs-dropdown [--placement:bottom-end] relative inline-flex self-start">
-                            <button
-                                id="hs-table-dropdown-{{ $allVisitor->id }}"
-                                type="button"
-                                class="hs-dropdown-toggle py-1 px-1 inline-flex justify-center items-center gap-2 rounded-lg text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 text-sm"
-                                aria-haspopup="menu"
-                                aria-expanded="false"
-                                aria-label="Dropdown"
-                            >
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-ellipsis-icon lucide-ellipsis"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+                    <div class="flex items-center gap-x-2">
+                        <div class="hs-dropdown [--placement:bottom-right] relative inline-block">
+                            <button id="hs-table-dropdown-{{ $allVisitor->id }}" type="button"
+                                    class="hs-dropdown-toggle py-1.5 px-2 inline-flex justify-center items-center gap-2 rounded-lg text-gray-700 dark:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 text-sm"
+                                    aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
+                                <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg"
+                                     width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"
+                                     stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="1"/>
+                                    <circle cx="19" cy="12" r="1"/>
+                                    <circle cx="5" cy="12" r="1"/>
+                                </svg>
                             </button>
-
-                            <div
-                                class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-40 z-20 bg-white shadow-2xl rounded-lg p-2 mt-2 dark:bg-neutral-800"
-                                role="menu"
-                                aria-orientation="vertical"
-                                aria-labelledby="hs-table-dropdown-{{ $allVisitor->id }}"
-                            >
+                            <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden divide-y divide-gray-200 min-w-40 z-20 bg-white shadow-2xl rounded-lg p-2 mt-2 dark:divide-neutral-700 dark:bg-neutral-800"
+                                 role="menu" aria-orientation="vertical" aria-labelledby="hs-table-dropdown-{{ $allVisitor->id }}">
+                                <!-- Actions Section -->
                                 <div class="py-2">
                             <span class="block py-2 px-3 text-xs font-medium uppercase text-gray-400 dark:text-neutral-600">
                                 Actions
