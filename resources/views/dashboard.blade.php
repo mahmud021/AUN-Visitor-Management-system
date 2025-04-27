@@ -506,5 +506,7 @@
 
         </div>
     </div>
-    <!-- At the end of your <body> tag, before </body> -->
+    @push('scripts')
+        @vite('resources/js/tab-persistence.js')
+    @endpush
 </x-app-layout>
