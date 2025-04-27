@@ -504,4 +504,5 @@
             </div>
         </div>
     </div>
+    <!-- At the end of your <body> tag, before </body> -->
 </x-app-layout>
