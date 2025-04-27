@@ -60,55 +60,66 @@
         // Normalize hash (remove leading # if present)
         hash = hash.startsWith('#') ? hash.slice(1) : hash;
 
-        // Find the corresponding tab button and select option
-        const targetButton = Array.from(tabButtons).find(btn => btn.getAttribute('data-hs-tab') === `#${hash}`);
-        const targetOption = tabSelect.querySelector(`option[value="#${hash}"]`);
+        // Function to activate a tab programmatically
+        function activateTab(tabId) {
+            const targetButton = Array.from(tabButtons).find(btn => btn.getAttribute('data-hs-tab') === `#${tabId}`);
+            const targetOption = tabSelect.querySelector(`option[value="#${tabId}"]`);
 
-        // Restore tab state on page load (refresh fix)
-        if (hash && targetButton && targetOption) {
-            console.log('Found matching tab for hash:', hash);
+            if (targetButton && targetOption) {
+                console.log('Activating tab:', tabId);
 
-            // Update select dropdown for mobile
-            tabSelect.value = `#${hash}`;
+                // Update select dropdown for mobile
+                tabSelect.value = `#${tabId}`;
 
-            // Remove active state from all buttons
-            tabButtons.forEach(btn => {
-                btn.classList.remove('active', 'hs-tab-active:font-semibold', 'hs-tab-active:border-blue-600', 'hs-tab-active:text-blue-600');
-                btn.setAttribute('aria-selected', 'false');
-            });
+                // Remove active state from all buttons
+                tabButtons.forEach(btn => {
+                    btn.classList.remove('active', 'hs-tab-active:font-semibold', 'hs-tab-active:border-blue-600', 'hs-tab-active:text-blue-600');
+                    btn.setAttribute('aria-selected', 'false');
+                });
 
-            // Set active state on the target button
-            targetButton.classList.add('active', 'hs-tab-active:font-semibold', 'hs-tab-active:border-blue-600', 'hs-tab-active:text-blue-600');
-            targetButton.setAttribute('aria-selected', 'true');
+                // Set active state on the target button
+                targetButton.classList.add('active', 'hs-tab-active:font-semibold', 'hs-tab-active:border-blue-600', 'hs-tab-active:text-blue-600');
+                targetButton.setAttribute('aria-selected', 'true');
 
-            // Show the corresponding tab content
-            const targetPanelId = targetButton.getAttribute('data-hs-tab').slice(1);
-            document.querySelectorAll('[role="tabpanel"]').forEach(panel => {
-                panel.classList.add('hidden');
-                if (panel.id === targetPanelId) {
-                    panel.classList.remove('hidden');
-                }
-            });
+                // Show the corresponding tab content
+                const targetPanelId = targetButton.getAttribute('data-hs-tab').slice(1);
+                document.querySelectorAll('[role="tabpanel"]').forEach(panel => {
+                    panel.classList.add('hidden');
+                    if (panel.id === targetPanelId) {
+                        panel.classList.remove('hidden');
+                    }
+                });
 
-            console.log('Activated tab:', targetPanelId);
-        } else {
-            console.log('No matching tab found for hash or defaulting to "My Visitors".');
+                console.log('Activated tab:', targetPanelId);
+            } else {
+                console.warn('No matching tab found for ID:', tabId);
+            }
         }
 
-        // Update URL hash when tab changes (via select or buttons)
+        // Restore tab state on page load (refresh fix)
+        if (hash) {
+            activateTab(hash);
+        } else {
+            console.log('No hash found, defaulting to "My Visitors".');
+        }
+
+        // Update URL hash and activate tab when tab changes (via select or buttons)
         tabSelect.addEventListener('change', function() {
             const selectedValue = this.value;
-            window.location.hash = selectedValue;
+            const tabId = selectedValue.startsWith('#') ? selectedValue.slice(1) : selectedValue;
+            window.location.hash = tabId;
             console.log('Tab changed via select to:', selectedValue);
-            updatePaginationLinks(); // Update pagination links on tab change
+            activateTab(tabId); // Forcefully activate the tab
+            updatePaginationLinks(); // Update pagination links
         });
 
         tabButtons.forEach(btn => {
             btn.addEventListener('click', function() {
-                const tabId = this.getAttribute('data-hs-tab');
+                const tabId = this.getAttribute('data-hs-tab').slice(1);
                 window.location.hash = tabId;
                 console.log('Tab changed via button to:', tabId);
-                updatePaginationLinks(); // Update pagination links on tab change
+                activateTab(tabId); // Forcefully activate the tab
+                updatePaginationLinks(); // Update pagination links
             });
         });
 
@@ -139,6 +150,10 @@
         updatePaginationLinks();
         window.addEventListener('hashchange', function() {
             console.log('Hash changed to:', window.location.hash);
+            const newHash = window.location.hash.startsWith('#') ? window.location.hash.slice(1) : window.location.hash;
+            if (newHash) {
+                activateTab(newHash); // Activate tab on hash change
+            }
             updatePaginationLinks();
         });
     });
