@@ -124,8 +124,8 @@
                     <!-- Purpose of Visit -->
                     <div class="space-y-2 col-span-2">
                         <x-form.input name="purpose_of_visit" label="Purpose of Visit"
-                                         class="bg-brand-800 border-brand-700 text-brand-100 placeholder-brand-300"
-                                         rows="3">{{ old('purpose_of_visit') }}</x-form.input>
+                                      class="bg-brand-800 border-brand-700 text-brand-100 placeholder-brand-300"
+                                      rows="3">{{ old('purpose_of_visit') }}</x-form.input>
                         <x-input-error :messages="$errors->get('purpose_of_visit')" class="mt-1 text-brand-400"/>
                     </div>
                 </div>
@@ -190,7 +190,8 @@
                         <x-form.select name="location" label="Location">
                             <option value="" disabled selected>Select a location</option>
                             @foreach($locations as $location)
-                                <option value="{{ $location->name }}" {{ old('location') == $location->name ? 'selected' : '' }}>
+                                <option
+                                    value="{{ $location->name }}" {{ old('location') == $location->name ? 'selected' : '' }}>
                                     {{ $location->name }}
                                 </option>
                             @endforeach
@@ -346,7 +347,9 @@
             <div class="overflow-hidden shadow-sm sm:rounded-lg">
                 {{-- Mobile Select Dropdown --}}
                 <div class="sm:hidden flex justify-center mt-10">
-                    <select id="tab-select" class="py-3 px-4 pe-9 w-64 border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400" aria-label="Tabs">
+                    <select id="tab-select"
+                            class="py-3 px-4 pe-9 w-64 border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400"
+                            aria-label="Tabs">
                         <option value="#tab-my">My Visitors</option>
                         @can('view-all-visitors')
                             <option value="#tab-all">All Visitors</option>
@@ -360,9 +363,10 @@
 
                 {{-- Desktop Tab Bar --}}
                 <div class="hidden sm:block border-b border-gray-200 dark:border-neutral-700 mt-10">
-                    <nav class="flex gap-x-4 justify-center" role="tablist" aria-orientation="horizontal" data-hs-tab-select="#tab-select">
+                    <nav class="flex gap-x-4 justify-center" role="tablist" aria-orientation="horizontal"
+                         data-hs-tab-select="#tab-select">
                         {{-- 1 ▸ My visitors --}}
-                        <button
+                            <button
                             id="tab-btn-my"
                             type="button"
                             role="tab"
@@ -370,7 +374,13 @@
                             aria-selected="true"
                             data-hs-tab="#tab-my"
                             class="active hs-tab-active:font-semibold hs-tab-active:border-blue-600 hs-tab-active:text-blue-600 py-4 px-2 inline-flex items-center gap-x-2 border-b-2 border-transparent text-sm whitespace-nowrap text-gray-500 hover:text-blue-600 focus:outline-hidden focus:text-blue-600 dark:text-neutral-400 dark:hover:text-blue-500">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-user-icon lucide-circle-user"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="10" r="3"/><path d="M7 20.662V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.662"/></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                 stroke-linejoin="round" class="lucide lucide-circle-user-icon lucide-circle-user">
+                                <circle cx="12" cy="12" r="10"/>
+                                <circle cx="12" cy="10" r="3"/>
+                                <path d="M7 20.662V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.662"/>
+                            </svg>
                             My Visitors
                         </button>
 
@@ -380,7 +390,14 @@
                                     aria-controls="tab-all" aria-selected="false"
                                     data-hs-tab="#tab-all"
                                     class="hs-tab-active:font-semibold hs-tab-active:border-blue-600 hs-tab-active:text-blue-600 py-4 px-2 inline-flex items-center gap-x-2 border-b-2 border-transparent text-sm whitespace-nowrap text-gray-500 hover:text-blue-600 focus:outline-hidden focus:text-blue-600 dark:text-neutral-400 dark:hover:text-blue-500">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users-icon lucide-users"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                     stroke-linejoin="round" class="lucide lucide-users-icon lucide-users">
+                                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                                    <circle cx="9" cy="7" r="4"/>
+                                    <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                                </svg>
                                 All Visitors
                             </button>
                         @endcan
@@ -390,7 +407,18 @@
                                 aria-controls="tab-pending" aria-selected="false"
                                 data-hs-tab="#tab-pending"
                                 class="hs-tab-active:font-semibold hs-tab-active:border-blue-600 hs-tab-active:text-blue-600 py-4 px-2 inline-flex items-center gap-x-2 border-b-2 border-transparent text-sm whitespace-nowrap text-gray-500 hover:text-blue-600 focus:outline-hidden focus:text-blue-600 dark:text-neutral-400 dark:hover:text-blue-500">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-dashed-icon lucide-circle-dashed"><path d="M10.1 2.182a10 10 0 0 1 3.8 0"/><path d="M13.9 21.818a10 10 0 0 1-3.8 0"/><path d="M17.609 3.721a10 10 0 0 1 2.69 2.7"/><path d="M2.182 13.9a10 10 0 0 1 0-3.8"/><path d="M20.279 17.609a10 10 0 0 1-2.7 2.69"/><path d="M21.818 10.1a10 10 0 0 1 0 3.8"/><path d="M3.721 6.391a10 10 0 0 1 2.7-2.69"/><path d="M6.391 20.279a10 10 0 0 1-2.69-2.7"/></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                 stroke-linejoin="round" class="lucide lucide-circle-dashed-icon lucide-circle-dashed">
+                                <path d="M10.1 2.182a10 10 0 0 1 3.8 0"/>
+                                <path d="M13.9 21.818a10 10 0 0 1-3.8 0"/>
+                                <path d="M17.609 3.721a10 10 0 0 1 2.69 2.7"/>
+                                <path d="M2.182 13.9a10 10 0 0 1 0-3.8"/>
+                                <path d="M20.279 17.609a10 10 0 0 1-2.7 2.69"/>
+                                <path d="M21.818 10.1a10 10 0 0 1 0 3.8"/>
+                                <path d="M3.721 6.391a10 10 0 0 1 2.7-2.69"/>
+                                <path d="M6.391 20.279a10 10 0 0 1-2.69-2.7"/>
+                            </svg>
                             Pending
                         </button>
 
@@ -399,7 +427,12 @@
                                 aria-controls="tab-approved" aria-selected="false"
                                 data-hs-tab="#tab-approved"
                                 class="hs-tab-active:font-semibold hs-tab-active:border-blue-600 hs-tab-active:text-blue-600 py-4 px-2 inline-flex items-center gap-x-2 border-b-2 border-transparent text-sm whitespace-nowrap text-gray-500 hover:text-blue-600 focus:outline-hidden focus:text-blue-600 dark:text-neutral-400 dark:hover:text-blue-500">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-check-icon lucide-check-check"><path d="M18 6 7 17l-5-5"/><path d="m22 10-7.5 7.5L13 16"/></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                 stroke-linejoin="round" class="lucide lucide-check-check-icon lucide-check-check">
+                                <path d="M18 6 7 17l-5-5"/>
+                                <path d="m22 10-7.5 7.5L13 16"/>
+                            </svg>
                             Approved
                         </button>
 
@@ -408,7 +441,15 @@
                                 aria-controls="tab-in" aria-selected="false"
                                 data-hs-tab="#tab-in"
                                 class="hs-tab-active:font-semibold hs-tab-active:border-blue-600 hs-tab-active:text-blue-600 py-4 px-2 inline-flex items-center gap-x-2 border-b-2 border-transparent text-sm whitespace-nowrap text-gray-500 hover:text-blue-600 focus:outline-hidden focus:text-blue-600 dark:text-neutral-400 dark:hover:text-blue-500">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock-arrow-up-icon lucide-clock-arrow-up"><path d="M13.228 21.925A10 10 0 1 1 21.994 12.338"/><path d="M12 6v6l1.562.781"/><path d="m14 18 4-4 4 4"/><path d="M18 22v-8"/></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                 stroke-linejoin="round"
+                                 class="lucide lucide-clock-arrow-up-icon lucide-clock-arrow-up">
+                                <path d="M13.228 21.925A10 10 0 1 1 21.994 12.338"/>
+                                <path d="M12 6v6l1.562.781"/>
+                                <path d="m14 18 4-4 4 4"/>
+                                <path d="M18 22v-8"/>
+                            </svg>
                             Checked-In
                         </button>
 
@@ -417,7 +458,13 @@
                                 aria-controls="tab-out" aria-selected="false"
                                 data-hs-tab="#tab-out"
                                 class="hs-tab-active:font-semibold hs-tab-active:border-blue-600 hs-tab-active:text-blue-600 py-4 px-2 inline-flex items-center gap-x-2 border-b-2 border-transparent text-sm whitespace-nowrap text-gray-500 hover:text-blue-600 focus:outline-hidden focus:text-blue-600 dark:text-neutral-400 dark:hover:text-blue-500">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out-icon lucide-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                 stroke-linejoin="round" class="lucide lucide-log-out-icon lucide-log-out">
+                                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                                <polyline points="16 17 21 12 16 7"/>
+                                <line x1="21" x2="9" y1="12" y2="12"/>
+                            </svg>
                             Checked-Out
                         </button>
                     </nav>
