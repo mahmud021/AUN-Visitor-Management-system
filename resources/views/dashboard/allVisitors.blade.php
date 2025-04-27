@@ -4,21 +4,17 @@
 <div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
     <div class="grid gap-6 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
         @foreach ($allVisitors as $v)
-            <x-card>
-
-                {{-- STATUS BADGE --}}
-                <div class="absolute top-3 right-3 z-10">
+            <x-card class="pt-6"> {{-- add padding-top to the whole card --}}
+                <div class="absolute top-4 right-4">
                     <x-status-badge :status="$v->status" />
                 </div>
 
-                {{-- NAME --}}
-                <h3 class="text-base sm:text-lg font-semibold text-neutral-900 dark:text-white">
-                    {{ $v->first_name ?? 'Null' }} {{ $v->last_name ?? '' }}
+                <h3 class="text-lg font-bold tracking-tight mt-6">
+                    {{ $v->first_name }} {{ $v->last_name }}
                 </h3>
 
-                {{-- META LIST --}}
-                <dl class="mt-4 grid gap-y-2 text-sm text-neutral-500 dark:text-neutral-400">
-
+                {{-- META block … --}}
+                <dl class="space-y-1.5 text-sm text-neutral-400">
                     {{-- PHONE --}}
                     <div class="grid grid-cols-[auto_1fr] items-center gap-x-2">
                         <svg class="size-4 shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none"
