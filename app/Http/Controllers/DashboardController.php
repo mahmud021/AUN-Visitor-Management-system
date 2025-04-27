@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Location;
 use App\Models\User;
 use App\Models\Visitor;
 use Carbon\Carbon;
@@ -11,74 +12,92 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $user = auth()->user();
+        $user        = auth()->user();
+        $canViewAll  = Gate::allows('view-all-visitors', $user);   // ability check
 
-        // Check if user has permission to view all visitors.
-        $canViewAll = Gate::allows('view-all-visitors', $user);
 
-        // Daily visitor count.
-        $dailyVisitorCount = $canViewAll
-            ? Visitor::whereDate('created_at', Carbon::today())->count()
-            : $user->visitors()->whereDate('created_at', Carbon::today())->count();
+        // “Today” filter
+        $todayFilter = fn ($q) => $q->whereDate('created_at', Carbon::today());
 
-        // List of total visitors for today.
-        $totalVisitors = $canViewAll
-            ? Visitor::whereDate('created_at', Carbon::today())->get()
-            : $user->visitors()->whereDate('created_at', Carbon::today())->get();
+        $dailyVisitorCount    = $this->scope($user, $canViewAll)
+            ->when(true, $todayFilter)
+            ->count();
 
-        // Checked-in visitor count.
-        $checkedInVisitorCount = $canViewAll
-            ? Visitor::where('status', 'checked_in')->count()
-            : $user->visitors()->where('status', 'checked_in')->count();
+        $totalVisitorsToday   = $this->scope($user, $canViewAll)
+            ->when(true, $todayFilter)
+            ->get();
 
-        // Overstaying visitors count and list.
-        $overstayingVisitors = $canViewAll
-            ? Visitor::where('status', 'checked_in')
-                ->where('end_time', '<', Carbon::now())
-                ->get()
-            : $user->visitors()->where('status', 'checked_in')
-                ->where('end_time', '<', Carbon::now())
-                ->get();
+        $checkedInVisitorCount = $this->scope($user, $canViewAll)
+            ->where('status', 'checked_in')
+            ->count();
 
-        $overstayingVisitorCount = $overstayingVisitors->count();
+        $overstayingVisitors   = $this->scope($user, $canViewAll)
+            ->where('status', 'checked_in')
+            ->where('end_time', '<', Carbon::now())
+            ->get();
 
-        // Data to pass to the view.
-        $data = [
-            'user' => $user,
-            'locations' => \App\Models\Location::all(),
-            'myVisitors' => $this->getUserVisitors($user),  // Always shows user's own visitors.
-            'dailyVisitorCount' => $dailyVisitorCount,
-            'checkedInVisitorCount' => $checkedInVisitorCount,
-            'overstayingVisitorCount' => $overstayingVisitorCount,
-            'totalVisitors' => $totalVisitors, // Pass the total visitors collection
-            'overstayingVisitors' => $overstayingVisitors, // Pass the overstaying visitors collection
-            'checkedInVisitors' => $canViewAll
-                ? Visitor::where('status', 'checked_in')->get()
-                : $user->visitors()->where('status', 'checked_in')->get(),
-        ];
+        /* ─────────────── 2.  Paginated tab data ─────────────── */
 
-        // Add all visitors if user has permission.
-        if ($canViewAll) {
-            $data['allVisitors'] = $this->getAllVisitors();
+        // collections you already had
+        $myVisitors        = $this->paginatedVisitors($user, false);              // always
+        $checkedInVisitors = $this->paginatedVisitors($user, $canViewAll, 'checked_in');
+
+        // only admins / HR see global lists
+        $allVisitors       = $canViewAll ? $this->paginatedVisitors($user, true)                 : collect();
+        $pendingVisitors   = $canViewAll ? $this->paginatedVisitors($user, true, 'pending')      : collect();
+        $approvedVisitors  = $canViewAll ? $this->paginatedVisitors($user, true, 'approved')     : collect();
+        $checkedOutVisitors= $canViewAll ? $this->paginatedVisitors($user, true, 'checked_out')  : collect();
+
+        /* ─────────────── 3.  Push everything to the view ─────── */
+
+        return view('dashboard', [
+            'user'                    => $user,
+            'locations'               => Location::all(),
+
+            // tab collections
+            'myVisitors'              => $myVisitors,
+            'allVisitors'             => $allVisitors,
+            'pendingVisitors'         => $pendingVisitors,
+            'approvedVisitors'        => $approvedVisitors,
+            'checkedInVisitors'       => $checkedInVisitors,
+            'checkedOutVisitors'      => $checkedOutVisitors,
+
+            // KPI / badge numbers
+            'dailyVisitorCount'       => $dailyVisitorCount,
+            'totalVisitors'           => $totalVisitorsToday,
+            'checkedInVisitorCount'   => $checkedInVisitorCount,
+            'overstayingVisitors'     => $overstayingVisitors,
+            'overstayingVisitorCount' => $overstayingVisitors->count(),
+        ]);
+    }
+
+    /* ───────────────────────── Helpers ───────────────────────── */
+
+    /**
+     * Get a single paginated slice (by status) respecting permissions.
+     */
+    protected function paginatedVisitors(User $user, bool $canViewAll, string $status = null)
+    {
+        $query = $this->scope($user, $canViewAll);
+
+        if ($status) {
+            $query->where('status', $status);
         }
 
+        // Make the page name unique so each tab paginates independently
+        $pageName = $status ? "{$status}Page" : 'visitorsPage';
 
-        return view('dashboard', $data);
-    }
-    // Get authenticated user's visitors.
-    protected function getUserVisitors(User $user)
-    {
-        return $user->visitors()
-            ->with('user')
+        return $query->with('user')
             ->latest()
-            ->simplePaginate(8, ['*'], 'myVisitorsPage');
+            ->simplePaginate(8, ['*'], $pageName);
     }
 
-    // Get all visitors (only for authorized users).
-    protected function getAllVisitors()
+    /**
+     * Apply “my visitors” vs “all visitors” scope in one place.
+     */
+    protected function scope(User $user, bool $canViewAll)
     {
-        return Visitor::with('user')
-            ->latest()
-            ->simplePaginate(8, ['*'], 'allVisitorsPage');
+        return $canViewAll ? Visitor::query() : $user->visitors();
     }
+
 }
