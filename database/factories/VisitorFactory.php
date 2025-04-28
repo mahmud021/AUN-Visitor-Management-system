@@ -18,34 +18,52 @@ class VisitorFactory extends Factory
      */
     public function definition(): array
     {
-        // Generate a random date (within a month before or after today)
-        $visitDate = $this->faker->dateTimeBetween('-1 month', '+1 month');
+        // Determine the status first to set timestamps accordingly
+        $status = $this->faker->randomElement(['pending', 'approved', 'denied', 'checked_in', 'checked_out']);
 
-        // Generate a random start time and then an end time a few hours later.
-        $startTime = $this->faker->time('H:i:s');
-        $endTime = $this->faker->time('H:i:s');
+        // Initialize timestamp fields as null
+        $approved_at = null;
+        $checked_in_at = null;
+        $checked_out_at = null;
+        $denied_at = null;
+
+        // Set timestamps based on status
+        if ($status === 'approved') {
+            $approved_at = now()->subHours(1);
+        } elseif ($status === 'checked_in') {
+            $approved_at = now()->subHours(2);
+            $checked_in_at = now()->subHours(1);
+        } elseif ($status === 'checked_out') {
+            $approved_at = now()->subHours(3);
+            $checked_in_at = now()->subHours(2);
+            $checked_out_at = now()->subHours(1);
+        } elseif ($status === 'denied') {
+            $denied_at = now()->subHours(1);
+        }
+
+        // Generate two times and ensure end_time is after start_time
+        $time1 = $this->faker->time('H:i:s');
+        $time2 = $this->faker->time('H:i:s');
+        $startTime = min($time1, $time2);
+        $endTime = max($time1, $time2);
 
         return [
-            // Generates a new User instance for the foreign key.
-            'user_id'      => User::factory(),
-            'first_name'   => $this->faker->firstName,
-            'last_name'    => $this->faker->lastName,
-            'telephone'    => $this->faker->phoneNumber,
-            // Use the visit_date field as defined in your migration.
+            'user_id' => User::factory(),
+            'first_name' => $this->faker->firstName,
+            'last_name' => $this->faker->lastName,
+            'telephone' => $this->faker->phoneNumber,
+            'location' => $this->faker->randomElement(['Reception', 'Conference Room', 'Lab', 'Office', 'Workshop']),
+            'purpose_of_visit' => $this->faker->randomElement(['Meeting', 'Delivery', 'Interview', 'Maintenance', 'Tour']),
             'visit_date' => $this->faker->dateTimeBetween(now()->startOfWeek(), now()->endOfWeek())->format('Y-m-d'),
-            'start_time'   => $startTime,
-            'end_time'     => $endTime,
-            // Generate a random 4-character visitor code.
+            'start_time' => $startTime,
+            'end_time' => $endTime,
             'visitor_code' => strtoupper($this->faker->lexify('????')),
-            // Randomly select a status from the available options.
-            'status'       => $this->faker->randomElement([
-                'pending', 'approved', 'denied', 'checked_in', 'checked_out'
-            ]),
-            // Optional timestamp fields: you can add logic here to set these based on status if needed.
-            'approved_at'  => null,
-            'checked_in_at'=> null,
-            'checked_out_at'=> null,
-            'denied_at'    => null,
+            'status' => $status,
+            'token' => $this->faker->isbn10(),
+            'approved_at' => $approved_at,
+            'checked_in_at' => $checked_in_at,
+            'checked_out_at' => $checked_out_at,
+            'denied_at' => $denied_at,
         ];
     }
 
@@ -59,9 +77,9 @@ class VisitorFactory extends Factory
 
             // Create a timeline event for the visitor creation.
             \App\Models\TimelineEvent::factory()->create([
-                'visitor_id'  => $visitor->id,
-                'user_id'     => $visitor->user_id,
-                'event_type'  => 'created',
+                'visitor_id' => $visitor->id,
+                'user_id' => $visitor->user_id,
+                'event_type' => 'created',
                 'description' => 'Visitor record created automatically',
                 'occurred_at' => now(),
             ]);
