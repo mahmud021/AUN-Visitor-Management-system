@@ -7,6 +7,7 @@ export default defineConfig({
         laravel([
             "resources/css/app.css",
             "resources/js/app.js",
+            "resources/js/tab-persistence.js",
             "node_modules/apexcharts/dist/apexcharts.css",
             "node_modules/preline/dist/helper-apexcharts.js",
         ]),
