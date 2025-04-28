@@ -70,13 +70,11 @@
 
                 <div class="mt-auto flex items-center gap-2">
                     @if($visitor->status == 'pending')
-                        @if(auth()->user()?->user_details?->role === 'HR Admin' || auth()->user()?->user_details?->role === 'super admin')
-                            <!-- Approve Form -->
-                            <form action="{{ route('visitors.update', $visitor->id) }}" method="POST" class="inline">
+                        @can('override-visitor-creation')
+                            <!-- Approve Button -->
+                            <form action="{{ route('visitors.approve', $visitor) }}" method="POST" class="inline">
                                 @csrf
                                 @method('PATCH')
-                                <input type="hidden" name="status" value="approved">
-                                <input type="hidden" name="redirect_to" value="{{ route('dashboard') }}">
                                 <div class="hs-tooltip inline-block">
                                     <button type="submit" title="Approve" class="hs-tooltip-toggle bg-white hover:bg-gray-100 p-2 rounded border border-gray-300">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
@@ -85,18 +83,16 @@
                                             <path d="M20 6 9 17l-5-5"/>
                                         </svg>
                                         <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-2xs dark:bg-neutral-700" role="tooltip">
-                                            Approve
-                                        </span>
+                            Approve
+                        </span>
                                     </button>
                                 </div>
                             </form>
 
-                            <!-- Deny Form -->
-                            <form action="{{ route('visitors.update', $visitor->id) }}" method="POST" class="inline ml-2">
+                            <!-- Deny Button -->
+                            <form action="{{ route('visitors.deny', $visitor) }}" method="POST" class="inline ml-2">
                                 @csrf
                                 @method('PATCH')
-                                <input type="hidden" name="status" value="denied">
-                                <input type="hidden" name="redirect_to" value="{{ route('dashboard') }}">
                                 <div class="hs-tooltip inline-block">
                                     <button type="submit" title="Deny" class="hs-tooltip-toggle bg-white hover:bg-gray-100 p-2 rounded border border-gray-300">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
@@ -106,30 +102,30 @@
                                             <path d="m6 6 12 12"/>
                                         </svg>
                                         <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-2xs dark:bg-neutral-700" role="tooltip">
-                                            Deny
-                                        </span>
+                            Deny
+                        </span>
                                     </button>
                                 </div>
                             </form>
-                        @endif
+                        @endcan
+
                     @elseif($visitor->status == 'approved')
                         @include('visitors.partials.checkin_form', ['visitor' => $visitor])
+
                     @elseif($visitor->status == 'checked_in')
-                        <!-- Check-out Form -->
-                        <form action="{{ route('visitors.update', $visitor->id) }}" method="POST" class="inline">
+                        <!-- Check-out Button -->
+                        <form action="{{ route('visitors.checkout', $visitor) }}" method="POST" class="inline">
                             @csrf
                             @method('PATCH')
-                            <input type="hidden" name="status" value="checked_out">
-                            <input type="hidden" name="redirect_to" value="{{ route('dashboard') }}">
                             <x-primary-button class="bg-gray-700 hover:bg-gray-600 text-white">
                                 Check Out
                             </x-primary-button>
                         </form>
+
                     @elseif($visitor->status == 'denied')
                         <span class="text-red-400">Visitor denied</span>
                     @endif
-                </div>
-                <div class="mt-auto flex justify-end">
+                </div>                <div class="mt-auto flex justify-end">
                     <x-dropdown align="right" width="48">
                         {{-- Trigger (3-dot icon) --}}
                         <x-slot name="trigger">

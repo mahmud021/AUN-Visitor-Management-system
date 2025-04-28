@@ -259,7 +259,7 @@ class VisitorController extends Controller
             'occurred_at' => now()
         ]);
 
-        return redirect()->route('visitors.scan')
+        return redirect()->route('dashboard')
             ->with('success', 'Visitor approved successfully');
     }
 
@@ -280,7 +280,7 @@ class VisitorController extends Controller
             'occurred_at' => now()
         ]);
 
-        return redirect()->route('visitors.scan')
+        return redirect()->route('dashboard')
             ->with('success', 'Visitor denied successfully');
     }
 
@@ -302,51 +302,17 @@ class VisitorController extends Controller
             'occurred_at' => now()
         ]);
 
-        return redirect()->route('visitors.scan')
+        return redirect()->route('dashboard')
             ->with('success', 'Checked out successfully');
     }
 
 
     public function update(Request $request, Visitor $visitor)
     {
-        if ($request->has('status') && $request->input('status') === 'checked_in') {
-            if (auth()->user()->user_details->role === 'Security') {
-                abort(403, 'Security users must use the check‑in route.');
-            }
-        }
+        // Authorization for updating details
+        Gate::authorize('update-visitor', $visitor);
 
-        if ($request->has('status')) {
-            $request->validate([
-                'status' => 'required|in:approved,denied,checked_out',
-            ]);
-
-            if ($request->input('status') === 'checked_out') {
-                $visitor->checked_out_at = now();
-            }
-
-            $visitor->status = $request->input('status');
-            $visitor->save();
-
-            $description = match ($visitor->status) {
-                'approved'    => 'Visitor approved by HR',
-                'denied'      => 'Visitor denied',
-                'checked_out' => 'Visitor checked out by security',
-                default       => '',
-            };
-
-            \App\Models\TimelineEvent::create([
-                'visitor_id'  => $visitor->id,
-                'user_id'     => auth()->id(),
-                'event_type'  => $visitor->status,
-                'description' => $description,
-                'occurred_at' => now(),
-            ]);
-
-            return redirect()->back()->with('success', 'Visitor status updated successfully.');
-        }
-
-        \Illuminate\Support\Facades\Gate::authorize('update-visitor', $visitor);
-
+        // Validate visitor details
         $validated = $request->validate([
             'first_name'         => 'required|string|max:20',
             'last_name'          => 'required|string|max:20',
@@ -358,17 +324,20 @@ class VisitorController extends Controller
             'purpose_of_visit'   => 'required|string|max:100',
         ]);
 
-        $visitor->first_name        = $validated['first_name'];
-        $visitor->last_name         = $validated['last_name'];
-        $visitor->telephone         = $validated['telephone'];
-        $visitor->visit_date        = $validated['visit_date'];
-        $visitor->start_time        = $validated['start_time'];
-        $visitor->end_time          = $validated['end_time'];
-        $visitor->location          = $validated['location'];
-        $visitor->purpose_of_visit  = $validated['purpose_of_visit'];
-        $visitor->save();
+        // Update visitor details
+        $visitor->update([
+            'first_name'        => $validated['first_name'],
+            'last_name'         => $validated['last_name'],
+            'telephone'         => $validated['telephone'],
+            'visit_date'        => $validated['visit_date'],
+            'start_time'        => $validated['start_time'],
+            'end_time'          => $validated['end_time'],
+            'location'          => $validated['location'],
+            'purpose_of_visit'  => $validated['purpose_of_visit']
+        ]);
 
-        \App\Models\TimelineEvent::create([
+        // Record timeline event
+        TimelineEvent::create([
             'visitor_id'  => $visitor->id,
             'user_id'     => auth()->id(),
             'event_type'  => 'updated_details',
@@ -376,7 +345,8 @@ class VisitorController extends Controller
             'occurred_at' => now(),
         ]);
 
-        return redirect()->back()->with('success', 'Visitor updated successfully.');
+        return redirect()->back()
+            ->with('success', 'Visitor details updated successfully.');
     }
 
 

@@ -1,9 +1,8 @@
 @can('check-in-visitor', $visitor)
     <!-- Check-in Form -->
-    <form action="{{ route('visitors.checkin', $visitor->id) }}" method="POST" class="inline">
+    <form action="{{ route('visitors.checkin', $visitor) }}" method="POST" class="inline">
         @csrf
         @method('PATCH')
-        <input type="hidden" name="redirect_to" value="{{ route('dashboard') }}">
 
         <div class="flex items-center gap-2 mb-4">
             <x-primary-button class="bg-gray-700 hover:bg-gray-600 text-white">
@@ -27,6 +26,7 @@
                             data-hs-pin-input-item
                             {{ $i === 1 ? 'autofocus' : '' }}
                             name="visitor_code[]"
+                            required
                         >
                     @endfor
                 </div>
@@ -35,7 +35,6 @@
     </form>
 @else
     @can('view-all-visitors')
-
         <span class="text-red-400">Check-in is not allowed at this time.</span>
-        @endcan
+    @endcan
 @endcan
