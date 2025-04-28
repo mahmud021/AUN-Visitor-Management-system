@@ -149,16 +149,6 @@ class VisitorController extends Controller
         return view('visitors.edit', compact('visitor', 'locations'));
     }
 
-
-
-
-    /**
-     * Update visitor personal details.
-     *
-     * This update method is dedicated to updating the visitor’s basic information:
-     * first name, last name, telephone, visit date, start time, and end time.
-     */
-
     public function checkIn(Request $request, Visitor $visitor)
     {
         // Validate the visitor code.
@@ -206,13 +196,6 @@ class VisitorController extends Controller
     {
         // Uses existing check-in-visitor gate
         Gate::authorize('check-in-visitor', $visitor);
-
-        if ($visitor->status === 'checked_in') {
-            return redirect()->back()->withErrors([
-                'checkin' => 'Visitor is already checked in.',
-            ]);
-        }
-
         // Only allow checking in on the scheduled date
         if (! \Carbon\Carbon::parse($visitor->visit_date)->isToday()) {
             return redirect()->back()->withErrors([
@@ -221,10 +204,7 @@ class VisitorController extends Controller
         }
 
         // Perform the check‑in
-        $visitor->update([
-            'status'        => 'checked_in',
-            'checked_in_at' => now(),
-        ]);
+        $visitor->update(['status' => 'checked_in']);
 
         // Log the event
         TimelineEvent::create([
@@ -236,13 +216,9 @@ class VisitorController extends Controller
         ]);
 
         return redirect()
-            ->route('visitors.scan')     // or wherever you want to send them
+            ->route('dashboard')     // or wherever you want to send them
             ->with('success', 'Visitor checked in successfully.');
     }
-
-    // VisitorController.php
-
-    // VisitorController.php
 
     public function approve(Visitor $visitor)
     {
