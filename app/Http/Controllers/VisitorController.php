@@ -198,9 +198,15 @@ class VisitorController extends Controller
         return redirect()->back()->with('success', 'Visitor checked in successfully.');
     }
 
+    public function scan(Visitor $visitor) {
+        return view('visitors.scan');
+    }
+
     public function autoCheckIn(Visitor $visitor)
     {
-        // Prevent duplicate check‑ins
+        // Uses existing check-in-visitor gate
+        Gate::authorize('check-in-visitor', $visitor);
+
         if ($visitor->status === 'checked_in') {
             return redirect()->back()->withErrors([
                 'checkin' => 'Visitor is already checked in.',
@@ -232,6 +238,72 @@ class VisitorController extends Controller
         return redirect()
             ->route('visitors.scan')     // or wherever you want to send them
             ->with('success', 'Visitor checked in successfully.');
+    }
+
+    // VisitorController.php
+
+    // VisitorController.php
+
+    public function approve(Visitor $visitor)
+    {
+        // Only HR Admin/Super Admin can approve
+        Gate::authorize('override-visitor-creation'); // Uses existing gate
+
+        $visitor->update(['status' => 'approved']);
+
+        TimelineEvent::create([
+            'visitor_id' => $visitor->id,
+            'user_id' => auth()->id(),
+            'event_type' => 'approved',
+            'description' => 'Visitor approved by HR',
+            'occurred_at' => now()
+        ]);
+
+        return redirect()->route('visitors.scan')
+            ->with('success', 'Visitor approved successfully');
+    }
+
+    public function deny(Visitor $visitor)
+    {
+        // Only HR Admin/Super Admin can deny
+        if (!in_array(auth()->user()->user_details->role, ['HR Admin', 'super admin'])) {
+            abort(403);
+        }
+
+        $visitor->update(['status' => 'denied']);
+
+        TimelineEvent::create([
+            'visitor_id' => $visitor->id,
+            'user_id' => auth()->id(),
+            'event_type' => 'denied',
+            'description' => 'Visitor denied',
+            'occurred_at' => now()
+        ]);
+
+        return redirect()->route('visitors.scan')
+            ->with('success', 'Visitor denied successfully');
+    }
+
+    public function checkout(Visitor $visitor)
+    {
+        // Security can check out via check-in-out gate
+        Gate::authorize('check-in-out');
+
+        $visitor->update([
+            'status' => 'checked_out',
+            'checked_out_at' => now()
+        ]);
+
+        TimelineEvent::create([
+            'visitor_id' => $visitor->id,
+            'user_id' => auth()->id(),
+            'event_type' => 'checked_out',
+            'description' => 'Visitor checked out by security',
+            'occurred_at' => now()
+        ]);
+
+        return redirect()->route('visitors.scan')
+            ->with('success', 'Checked out successfully');
     }
 
 
@@ -319,31 +391,22 @@ class VisitorController extends Controller
         // Delete the visitor if needed.
     }
 
+
+
     // VisitorController.php
     public function processScan(Request $request)
     {
         $request->validate([
-            'qr_content' => 'required|string',
+            'qr_content' => 'required|string|exists:visitors,token'
         ]);
 
         $visitor = Visitor::where('token', $request->qr_content)->first();
 
-        if (! $visitor) {
-            return redirect()->route('visitors.scan')
-                ->withErrors(['qr_content' => 'No visitor found with this QR code.']);
-        }
-
-        if ($visitor->status === 'checked_in') {
-            return redirect()->route('visitors.scan')
-                ->withErrors(['checkin' => 'Visitor is already checked in.']);
-        }
-
-        if (! Carbon::parse($visitor->visit_date)->isToday()) {
+        if (!Carbon::parse($visitor->visit_date)->isToday()) {
             return redirect()->route('visitors.scan')
                 ->withErrors(['checkin' => 'Visitors can only check in on their scheduled date.']);
         }
 
-        // Render the same scan view, now with a $visitor to confirm
         return view('visitors.scan', compact('visitor'));
     }
 

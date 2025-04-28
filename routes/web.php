@@ -53,35 +53,23 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // Visitor Management
     Route::prefix('visitors')->name('visitors.')->group(function () {
-        Route::get('/', [VisitorController::class, 'index'])->name('index')->middleware('can:view-all-visitors');
+        // GET routes first
+        Route::get('/', [VisitorController::class, 'index'])->name('index');
         Route::get('/create', [VisitorController::class, 'create'])->name('create');
-        Route::post('/', [VisitorController::class, 'store'])->name('store')->middleware('can:create-visitor');
-        Route::get('/{visitor}/edit', [VisitorController::class, 'edit'])
-            ->name('edit')
-            ->middleware('can:update-visitor,visitor');
-        Route::patch('/{visitor}', [VisitorController::class, 'update'])
-            ->name('update')
-            ->middleware('can:update-visitor,visitor');
+        Route::get('/scan', [VisitorController::class, 'scan'])->name('scan'); // Changed from '/visitor/scan'
+        Route::get('/{visitor}/edit', [VisitorController::class, 'edit'])->name('edit');
+        Route::get('/{visitor}/qr', [VisitorController::class, 'show'])->name('show');
+        Route::get('/{visitor}/timeline', [VisitorController::class, 'timeline'])->name('timeline');
 
-        // New check‑in route using the check-in-visitor gate.
-        Route::patch('/{visitor}/check-in', [VisitorController::class, 'checkIn'])
-            ->name('checkin')
-            ->middleware('can:check-in-visitor,visitor');
-        // in routes/web.php
-        Route::patch('visitors/{visitor}/auto-checkin', [VisitorController::class,'autoCheckIn'])
-            ->name('autoCheckin');
-
-        Route::get('/visitors/search', [VisitorController::class, 'search'])->name('search');
-        Route::get('/visitor/scan', function () {
-            return view('visitors.scan');
-        })->name('scan');
-
-        Route::get('/{visitor}/timeline', [VisitorController::class, 'timeline'])
-            ->name('timeline')
-            ->middleware('can:view-timeline,visitor');
-        Route::get('/visitors/{visitor}/qr', [VisitorController::class, 'show'])->name('show');
-
+        // POST/PATCH routes after
+        Route::post('/', [VisitorController::class, 'store'])->name('store');
         Route::post('/scan-process', [VisitorController::class, 'processScan'])->name('scan-process');
+        Route::patch('/{visitor}', [VisitorController::class, 'update'])->name('update');
+        Route::patch('/{visitor}/check-in', [VisitorController::class, 'checkIn'])->name('checkin');
+        Route::patch('/{visitor}/approve', [VisitorController::class, 'approve'])->name('approve');
+        Route::patch('/{visitor}/deny', [VisitorController::class, 'deny'])->name('deny');
+        Route::patch('/{visitor}/checkout', [VisitorController::class, 'checkout'])->name('checkout');
+        Route::patch('/{visitor}/auto-checkin', [VisitorController::class, 'autoCheckIn'])->name('autoCheckin');
     });
 
 
