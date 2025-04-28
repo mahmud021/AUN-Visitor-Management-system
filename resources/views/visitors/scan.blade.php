@@ -160,7 +160,7 @@
                                                     <button type="submit"
                                                             class="bg-green-600 hover:bg-green-500 text-white py-2 px-4 rounded"
                                                             title="Check In Visitor">
-                                                        Check In Now
+                                                        Check In
                                                     </button>
                                                 </form>
                                             @else
