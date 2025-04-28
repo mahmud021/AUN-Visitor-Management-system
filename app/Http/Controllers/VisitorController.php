@@ -372,10 +372,6 @@ class VisitorController extends Controller
 
         $visitor = Visitor::where('token', $request->qr_content)->first();
 
-        if (!Carbon::parse($visitor->visit_date)->isToday()) {
-            return redirect()->route('visitors.scan')
-                ->withErrors(['checkin' => 'Visitors can only check in on their scheduled date.']);
-        }
 
         return view('visitors.scan', compact('visitor'));
     }
