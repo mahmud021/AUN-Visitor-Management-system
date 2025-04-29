@@ -60,6 +60,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/{visitor}/edit', [VisitorController::class, 'edit'])->name('edit');
         Route::get('/{visitor}/qr', [VisitorController::class, 'show'])->name('show');
         Route::get('/{visitor}/timeline', [VisitorController::class, 'timeline'])->name('timeline');
+        Route::get('/users/search', [VisitorController::class, 'search'])->name('search');
 
         // POST/PATCH routes after
         Route::post('/', [VisitorController::class, 'store'])->name('store');
