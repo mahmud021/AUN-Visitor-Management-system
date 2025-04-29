@@ -66,13 +66,15 @@
                                 </dd>
                             </div>
 
-                            <!-- Visitor Code -->
-                            <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                <dt class="text-sm/6 font-medium text-brand-50">Visitor Code</dt>
-                                <dd class="mt-1 text-sm/6 text-brand-200 sm:col-span-2 sm:mt-0">
-                                    {{ $visitor->visitor_code ?? 'Null' }}
-                                </dd>
-                            </div>
+                            <!-- Visitor Code (Only show to creator) -->
+                            @if(auth()->id() === $visitor->user_id)
+                                <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                    <dt class="text-sm/6 font-medium text-brand-50">Visitor Code</dt>
+                                    <dd class="mt-1 text-sm/6 text-brand-200 sm:col-span-2 sm:mt-0">
+                                        {{ $visitor->visitor_code ?? 'Null' }}
+                                    </dd>
+                                </div>
+                            @endif
 
                             <!-- Status -->
                             <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -110,10 +112,12 @@
                 </div>
 
                 <!-- Right Column: QR Code -->
-                <div class="flex justify-center sm:justify-end items-start">
-                    <div class="max-w-sm w-full">
-                        @if($qrCode)
-                            <img id="qrCodeImage" src="data:image/png;base64,{{ base64_encode($qrCode) }}" alt="QR Code" class="mx-auto w-[400px] h-[400px]">
+                <!-- Right Column: QR Code (Only show to creator) -->
+                @if(auth()->id() === $visitor->user_id && $qrCode)
+                    <div class="flex justify-center sm:justify-end items-start">
+                        <div class="max-w-sm w-full">
+                            <img id="qrCodeImage" src="data:image/png;base64,{{ base64_encode($qrCode) }}"
+                                 alt="QR Code" class="mx-auto w-[400px] h-[400px]">
                             <h3 class="font-semibold text-lg mt-4 text-brand-50">
                                 Please save or print this QR code and present it at check-in.
                             </h3>
@@ -122,11 +126,9 @@
                                     Download QR Code
                                 </button>
                             </div>
-                        @else
-                            <p class="text-red-500">Error: QR Code not generated.</p>
-                        @endif
+                        </div>
                     </div>
-                </div>
+                @endif
             </div>
         </div>
     </div>
