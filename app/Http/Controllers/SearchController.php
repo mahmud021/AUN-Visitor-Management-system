@@ -9,20 +9,23 @@ class SearchController extends Controller
 {
     public function dashboardSearch(Request $request)
     {
-        $query = $request->input('q'); // Using $request to get the search query
+        $query = $request->input('q');
 
-        // Start with base query
-        $visitorsQuery = Visitor::where('first_name', 'LIKE', '%' . $query . '%')
-            ->orWhere('last_name', 'LIKE', '%' . $query . '%'); // Search both first and last name
+        $results = [
+            'myVisitors' => Visitor::where('user_id', auth()->id())
+                ->where(function($q) use ($query) {
+                    $q->where('first_name', 'LIKE', "%$query%")
+                        ->orWhere('last_name', 'LIKE', "%$query%");
+                })->get(),
+            'allVisitors' => collect() // Initialize empty collection
+        ];
 
-        // Add role-based filtering
-        if (!auth()->user()->can('view-all-visitors')) {
-            // For students/non-admins, only show their own visitors
-            $visitorsQuery->where('user_id', auth()->id());
+        if (auth()->user()->can('view-all-visitors')) {
+            $results['allVisitors'] = Visitor::where('first_name', 'LIKE', "%$query%")
+                ->orWhere('last_name', 'LIKE', "%$query%")
+                ->get();
         }
 
-        $visitors = $visitorsQuery->get();
-
-        return view('results', ['visitors' => $visitors]);
+        return view('dashboard.results', $results);
     }
 }

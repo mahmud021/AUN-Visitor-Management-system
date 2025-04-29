@@ -128,7 +128,8 @@
                     @elseif($v->status == 'denied')
                         <span class="text-red-400">Visitor denied</span>
                     @endif
-                </div>                <div class="mt-auto flex justify-end">
+                </div>
+                <div class="mt-auto flex justify-end">
                     <x-dropdown align="right" width="48">
                         {{-- Trigger (3-dot icon) --}}
                         <x-slot name="trigger">
