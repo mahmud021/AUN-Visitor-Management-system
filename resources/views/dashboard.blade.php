@@ -344,7 +344,7 @@
             </div>
 
             {{-- ───────────────────────── Tabs + panes ───────────────────────── --}}
-            <div class="overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="overflow-visible shadow-sm sm:rounded-lg">
                 {{-- Mobile Select Dropdown --}}
                 <div class="sm:hidden flex justify-center mt-10">
                     <select id="tab-select"
